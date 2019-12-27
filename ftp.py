@@ -1,23 +1,19 @@
 from time import sleep
 from ftplib import FTP
-import os
-import environ
-from time import sleep
-import json
+import os, environ, json
 
-ROOT_DIR = environ.Path(__file__) - 1
-
+environ.Path(__file__)
 env = environ.Env()
-env.read_env(ROOT_DIR('.envs/.env'))
-
+env.read_env('.envs/.env')
 
 def conectar(conectar_a_conta):
+
 	if conectar_a_conta == 'luciano':
-		print(env('HOST'), env('USERNAME'), env('PASSWORD'))
-		return FTP(env('HOST'),env('USERNAME'), env('PASSWORD'))
+		print(env('HOST_LUCIANO'), env('USER_LUCIANO'), env('PASSWORD_LUCIANO'))
+		return FTP(env('HOST_LUCIANO'), env('USER_LUCIANO'), env('PASSWORD_LUCIANO'))
 	else:
-		print(env('fHOST'), env('fUSERNAME'), env('fPASSWORD'))
-		return FTP(env('fHOST'),env('fUSERNAME'), env('fPASSWORD'))
+		print(env('HOST_FABRIZIO'), env('USER_FABRIZIO'), env('PASSWORD_FABRIZIO'))
+		return FTP(env('HOST_FABRIZIO'), env('USER_FABRIZIO'), env('PASSWORD_FABRIZIO'))
 
 # ftp.dir('public_html')
 
@@ -114,6 +110,7 @@ def menu():
 	return ftps(submenu)
 
 def main():
+
 	submenu = ""
 	while submenu != "4":
 		submenu = menu()

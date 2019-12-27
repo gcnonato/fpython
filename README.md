@@ -1,9 +1,23 @@
 # Arquivos de estudos de python
 ## Sinta-se a vontade para sugerir melhorias ou mudanças no repositório já que é feito para a comunidade
 
-#### *D I C A S*
+#### *I M P O R T A N T E*
 
-> Renomeie o arquivo CONFIG.TXT para CONFIG.INI, pois ele serve para não deixar exposto as 
-senhas usadas nos exemplos. Qualquer dúvidas entre em contato ou abre uma issues que será respondida prontamente.
+> Para usar os scripts que precisam de senhas faça o seguinte:
+- Crie uma pasta chamada **.envs**
+- Dentro dela crie um arquivo **.env**
+- Copie o conteúdo abaixo e preencha com suas informações:
+~~~~ 
+INSTA_USERNAME=
+INSTA_PASSWORD=
 
+SPOTIFY_EMAIL=
+SPOTIFY_SENHA=
+
+RDS_DB_NAME=
+RDS_USERNAME=
+RDS_PASSWORD=
+RDS_HOSTNAME=
+RDS_PORT=5432
+~~~~
 
