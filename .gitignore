@@ -1,0 +1,9 @@
+*.png
+*.ini
+*.yml
+*.idea
+*.envs
+geckodriver.log
+.log
+__pycache__
+\.envs\.local
