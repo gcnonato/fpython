@@ -25,8 +25,6 @@ class Application(Frame):
 	def royale(self):
 		if (os.name != 'posix'):
 			os.system("python.exe C:/Users/luxu/Desktop/python/royale.py")
-			#os.chdir("python/imparcial/")
-			#subprocess.call(["scrapy", "crawl", "royale"])
 		else:
 			os.system("python3.6 python/Desktop/royale.py")
 			subprocess.Popen(['mousepad','royale.txt'])
