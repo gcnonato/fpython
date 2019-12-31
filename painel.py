@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
 from tkinter import *
-import os
-import subprocess
+import os, subprocess, shutil
 
 class Application(Frame):
 
@@ -24,7 +22,13 @@ class Application(Frame):
 
 	def royale(self):
 		if (os.name != 'posix'):
-			os.system("python.exe C:/Users/luxu/Desktop/python/royale.py")
+			source = 'C:\\Users\\luxu\\Desktop'
+			os.system("ipython.exe C:/Users/luxu/Desktop/python/royale_with_selenium.py")
+			files = [f for f in os.listdir('.') if f.startswith('Cheats')]
+			for file in files:
+				print(file)
+				shutil.move(file, source)  ## to move files from
+				print()
 		else:
 			os.system("python3.6 python/Desktop/royale.py")
 			subprocess.Popen(['mousepad','royale.txt'])

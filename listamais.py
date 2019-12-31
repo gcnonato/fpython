@@ -13,7 +13,6 @@ BTN_TO_SEARCH = "//button[@class='tg-btn']"
 SCRIPT_TO_SCROLL_PAGE = "window.scrollTo(0, document.body.scrollHeight);"
 BTN_CURTIDA = "//button[@class='dCJp8 afkep']"
 
-
 class ListaTelefonica:
     def __init__(self, cidade, procurar, username=None, password=None):
         self.username = username
@@ -145,6 +144,6 @@ class ListaTelefonica:
             sleep(random.randint(1, 5) / 30)
 
 cidade = 'Presidente Prud'
-o_que_procurar = 'CLINICA SHIBATA '
+o_que_procurar = 'Jaime Centro'
 lmais = ListaTelefonica(cidade, o_que_procurar)
 lmais.search()
