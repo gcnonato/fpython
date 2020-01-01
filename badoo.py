@@ -94,8 +94,8 @@ if __name__ == '__main__':
     params = {}
     # params['email'] = input('Digite o e-mail:')
     # params['password'] = input('Digite a senha:')
-    params['email'] = 'zicadopv@terra.com.br'
-    params['password'] = '222222'
+    params['email'] = ''
+    params['password'] = ''
     bd = BadooWithSelenium()
     bd.main(url, params)
     # if len(params['email']) < 1:
