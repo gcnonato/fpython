@@ -1,22 +1,33 @@
+import environ
+import json
+import os
+import random
+import re
+import sys
+from datetime import datetime
+from time import sleep
+
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as CondicaoExperada
 from selenium.common.exceptions import *
 from selenium.webdriver import ActionChains
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as CondicaoExperada
+from selenium.webdriver.support.ui import WebDriverWait
 
-from time import sleep
-import os, random, re, json, sys
-from datetime import datetime
+ROOT_DIR = environ.Path(__file__) - 2
+env = environ.Env()
+env.read_env('.envs/.env')
 
 
 class BadooWithSelenium:
     def __init__(self):
-        chrome_options = webdriver.ChromeOptions()
+        # chrome_options = webdriver.Firefox()
+        # chrome_options = webdriver.ChromeOptions()
         # chrome_options.add_argument('--headless')
-        self.driver = webdriver.Chrome(options=chrome_options)
-        self.driver.set_window_size(1120, 550)
+        # self.driver = webdriver.Chrome(options=chrome_options)
+        self.driver = webdriver.Firefox()
+        # self.driver.set_window_size(1120, 550)
         self.wait = WebDriverWait(
             self.driver,
             10,
@@ -68,39 +79,17 @@ class BadooWithSelenium:
         )
         sleep(random.randint(15, 17) / 30)
         button_login.click()
-        sleep(random.randint(5, 7) / 30)
-        xpath_pessoas_perto = "//a[@href='/search']"
-        pessoas_perto = self.wait.until(
-            CondicaoExperada.element_to_be_clickable(
-                (By.XPATH, xpath_pessoas_perto)
-            )
-        )
-        pessoas_perto.click()
-        online = "(.//*[normalize-space(text()) and normalize-space(.)='Pessoas Perto'])[2]/following::div[7]"
-        WebDriverWait(driver, 10).until(esperar_pelo_elemento(driver,online))
-        driver.find_element_by_link_text("Pessoas Perto").click()
-        driver.find_element_by_xpath(
-            "(.//*[normalize-space(text()) and normalize-space(.)='Pessoas Perto'])[2]/following::div[7]"
-        ).click()
-        driver.find_element_by_xpath(
-            "(.//*[normalize-space(text()) and normalize-space(.)='Pessoas Perto'])[2]/following::div[7]"
-        ).click()
-        driver.find_element_by_xpath(
-            "(.//*[normalize-space(text()) and normalize-space(.)='Novos membros'])[2]/following::div[1]"
-        ).click()
+        sleep(15)
+
+        driver.get('https://badoo.com/search?filter=online')
+
 
 if __name__ == '__main__':
     url = 'https://us1.badoo.com/pt/signin/?f=top'
     params = {}
     # params['email'] = input('Digite o e-mail:')
     # params['password'] = input('Digite a senha:')
-    params['email'] = ''
-    params['password'] = ''
+    params['email'] = env('BADOO_EMAIL')
+    params['password'] = env('BADOO_SENHA')
     bd = BadooWithSelenium()
     bd.main(url, params)
-    # if len(params['email']) < 1:
-    #     print('Digite e-mail/senha para acessar o site!!')
-    #     sys.exit(0)
-    # else:
-    #     print(params)
-    #     bd.main(url, params)

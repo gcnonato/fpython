@@ -26,7 +26,8 @@ class InstagramBot:
     def __init__(self, username, password, hashtag):
         self.username = username
         self.password = password
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Firefox()
+        # self.driver = webdriver.Chrome()
         self.hashtag = hashtag
         self.wait = WebDriverWait(
             self.driver,
