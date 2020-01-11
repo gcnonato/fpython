@@ -80,13 +80,13 @@ class GuiaBolsoSelenium:
             driver.quit()
             url = 'https://www.guiabolso.com.br/web/#/login'
             params = {}
-            params['email'] = 'zicadopv@gmail.com'
-            params['password'] = 'luxu1650'
+            params['email'] = env.ENVIRON['GUIABOLSO_EMAIL']
+            params['password'] = env.ENVIRON['GUIABOLSO_PASSWORD']
             gb = GuiaBolsoSelenium()
             gb.main(url, params)
         options_choice_months.click()
         sleep(random.randint(2, 3))
-        xpath_choice_month_to_show = '//ul[@class="jss313 jss314"]//*[text()="dezembro 2019"]'
+        xpath_choice_month_to_show = '//ul[@class="jss313 jss314"]//*[text()="janeiro"]'
         choice_month_to_show = driver.find_element_by_xpath(xpath_choice_month_to_show)
         choice_month_to_show.click()
         driver.get('https://www.guiabolso.com.br/web/#/financas/gastos-e-rendas/gastos')
@@ -109,12 +109,10 @@ class GuiaBolsoSelenium:
                 for row in result:
                     for exclude in excludes:
                         if exclude in row:
-                        # if 'Banco do Brasil S/A' in row:
                             search = True
                             break
                     if search:
                         search = False
-                        print(search)
                     else:
                         try:
                             mes.index(row)
@@ -132,9 +130,6 @@ class GuiaBolsoSelenium:
                                 print('*' * 100)
                             else:
                                 rows += row + '/'
-                        # csvWriter.writerow('*'*80)
-                        # print('*'*100)
-                # break
                 sleep(3)
             csvFileObj.close()
         else:
