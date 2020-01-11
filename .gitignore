@@ -7,3 +7,4 @@ geckodriver.log
 .log
 __pycache__
 \.envs\.local
+.env

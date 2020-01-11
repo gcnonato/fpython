@@ -15,19 +15,21 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as CondicaoExperada
 from selenium.webdriver.support.ui import WebDriverWait
 
-ROOT_DIR = environ.Path(__file__) - 2
+ROOT_DIR = environ.Path(__file__)
 env = environ.Env()
-env.read_env('.envs/.env')
+env.read_env()
 
 
 class BadooWithSelenium:
     def __init__(self):
-        # chrome_options = webdriver.Firefox()
-        # chrome_options = webdriver.ChromeOptions()
-        # chrome_options.add_argument('--headless')
-        # self.driver = webdriver.Chrome(options=chrome_options)
-        self.driver = webdriver.Firefox()
-        # self.driver.set_window_size(1120, 550)
+        if (os.name != 'posix'):  # Windows
+            self.driver = webdriver.Chrome()
+            chrome_options = webdriver.ChromeOptions()
+            chrome_options.add_argument('--headless')
+        else:
+            self.driver = webdriver.Firefox()
+            self.driver = webdriver.Chrome(options=chrome_options)
+            self.driver.set_window_size(1120, 550)
         self.wait = WebDriverWait(
             self.driver,
             10,
@@ -89,7 +91,7 @@ if __name__ == '__main__':
     params = {}
     # params['email'] = input('Digite o e-mail:')
     # params['password'] = input('Digite a senha:')
-    params['email'] = env('BADOO_EMAIL')
-    params['password'] = env('BADOO_SENHA')
+    params['email'] = env.ENVIRON['BADOO_EMAIL']
+    params['password'] = env.ENVIRON['BADOO_PASSWORD']
     bd = BadooWithSelenium()
     bd.main(url, params)
