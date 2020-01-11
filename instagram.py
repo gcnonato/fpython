@@ -6,7 +6,7 @@ from selenium.common.exceptions import *
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from time import sleep
-import random, environ
+import random, environ, os
 
 environ.Path(__file__)
 env = environ.Env()
@@ -24,10 +24,16 @@ BTN_CURTIDA = "//button[@class='dCJp8 afkep']"
 
 class InstagramBot:
     def __init__(self, username, password, hashtag):
+        if (os.name != 'posix'):  # Windows
+            self.driver = webdriver.Chrome()
+            chrome_options = webdriver.ChromeOptions()
+            # chrome_options.add_argument('--headless')
+        else:
+            self.driver = webdriver.Firefox()
+            self.driver = webdriver.Chrome(options=chrome_options)
+            self.driver.set_window_size(1120, 550)
         self.username = username
         self.password = password
-        self.driver = webdriver.Firefox()
-        # self.driver = webdriver.Chrome()
         self.hashtag = hashtag
         self.wait = WebDriverWait(
             self.driver,
@@ -101,8 +107,8 @@ class InstagramBot:
                 print(e)
                 sleep(5)
 
-username = env('INSTA_USERNAME')
-password = env('INSTA_PASSWORD')
+username = env.ENVIRON['INSTA_USERNAME']
+password = env.ENVIRON['INSTA_PASSWORD']
 hashtag = 'informática'
 insta = InstagramBot(username, password, hashtag)
 insta.login()
