@@ -30,7 +30,7 @@ class InstagramBot:
             # chrome_options.add_argument('--headless')
         else:
             self.driver = webdriver.Firefox()
-            self.driver = webdriver.Chrome(options=chrome_options)
+            # self.driver = webdriver.Chrome(options=chrome_options)
             self.driver.set_window_size(1120, 550)
         self.username = username
         self.password = password

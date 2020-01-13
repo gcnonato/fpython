@@ -17,10 +17,16 @@ env.read_env()
 
 class GuiaBolsoSelenium:
     def __init__(self):
-        chrome_options = webdriver.ChromeOptions()
+        if (os.name != 'posix'):  # Windows
+            self.driver = webdriver.Chrome()
+            chrome_options = webdriver.ChromeOptions()
+            chrome_options.add_argument('--headless')
+            self.driver = webdriver.Chrome(options=chrome_options)
+        else:
+            self.driver = webdriver.Firefox()
+            self.driver.set_window_size(1120, 550)
         # chrome_options.add_argument('--headless')
-        self.driver = webdriver.Chrome(options=chrome_options)
-        # self.driver.set_window_size(1120, 550)
+        self.driver.set_window_size(1120, 550)
         self.wait = WebDriverWait(
             self.driver,
             10,
