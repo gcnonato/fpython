@@ -17,14 +17,14 @@ def youtube_dl_script():
 		REPEAT = input("Digite 'S' para sim ou 'N' para não: ")
 		REPEAT = REPEAT.upper()
 		if REPEAT == "S":
-			os.system("clear")
+			os.system("clear") #5
 			youtube_dl_script()
 		else:
 			print("")
 			print("Saindo...")
 			print("")
 			sleep(0.3) # Time in seconds.
-			os._exit(1)
+			os._exists(0)
 
 	def separar_id_video(link_video):
 		posicao_do_igual = link_video.find("v=")
@@ -34,22 +34,25 @@ def youtube_dl_script():
 		print(posicao_do_igual)
 		return link_video[posicao_do_igual:]
 
-	def main_function_get_id():
+	def main_function_get_id(): #1
 		print("Por favor, digite APENAS a ID do vídeo desejado (Exemplo: https://www.youtube.com/watch?v=ID_DO_VÍDEO):")
-		print("=======================================================================================================")
+		print("="*50)
 		link_video = input("Link do vídeo: ")
 		print("")
 		global ID
 		ID = separar_id_video(link_video)
 
-	def video_function_path():
-		os.chdir(expanduser(location_script))
+	def video_function_path(): #2
+		location = os.chdir(expanduser(location_script))
 
-	def video_function_default_mp4():
+	def video_function_default_mp4(): #3
 		if ID == -1:
 			print("Link inválido")
 		else:
+			os.chdir('Desktop')
+			print(os.getcwd())
 			os.system("youtube-dl --format mp4 https://www.youtube.com/watch?v=" + ID)
+
 			sleep(0.5) # Time in seconds.
 
 
