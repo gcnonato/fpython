@@ -4,29 +4,45 @@ from tkinter import *
 import os, subprocess, shutil
 
 ROOT_DIR = '/home/luxu/Desktop/'
+LOCAL_DEFAULT_LINUX = '/home/luxu/Desktop/'
+LOCAL_DEFAULT_WINDOWS = 'C:/Users/luxu/Desktop/python/'
+
 
 class Application(Frame):
 
 	def holerite(self):
 		if (os.name != 'posix'):
-			os.system("python.exe C:/Users/luxu/Desktop/python/selenium/holerite.py")
+			os.system(f"ipython.exe {LOCAL_DEFAULT_WINDOWS}selenium/holerite.py")
+			#os.system("python.exe C:/Users/luxu/Desktop/python/selenium/holerite.py")
 		else:
 			os.system("python3.6 python/Desktop/holerite.py")
 		self.quit
 
 	def zap(self):
 		if (os.name != 'posix'):
-			os.system("luxucode zap")
-		else:
-			os.system("python3.6 python/Desktop/royale.py")
-			subprocess.Popen(['mousepad','royale.txt'])
+			os.system("luxucode zap")		
 		self.quit
 
 	def royale(self):
 		if (os.name != 'posix'):
-			os.system("ipython.exe C:/Users/luxu/Desktop/python/royale_with_selenium.py")
+			#source = 'C:\\Users\\luxu\\Desktop'
+			#os.system(f"ipython.exe {LOCAL_DEFAULT_WINDOWS}royale_with_selenium.py")
+			#files = [f for f in os.listdir('.') if f.startswith('Cheats')]
+			#for file in files:
+			#	print(file)
+			#	shutil.move(file, source)  ## to move files from
+			#	print()
+			os.system(f"ipython.exe {LOCAL_DEFAULT_WINDOWS}royale.py")
 		else:
-			os.system(f"ipython {ROOT_DIR}fpython/royale.py")
+			os.system(f"ipython {LOCAL_DEFAULT_LINUX}fpython/royale.py")
+		self.quit
+		
+	def jupyter(self):
+		if (os.name != 'posix'): #windows
+			os.chdir(f"{LOCAL_DEFAULT_WINDOWS}jupyter_virtual_env/venv/Scripts/")
+			subprocess.Popen(['start', 'activate'], shell=True)
+		else:			
+			subprocess.Popen(['start', 'jupyter notebook'], shell=True)
 		self.quit
 
 	def guiabolso(self):
@@ -45,7 +61,7 @@ class Application(Frame):
 
 	def youtube(self):
 		if (os.name != 'posix'):
-			os.chdir("C:/Users/luxu/Desktop/")
+			#os.chdir("C:/Users/luxu/Desktop/")
 			os.system("python.exe C:/Users/luxu/Desktop/python/pegar_video.py")
 		else:
 			os.system(f"ipython {ROOT_DIR}fpython/pegar_video.py")

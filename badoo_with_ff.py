@@ -25,7 +25,7 @@ class BadooWithSelenium:
         if (os.name != 'posix'):  # Windows
             self.driver = webdriver.Chrome()
             chrome_options = webdriver.ChromeOptions()
-            chrome_options.add_argument('--headless')
+            #chrome_options.add_argument('--headless')
         else:
             self.driver = webdriver.Firefox()
             self.driver.set_window_size(1120, 550)
@@ -81,8 +81,13 @@ class BadooWithSelenium:
         sleep(random.randint(15, 17) / 30)
         button_login.click()
         sleep(15)
-
         driver.get('https://badoo.com/search?filter=online')
+		''' Daqui pra frente dá erro, pois quero manter a página aberta. '''
+        button_login = self.wait.until(
+            CondicaoExperada.element_to_be_clickable(
+                (By.XPATH, xpath_button_login)
+            )
+        )
 
 
 if __name__ == '__main__':

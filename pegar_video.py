@@ -1,132 +1,100 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
 import os
-from os.path import isdir, expanduser
+# from os.path import isdir, expanduser
 from time import sleep
+from pprint import pprint
 
 os.path.expanduser("~")
 
 location_script = os.getcwd()
 
-def youtube_dl_script():
+class YoutubeDlScript():
+	def __init__(self):
+		self.ID = ''
 
-	def repeat_script():
-		print("")
-		print("Deseja realizar outra operação com o script? [S/N]")
+
+	def repeat_script(self):
+		print("\nDeseja realizar outra operação com o script? [S/N]")
 		REPEAT = input("Digite 'S' para sim ou 'N' para não: ")
 		REPEAT = REPEAT.upper()
 		if REPEAT == "S":
-			os.system("clear") #5
-			youtube_dl_script()
+			if (os.name != 'posix'):  # windows
+				os.system("cls")
+			else:
+				os.system("clear")
+			self.main_function_get_id()
 		else:
-			print("")
-			print("Saindo...")
-			print("")
+			print("\nSaindo...\n")
 			sleep(0.3) # Time in seconds.
-			os._exists(0)
+			os._exists(1)
 
-	def separar_id_video(link_video):
+	# Passo 1
+	def main_function_get_id(self):
+		print(f"Por favor, digite APENAS a ID do vídeo desejado (Exemplo: https://www.youtube.com/watch?v=ID_DO_VÍDEO):\n{'='*80}")
+		link_video = input("Link do vídeo: ")
+		self.ID = self.separar_id_video(link_video)
+		
+	
+	def separar_id_video(self, link_video):
 		posicao_do_igual = link_video.find("v=")
-		if posicao_do_igual<0: # quer dizer q num veio o link certo
+		if posicao_do_igual < 0:
 			return posicao_do_igual
-		posicao_do_igual +=2
-		print(posicao_do_igual)
+		posicao_do_igual += 2
+		#print(posicao_do_igual)
+		print("Tudo OK! Vamos lá...\n")
 		return link_video[posicao_do_igual:]
 
-	def main_function_get_id(): #1
-		print("Por favor, digite APENAS a ID do vídeo desejado (Exemplo: https://www.youtube.com/watch?v=ID_DO_VÍDEO):")
-		print("="*50)
-		link_video = input("Link do vídeo: ")
-		print("")
-		global ID
-		ID = separar_id_video(link_video)
+	# Passo 2
+	def video_function_path(self):
+		location = os.chdir(os.path.expanduser(location_script))
 
-	def video_function_path(): #2
-		location = os.chdir(expanduser(location_script))
-
-	def video_function_default_mp4(): #3
-		if ID == -1:
+	# Passo 3
+	def video_function_default_mp4(self):
+		if self.ID == -1:
 			print("Link inválido")
 		else:
-			os.chdir('Desktop')
-			print(os.getcwd())
-			os.system("youtube-dl --format mp4 https://www.youtube.com/watch?v=" + ID)
+			# os.chdir('Desktop')
+			# os.system("youtube-dl --format mp4 https://www.youtube.com/watch?v=" + self.ID)
+			sleep(0.5)
 
-			sleep(0.5) # Time in seconds.
-
-
-	def video_function_default_mp4_conversion():
-		os.system("youtube-dl --recode-video mp4 https://www.youtube.com/watch?v=" + ID)
-		sleep(0.5) # Time in seconds.
-
-	def option_function_update():
+	
+	def option_function_update(self):
 		# os.system("youtube-dl --update")
 		os.system("pip install --upgrade youtube_dl")
 		sleep(0.5) # Time in seconds.
 
-	#------------------------------------------------------------
-	def option_conversion_formats():
-		print("Qual formato deseja que o vídeo seja convertido?")
-		print("================================================")
-		print("")
-		print("Formatos de vídeo (conversão):")
-		print("(1) Arquivo de vídeo em formato .MP4")
-		print("(2) Arquivo de vídeo em formato .MKV")
-		print("(3) Arquivo de vídeo em formato .WEBM")
-		print("(4) Arquivo de vídeo em formato .AVI")
-		print("")
-		ESCOLHACONVERSAO = input("Escolha uma das opções acima: ")
-		print("")
-		if ESCOLHACONVERSAO == "1":
-			main_function_get_id()
-			video_function_path()
-			video_function_default_mp4_conversion()
+
+	def menu(self):
+		if os.name != 'posix':  # windows
+			os.system("cls")
+		else:
+			os.system("clear")
+		print("O que deseja fazer?\n(1) Downloads\n\n(2) Atualizar Youtube-Dl\n\n(3) Sair\n")
+		ESCOLHA = input("Escolha uma das opções acima:")
+		if sleep(5):
+			ESCOLHA = "1"
+
+		if ESCOLHA == "1":
+			self.main_function_get_id()
+			self.video_function_path()
+			self.video_function_default_mp4()
+			self.repeat_script()
+			# return self.repeat_script()
+		elif ESCOLHA == "2":
+			self.option_function_update()
+			self.repeat_script()
+		elif ESCOLHA == "3":
+			print("\nSaindo...\n")
+			sleep(0.3) # Time in seconds.
+			os._exists(1)
 		else:
 			print("Esta não é uma opção válida!")
 			sleep(0.5)  # Time in seconds.
-			# os.system("sleep 5")
-	#------------------------------------------------------------
-	#------------------------------------------------------------
-	# Opções para o salvamento do vídeo selecionado
-	#------------------------------------------------------------
-	'''
-	print("Como deseja salvar o vídeo?")
-	print("(1) Arquivo de vídeo em formato .MP4")
-	print("")
-	print("Opções do script:")
-	print("(7) Formatos de Conversão de Vídeo")
-	print("(8) Atualizar Youtube-Dl")
-	print("(9) Sair do Youtube-Dl Script")
-	print("")
-	ESCOLHA = input("Escolha uma das opções acima: ")
-	'''
-	print("")
-	ESCOLHA = "1"
-	if ESCOLHA == "1":
-		main_function_get_id()
-		video_function_path()
-		video_function_default_mp4()
-		repeat_script()
-	elif ESCOLHA == "7":
-		option_conversion_formats()
-		repeat_script()
-	elif ESCOLHA == "8":
-		option_function_update()
-		repeat_script()
-	elif ESCOLHA == "9":
-		print("Saindo...")
-		print("")
-		# os.system("sleep 3")
-		sleep(0.3)  # Time in seconds.
-	else:
-		print("Esta não é uma opção válida!")
-		# os.system("sleep 5")
-		sleep(0.5)  # Time in seconds.
-		repeat_script()
+			self.repeat_script()
 
-	# main_function_get_id()
-	# video_function_path()
-	# video_function_default_mp4()
-	# repeat_script()
-youtube_dl_script()
+if __name__ == '__main__':
+	yt = YoutubeDlScript()
+	repeact = yt.menu()
+	ytnv = YoutubeDlScript()
+	ytnv.main_function_get_id()
