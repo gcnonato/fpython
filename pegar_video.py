@@ -3,15 +3,15 @@
 import os
 # from os.path import isdir, expanduser
 from time import sleep
-from pprint import pprint
 
-os.path.expanduser("~")
+# os.path.expanduser("~")
 
-location_script = os.getcwd()
 
 class YoutubeDlScript():
+
 	def __init__(self):
 		self.ID = ''
+		self.location_script = os.getcwd()
 
 
 	def repeat_script(self):
@@ -47,15 +47,19 @@ class YoutubeDlScript():
 
 	# Passo 2
 	def video_function_path(self):
-		location = os.chdir(os.path.expanduser(location_script))
+		self.location = os.chdir(os.path.expanduser(self.location_script))
 
 	# Passo 3
 	def video_function_default_mp4(self):
+		if os.name != 'posix':  # windows
+			os.chdir('C:\\Users\\luxu\\Desktop')
+		else:
+			os.chdir('/home/luxu/Desktop')
+		# print(os.getcwd())
 		if self.ID == -1:
 			print("Link inválido")
 		else:
-			# os.chdir('Desktop')
-			# os.system("youtube-dl --format mp4 https://www.youtube.com/watch?v=" + self.ID)
+			os.system("youtube-dl --format mp4 https://www.youtube.com/watch?v=" + self.ID)
 			sleep(0.5)
 
 	
@@ -72,9 +76,6 @@ class YoutubeDlScript():
 			os.system("clear")
 		print("O que deseja fazer?\n(1) Downloads\n\n(2) Atualizar Youtube-Dl\n\n(3) Sair\n")
 		ESCOLHA = input("Escolha uma das opções acima:")
-		if sleep(5):
-			ESCOLHA = "1"
-
 		if ESCOLHA == "1":
 			self.main_function_get_id()
 			self.video_function_path()
@@ -96,5 +97,5 @@ class YoutubeDlScript():
 if __name__ == '__main__':
 	yt = YoutubeDlScript()
 	repeact = yt.menu()
-	ytnv = YoutubeDlScript()
-	ytnv.main_function_get_id()
+	# ytnv = YoutubeDlScript()
+	# ytnv.main_function_get_id()

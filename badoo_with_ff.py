@@ -82,7 +82,7 @@ class BadooWithSelenium:
         button_login.click()
         sleep(15)
         driver.get('https://badoo.com/search?filter=online')
-		''' Daqui pra frente dá erro, pois quero manter a página aberta. '''
+        ''' Daqui pra frente dá erro, pois quero manter a página aberta. '''
         button_login = self.wait.until(
             CondicaoExperada.element_to_be_clickable(
                 (By.XPATH, xpath_button_login)

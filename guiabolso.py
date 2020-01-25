@@ -20,12 +20,19 @@ class GuiaBolsoSelenium:
         if (os.name != 'posix'):  # Windows
             self.driver = webdriver.Chrome()
             chrome_options = webdriver.ChromeOptions()
-            chrome_options.add_argument('--headless')
+            # chrome_options.add_argument('--headless')
             self.driver = webdriver.Chrome(options=chrome_options)
         else:
             self.driver = webdriver.Firefox()
             self.driver.set_window_size(1120, 550)
         # chrome_options.add_argument('--headless')
+        self.with_data_and_buys = ''
+        self.mes = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez']
+        self.excludes = ['Impostos', 'Saque', 'Pagto conta telefone', 'Pagamento de Boleto', 'Taxas bancárias',
+                         'consignado',
+                         'Transf.Eletr.Disponiv', 'Banco do Brasil S/A', 'IOF', 'Internet', 'Outros gastos',
+                         'Tarifa Pacote',
+                         'Pgto BB', 'Contr BB', 'ANUIDADE NACIONAL']
         self.driver.set_window_size(1120, 550)
         self.wait = WebDriverWait(
             self.driver,
@@ -82,6 +89,7 @@ class GuiaBolsoSelenium:
         xpath_options_choice_months = '//div[@class="center"]'
         try:
             options_choice_months = driver.find_element_by_xpath(xpath_options_choice_months)
+            options_choice_months.click()
         except:
             driver.quit()
             url = 'https://www.guiabolso.com.br/web/#/login'
@@ -90,7 +98,6 @@ class GuiaBolsoSelenium:
             params['password'] = env.ENVIRON['GUIABOLSO_PASSWORD']
             gb = GuiaBolsoSelenium()
             gb.main(url, params)
-        options_choice_months.click()
         sleep(random.randint(2, 3))
         xpath_choice_month_to_show = '//ul[@class="jss313 jss314"]//*[text()="janeiro"]'
         choice_month_to_show = driver.find_element_by_xpath(xpath_choice_month_to_show)
@@ -99,48 +106,88 @@ class GuiaBolsoSelenium:
         # xpath_with_data_and_buys = '//div[@class="sc-cpmLhU cllocz"]'
         xpath_with_data_and_buys = '//div[@class="sc-bnXvFD ibVkfa"]'
         sleep(random.randint(2, 3))
-        with_data_and_buys = driver.find_elements_by_xpath(xpath_with_data_and_buys)
-        if len(with_data_and_buys) > 0:
-            # Write out the CSV file.
-            csvFileObj = open("guiabolso.csv", 'w', newline='')
-            csvWriter = csv.writer(csvFileObj, delimiter=' ')
-            mes = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez']
-            excludes = ['Impostos', 'Saque', 'Pagto conta telefone', 'Pagamento de Boleto', 'Taxas bancárias', 'consignado',
-                       'Transf.Eletr.Disponiv', 'Banco do Brasil S/A', 'IOF', 'Internet', 'Outros gastos', 'Tarifa Pacote',
-                       'Pgto BB', 'Contr BB', 'ANUIDADE NACIONAL']
-            for dado in with_data_and_buys:
+        self.with_data_and_buys = driver.find_elements_by_xpath(xpath_with_data_and_buys)
+        if len(self.with_data_and_buys) > 0:
+            # self.write_in_csv()
+            self.write_in_txt()
+        else:
+            print('Sem dados captados :-(')
+        driver.quit()
+
+    def write_in_txt(self):
+        # Write out the TXT file.
+        # txtFileObj = open("guiabolso.txt", 'w')
+        with open("guiabolso.txt", 'w') as txtFileObj:
+            for dado in self.with_data_and_buys:
                 result = dado.text.split('\n')
                 rows = ''
                 search = False
                 for row in result:
-                    for exclude in excludes:
-                        if exclude in row:
-                            search = True
-                            break
+                    # for exclude in self.excludes:
+                    #     if exclude in row:
+                    #         search = True
+                    #         break
                     if search:
                         search = False
                     else:
                         try:
-                            mes.index(row)
-                            rows += row
-                            csvWriter.writerow(rows)
+                            self.mes.index(row)
+                            rows += f"{row}\n"
+                            txtFileObj.write(rows)
+                            # csvWriter.writerow(rows)
                             print(rows)
                             rows = ''
                         except:
                             if 'R$' in row:
-                                rows += row
-                                csvWriter.writerow(rows)
+                                rows += f"{row}\n"
+                                txtFileObj.write(rows)
+                                # csvWriter.writerow(rows)
                                 print(rows)
                                 rows = ''
-                                csvWriter.writerow('*' * 80)
-                                print('*' * 100)
+                                passar_um_traco = f"{'*' * 80}\n"
+                                txtFileObj.write(passar_um_traco)
+                                # csvWriter.writerow('*' * 80)
+                                print(passar_um_traco)
                             else:
-                                rows += row + '/'
-                sleep(3)
-            csvFileObj.close()
-        else:
-            print('Sem dados captados :-(')
-        driver.quit()
+                                # row + '/'
+                                rows += f"{row}/"
+            # sleep(3)
+        # txtFileObj.close()
+
+    def write_in_csv(self):
+        # Write out the CSV file.
+        csvFileObj = open("guiabolso.csv", 'w', newline='')
+        csvWriter = csv.writer(csvFileObj, delimiter=' ')
+        for dado in self.with_data_and_buys:
+            result = dado.text.split('\n')
+            rows = ''
+            search = False
+            for row in result:
+                for exclude in self.excludes:
+                    if exclude in row:
+                        search = True
+                        break
+                if search:
+                    search = False
+                else:
+                    try:
+                        self.mes.index(row)
+                        rows += row
+                        csvWriter.writerow(rows)
+                        print(rows)
+                        rows = ''
+                    except:
+                        if 'R$' in row:
+                            rows += row
+                            csvWriter.writerow(rows)
+                            print(rows)
+                            rows = ''
+                            csvWriter.writerow('*' * 80)
+                            print('*' * 100)
+                        else:
+                            rows += row + '/'
+            sleep(3)
+        csvFileObj.close()
 
 
 if __name__ == '__main__':
