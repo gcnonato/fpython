@@ -1,0 +1,5 @@
+bs4==0.0.1
+cfscrape==2.0.8
+fire==0.2.1
+huepy==1.2.1
+PySimpleGUI==4.15.2
