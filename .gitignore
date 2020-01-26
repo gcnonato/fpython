@@ -6,3 +6,4 @@
 *.log
 \.envs\.local
 .env
+__pycache__
