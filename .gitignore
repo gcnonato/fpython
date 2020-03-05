@@ -4,6 +4,7 @@
 *.idea
 *.env
 *.log
+*.json
 \.envs\.local
 .env
 __pycache__

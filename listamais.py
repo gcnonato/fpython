@@ -3,10 +3,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as CondicaoExperada
 from selenium.common.exceptions import *
-from selenium.webdriver import ActionChains
-from selenium.webdriver.common.keys import Keys
 from time import sleep
 import random
+import PySimpleGUI as sg
+import fire
 
 URL = 'https://www.listamais.com.br/'
 BTN_TO_SEARCH = "//button[@class='tg-btn']"
@@ -14,14 +14,63 @@ SCRIPT_TO_SCROLL_PAGE = "window.scrollTo(0, document.body.scrollHeight);"
 BTN_CURTIDA = "//button[@class='dCJp8 afkep']"
 
 class ListaTelefonica:
-    def __init__(self, cidade, procurar, username=None, password=None):
-        self.username = username
-        self.password = password
-        self.driver = webdriver.Chrome()
-        self.cidade = cidade
-        self.procurar = procurar
+    def __init__(self):
+        self.escolha = self.option()
+        # self.cidade = cidade
+        # self.procurar = procurar
+        # self.driver = webdriver.Chrome()
+
+
+    def load(self, cidade, procurar):
+        ...
+
+
+
+    def option(self, numero=0):
+        # global escolha
+        self.escolha = int(numero)
+
+    def layout_inicial(self):
+        # global escolha
+        title = 'Bot do LISTA MAIS'
+        layout = \
+            [
+                [
+                    sg.Text(f'{" " * 16}{title}', size=(80, 2))
+                ],
+                [
+                    sg.Text(' ' * 23),
+                    sg.Radio('Streaming!', "1", default=True),
+                    sg.Radio('Download!', "1"),
+                    sg.Radio('Link Magnético!', "1")
+                ],
+                [
+                    sg.Input(size=(80, 1))
+                ],
+                [
+                    sg.Cancel(),
+                    sg.OK()
+                ]
+            ]
+
+        window = sg.Window('ListaMaisBot', layout)
+        event, values = window.read()
+        window.close()
+
+        if values[0] is True:
+            self.escolha = 0
+        elif values[1] is True:
+            self.escolha = 1
+        elif values[2] is True:
+            self.escolha = 2
+
+        return values[3]
+
+
+    def search(self, cidade, procurar):
+        driver = webdriver.Chrome()
         self.wait = WebDriverWait(
-            self.driver,
+            driver,
             10,
             poll_frequency=1,
             ignored_exceptions=[
@@ -30,22 +79,20 @@ class ListaTelefonica:
                 ElementNotSelectableException,
             ],
         )
-
-    def search(self):
-        driver = self.driver
         driver.get(URL)
         campo_busca = self.wait.until(
             CondicaoExperada.element_to_be_clickable(
                 (By.XPATH, '//span//input[@name="busca"]')
             )
         )
-        self.type_like_a_person(self.procurar, campo_busca)
+        self.type_like_a_person(procurar, campo_busca)
+
         campo_cidade = self.wait.until(
             CondicaoExperada.element_to_be_clickable(
                 (By.XPATH, "//span//input[@tabindex='3']")
             )
         )
-        self.type_like_a_person(self.cidade, campo_cidade)
+        self.type_like_a_person(cidade, campo_cidade)
         sleep(random.randint(3, 6))
         btn_search = self.wait.until(
             CondicaoExperada.element_to_be_clickable(
@@ -54,7 +101,7 @@ class ListaTelefonica:
         )
         sleep(random.randint(3, 6))
         btn_search.click()
-        self.box_search()
+        # self.box_search()
 
 
     def box_search(self):
@@ -143,7 +190,12 @@ class ListaTelefonica:
             single_input_field.send_keys(letter)
             sleep(random.randint(1, 5) / 30)
 
-cidade = 'Presidente Prud'
-o_que_procurar = 'Jaime Centro'
-lmais = ListaTelefonica(cidade, o_que_procurar)
-lmais.search()
+if __name__ == '__main__':
+    cidade = 'Presidente Prud'
+    # o_que_procurar = 'Moto Mário'
+    lmais = ListaTelefonica()
+    # lmais.search()
+    fire.Fire(lmais.option())
+    o_que_procurar = lmais.layout_inicial()
+    # print(busca)
+    lmais.search(cidade, o_que_procurar)

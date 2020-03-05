@@ -1,6 +1,6 @@
 from time import sleep
 from ftplib import FTP
-import os, environ, json
+import os, environ
 
 environ.Path(__file__)
 env = environ.Env()
