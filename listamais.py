@@ -13,18 +13,16 @@ BTN_TO_SEARCH = "//button[@class='tg-btn']"
 SCRIPT_TO_SCROLL_PAGE = "window.scrollTo(0, document.body.scrollHeight);"
 BTN_CURTIDA = "//button[@class='dCJp8 afkep']"
 
+
 class ListaTelefonica:
     def __init__(self):
-        self.escolha = self.option()
+        self.option()
         # self.cidade = cidade
         # self.procurar = procurar
         # self.driver = webdriver.Chrome()
 
-
     def load(self, cidade, procurar):
         ...
-
-
 
     def option(self, numero=0):
         # global escolha
@@ -66,7 +64,6 @@ class ListaTelefonica:
 
         return values[3]
 
-
     def search(self, cidade, procurar):
         driver = webdriver.Chrome()
         self.wait = WebDriverWait(
@@ -102,7 +99,6 @@ class ListaTelefonica:
         sleep(random.randint(3, 6))
         btn_search.click()
         # self.box_search()
-
 
     def box_search(self):
         sleep(random.randint(3, 6))
@@ -162,7 +158,7 @@ class ListaTelefonica:
             print(open_now)
             print(list_telephones)
         elif size_div_telephones > 1:
-            for i in range(1,size_div_telephones):
+            for i in range(1, size_div_telephones):
                 xpath_phone = f"//*[@class='show-grid']//div[{i}]"
                 list_telephones.append(
                     self.driver.find_element_by_xpath(xpath_phone).text
@@ -180,7 +176,6 @@ class ListaTelefonica:
         sleep(random.randint(20, 30))
         self.driver.quit()
 
-
     @staticmethod
     def type_like_a_person(sentence, single_input_field):
         """ Este código irá basicamente permitir que
@@ -189,6 +184,7 @@ class ListaTelefonica:
         for letter in sentence:
             single_input_field.send_keys(letter)
             sleep(random.randint(1, 5) / 30)
+
 
 if __name__ == '__main__':
     cidade = 'Presidente Prud'

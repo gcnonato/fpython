@@ -77,8 +77,8 @@ def logar(html, params):
 
 def login():
     params = {
-        'email': 'zicadopv@gmail.com',
-        'password': '222222'
+        'email': '',
+        'password': ''
     }
     html = 'https://app.rabbiit.com/api/v1/auth'
     token = get(html, params).json()['token']
