@@ -5,6 +5,8 @@ import sys
 import json
 import datetime
 import environ
+from sqlalchemy.dialects.mysql import insert
+from sqlalchemy import create_engine
 
 # Carrega as configurações de arquivo externo
 environ.Path(__file__)
@@ -62,13 +64,15 @@ def conexao(connection, nome_conexao, tbl=None):
 
 def nomeTabelas(connection, nome_conexao):
     nome = conexao(connection, nome_conexao)
+    print(nome)
     nome_tabelas = []
     for n in nome:
-        nome_tabelas.append(n['TABLE_NAME'])
-    salvar = json.dumps(nome_tabelas, indent=4, ensure_ascii=False)
-    arquivo = 'TabelasBanco.json'
-    with open(arquivo, "w", encoding='utf8') as _json:
-        _json.write(salvar)
+        # table = nome_tabelas.append(n['TABLE_NAME'])
+        print(n['TABLE_NAME'])
+    # salvar = json.dumps(nome_tabelas, indent=4, ensure_ascii=False)
+    # arquivo = 'TabelasBanco.json'
+    # with open(arquivo, "w", encoding='utf8') as _json:
+    #     _json.write(salvar)
     # try:
     #     file = open(arquivo, "w", encoding='utf8')
     #     file.write(salvar)
@@ -111,17 +115,48 @@ def consultar(connection,nome_conexao,tbl):
     # file.close()
     return
 
+
+def inserir(table, data):
+    # mysql+pymysql://<username>:<password>@<host>/<dbname>[?<options>]
+    connect = f"mysql+pymysql://{env('USER_LOCAL_MYSQL')}:{env('PASSWORD_LOCAL_MYSQL')}@localhost/{env('DB_LOCAL_MYSQL')}"
+    # engine.execute("USE outpromo_homologacao")
+    engine = create_engine(connect)  # connect to server
+    sql = 'SELECT * FROM django_migrations'
+    # print(engine.table_names())
+    # sql = ("INSERT INTO 'casting_loja' ('razao_social', 'nome_loja', 'ENDERECO', 'COMPLEMENTO', 'BAIRRO', 'CEP', 'CIDADE', "
+    #        "'UF', 'PAIS', 'DDD', 'FONE', 'E_MAIL', 'URL_SITE', 'latlong', 'inativa', 'empresa_id', 'rede_id') VALUES ("
+    #        "'CARREFOUR AVENIDA MOYSES ROYSEN, SN SAO PAULO - SP', 'CARREFOUR AVENIDA MOYSES ROYSEN, SN SAO PAULO - SP', "
+    #        "'AVENIDA MOYSES ROYSEN, SN', '', 'VILA GUILHERME', '02049010', 'SÃO PAULO', 'SP', 'BRASIL', '11', '2191-3700', "
+    #        "'carrefour@carrefour.com', 'http://www.carrefour.com', '-23.514124351734957', 0, 23, 297")
+    try:
+        # trans = engine.begin()
+        resultado = engine.execute(sql)
+        print(resultado)
+        # trans.comit()
+    except pymysql.err.ProgrammingError as e:
+    # except pymysql.err as e:
+        print(e)
+    # insert_stmt = insert(table).values(
+    #     id='some_existing_id',
+    #     data='inserted value'
+    # )
+    # conn.execute(on_duplicate_key_stmt)
+    # insert(table, data)
+
+
+
 if __name__ == "__main__":
     try:
         nome_conexao = sys.argv[1]
         connection = conexao_local_remoto(sys.argv[1])
         # consultar(connection, nome_conexao, sys.argv[2])
-        nomeTabelas(connection, nome_conexao)
+        # nomeTabelas(connection, nome_conexao)
+        inserir('d',{})
     except Exception as err:
         # os.system("cls")
         line = '*'*80
         print(f'{line}\n'
-              f'Não esqueça de colocar dessa forma: mysql.py <LOCAL, LUCIANO ou FABRIZIO> <TABELA>'
+              f'Não esqueça de colocar dessa forma: mysql.py <local, LUCIANO ou FABRIZIO> <TABELA>'
               f'\n{line}')
         print(f'Error.: {err}')
         sys.exit(0)
