@@ -1,10 +1,8 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import os
-# from os.path import isdir, expanduser
+import sys
+import subprocess
 from time import sleep
-
-# os.path.expanduser("~")
 
 
 class YoutubeDlScript():
@@ -15,9 +13,10 @@ class YoutubeDlScript():
 
 
 	def repeat_script(self):
-		print("\nDeseja realizar outra operação com o script? [S/N]")
-		REPEAT = input("Digite 'S' para sim ou 'N' para não: ")
-		REPEAT = REPEAT.upper()
+		# print("\nDeseja realizar outra operação com o script? [S/N]")
+		# REPEAT = input("Digite 'S' para sim ou 'N' para não: ")
+		# REPEAT = REPEAT.upper()
+		REPEAT = "M"
 		if REPEAT == "S":
 			if (os.name != 'posix'):  # windows
 				os.system("cls")
@@ -26,8 +25,9 @@ class YoutubeDlScript():
 			self.main_function_get_id()
 		else:
 			print("\nSaindo...\n")
-			sleep(0.3) # Time in seconds.
-			os._exists(1)
+			# subprocess.run(["ls", "-l"])  # Run command
+			sleep(0.3)
+			os._exit(0)
 
 	# Passo 1
 	def main_function_get_id(self):
