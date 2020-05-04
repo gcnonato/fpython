@@ -1,10 +1,11 @@
 import csv
-import environ
+# import environ
 import os
 import random
 from time import sleep
 from datetime import datetime
 import PySimpleGUI as sg
+from decouple import config
 
 from selenium import webdriver
 from selenium.common.exceptions import *
@@ -12,9 +13,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as CondicaoExperada
 from selenium.webdriver.support.ui import WebDriverWait
 
-ROOT_DIR = environ.Path(__file__)
-env = environ.Env()
-env.read_env()
+# ROOT_DIR = environ.Path(__file__)
+# env = environ.Env()
+# env.read_env()
 
 
 class GuiaBolsoSelenium:
@@ -257,8 +258,8 @@ if __name__ == '__main__':
     url = 'https://www.guiabolso.com.br/web/#/login'
     gb = GuiaBolsoSelenium()
     params = {}
-    params['email'] = env.ENVIRON['GUIABOLSO_EMAIL']
-    params['password'] = env.ENVIRON['GUIABOLSO_PASSWORD']
+    params['email'] = config('GUIABOLSO_EMAIL', default='localhost')
+    params['password'] = config('GUIABOLSO_PASSWORD', default='localhost') 
     params['current_month'] = gb.layout_inicial()
     print(params['current_month'])
     if params['current_month'] != None:

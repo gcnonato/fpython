@@ -1,4 +1,4 @@
-import environ
+# import environ
 import json
 import os
 import random
@@ -6,6 +6,7 @@ import re
 import sys
 from datetime import datetime
 from time import sleep
+from decouple import config
 
 from selenium import webdriver
 from selenium.common.exceptions import *
@@ -15,10 +16,11 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as CondicaoExperada
 from selenium.webdriver.support.ui import WebDriverWait
 
-ROOT_DIR = environ.Path(__file__)
-env = environ.Env()
-env.read_env()
+# ROOT_DIR = environ.Path(__file__)
+# env = environ.Env()
+# env.read_env()
 
+config('EMAIL_HOST', default='localhost')
 
 class BadooWithSelenium:
     def __init__(self):
@@ -95,7 +97,7 @@ if __name__ == '__main__':
     params = {}
     # params['email'] = input('Digite o e-mail:')
     # params['password'] = input('Digite a senha:')
-    params['email'] = env.ENVIRON['BADOO_EMAIL']
-    params['password'] = env.ENVIRON['BADOO_PASSWORD']
+    params['email'] = config('BADOO_EMAIL', default='localhost')
+    params['password'] = config('BADOO_PASSWORD', default='localhost')
     bd = BadooWithSelenium()
     bd.main(url, params)
