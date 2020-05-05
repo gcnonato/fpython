@@ -52,9 +52,9 @@ class YoutubeDlScript():
 	# Passo 3
 	def video_function_default_mp4(self):
 		if os.name != 'posix':  # windows
-			os.chdir('C:\\Users\\zicad\\Desktop')
+			os.chdir('C:\\Users\\luxu\\Desktop')
 		else:
-			os.chdir('/home/zicad/Desktop')
+			os.chdir('/home/luxu/Desktop')
 		# print(os.getcwd())
 		if self.ID == -1:
 			print("Link inválido")

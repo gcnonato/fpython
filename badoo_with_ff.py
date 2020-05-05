@@ -16,11 +16,6 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as CondicaoExperada
 from selenium.webdriver.support.ui import WebDriverWait
 
-# ROOT_DIR = environ.Path(__file__)
-# env = environ.Env()
-# env.read_env()
-
-config('EMAIL_HOST', default='localhost')
 
 class BadooWithSelenium:
     def __init__(self):
@@ -97,7 +92,7 @@ if __name__ == '__main__':
     params = {}
     # params['email'] = input('Digite o e-mail:')
     # params['password'] = input('Digite a senha:')
-    params['email'] = config('BADOO_EMAIL', default='localhost')
-    params['password'] = config('BADOO_PASSWORD', default='localhost')
+    params['email'] = config('BADOO_EMAIL')
+    params['password'] = config('BADOO_PASSWORD')
     bd = BadooWithSelenium()
     bd.main(url, params)
