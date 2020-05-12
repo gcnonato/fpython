@@ -13,10 +13,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as CondicaoExperada
 from selenium.webdriver.support.ui import WebDriverWait
 
-# ROOT_DIR = environ.Path(__file__)
-# env = environ.Env()
-# env.read_env()
-
 
 class GuiaBolsoSelenium:
     def __init__(self):
@@ -238,7 +234,6 @@ class GuiaBolsoSelenium:
 
 
     def layout_inicial(self):
-        # title = 'Escolha o mes'
         default_value = self.months[int(datetime.now().month - 1)]
         layout = \
             [
@@ -259,7 +254,7 @@ if __name__ == '__main__':
     gb = GuiaBolsoSelenium()
     params = {}
     params['email'] = config('GUIABOLSO_EMAIL', default='localhost')
-    params['password'] = config('GUIABOLSO_PASSWORD', default='localhost') 
+    params['password'] = config('GUIABOLSO_PASSWORD', default='localhost')
     params['current_month'] = gb.layout_inicial()
     print(params['current_month'])
     if params['current_month'] != None:
