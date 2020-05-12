@@ -8,3 +8,11 @@
 \.envs\.local
 .env
 __pycache__
+.zip
+.toc
+.pkg
+.pyz
+.txt
+.html
+.spec
+build
