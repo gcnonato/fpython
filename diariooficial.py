@@ -99,7 +99,9 @@ class Gui:
         self.years = [str(year) for year in range(2008, 2026)]
 
     def layout_inicial(self):
-        sg.theme('DARKTEAL')
+        # sg.theme('DARKTEAL')
+        sg.change_look_and_feel('Dark Blue 3')
+
         default_month = self.months[int(datetime.now().month - 1)]
         default_year = int(datetime.now().year)
         layout = \
@@ -117,21 +119,42 @@ class Gui:
         return values['choicemonth'], values['choiceyear']
 
     def view(self, list_finals):
+        MLINE_KEY = '-MLINE-'+sg.WRITE_ONLY_KEY
         layout = [
-            [sg.Multiline()]
-            [sg.Listbox(
-                values=list_finals,
-                size=(110, 15),
-                select_mode='LISTBOX_SELECT_MODE_SINGLE',
-                key='_LISTBOX_',
-                font=('Arial', 18),
-            )],
-            [sg.Button('Sair')]
+            [sg.Multiline(size=(60, 10), key=MLINE_KEY)],
+            # [sg.Listbox(
+            #     values=list_finals,
+            #     size=(110, 15),
+            #     select_mode='LISTBOX_SELECT_MODE_SINGLE',
+            #     key='_LISTBOX_',
+            #     font=('Arial', 18),
+            # )],
+            [sg.B('Plain'), sg.Button('Text Blue Line'), sg.Button('Text Green Line'),
+             sg.Button('Background Blue Line'), sg.Button('Background Green Line'), sg.B('White on Green'),
+            sg.Button('Sair')]
         ]
-        window = sg.Window('Show files', grab_anywhere=False).Layout(layout)
-        window.Read()
-        window.Close()
 
+        window = sg.Window('Demonstration of Multicolored Multline Text', layout)
+
+        while True:
+            event, values = window.read()  # type: (str, dict)
+            print(event, values)
+            if event in (None, 'Sair'):
+                break
+            if 'Text Blue' in event:
+                window[MLINE_KEY].update('This is blue text', text_color_for_value='blue', append=True)
+            if 'Text Green' in event:
+                window[MLINE_KEY].update('This is green text', text_color_for_value='green', append=True)
+            if 'Background Blue' in event:
+                window[MLINE_KEY].update('This is Blue Background', background_color_for_value='blue', append=True)
+            if 'Background Green' in event:
+                window[MLINE_KEY].update('This is Green Backgroundt', background_color_for_value='green', append=True)
+            if 'White on Green' in event:
+                window[MLINE_KEY].update('This is white text on a green background', text_color_for_value='white',
+                                         background_color_for_value='green', append=True)
+            if event == 'Plain':
+                window[MLINE_KEY].update('This is plain text with no extra coloring', append=True)
+        window.close()
 if __name__ == '__main__':
     url = 'http://www.imprensaoficial.com.br/DO/BuscaDO2001Resultado_11_3.aspx'
     month = 2
@@ -141,6 +164,6 @@ if __name__ == '__main__':
     # print(month.split(':')[0], year)
     do = DiarioOficial(month, url, year)
     list_finals = do.scrapy()
-    for pericia in list_finals:
-        print(pericia)
+    # for pericia in list_finals:
+    #     print(pericia)
     gui.view(list_finals)
