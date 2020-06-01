@@ -64,7 +64,7 @@ class TaigaSelenium:
 
         # xpath_input_username = '//input[@name="username"]'
         # input_username = self.wait.until(
-        #     CondicaoExperada.element_to_be_clickable(
+        #     condicaoexperada.element_to_be_clickable(
         #         (By.XPATH, xpath_input_username)
         #     )
         # )
@@ -74,7 +74,7 @@ class TaigaSelenium:
         # sleep(random.randint(5, 7) / 30)
         # xpath_input_password = '//input[@name="password"]'
         # input_password = self.wait.until(
-        #     CondicaoExperada.element_to_be_clickable(
+        #     condicaoexperada.element_to_be_clickable(
         #         (By.XPATH, xpath_input_password)
         #     )
         # )
@@ -84,7 +84,7 @@ class TaigaSelenium:
         # sleep(random.randint(15, 18) / 30)
         # xpath_button_login = "//button//span[text()='Login']"
         # button_login = self.wait.until(
-        #     CondicaoExperada.element_to_be_clickable(
+        #     condicaoexperada.element_to_be_clickable(
         #         (By.XPATH, xpath_button_login)
         #     )
         # )

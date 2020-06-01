@@ -1,17 +1,10 @@
 #coding: utf-8
+from requests import get
+from bs4 import BeautifulSoup as bs
 
-import requests
-import json
-from bs4 import BeautifulSoup
-
-url = 'https://www.mentebinaria.com.br/apoie/'
-
-p = requests.get(url)
-p.raise_for_status()
-soup = BeautifulSoup(p.content, 'html.parser')
-# print(soup)
-lista = soup.find_all('ul',class_='ipsList_inline ipsList_noSpacing')
-for l in lista[1]:
-    print(l)
-# d = json.loads(p.content)
-# //*[@id="elCmsPageWrap"]/div/div/ul/li/div/ul
+url = 'https://www.mentebinaria.com.br/'
+p = get(url)
+soup = bs(p.content, 'html.parser')
+with open('mentein.txt', 'w') as f:
+    for pag in soup.find_all('li', class_='ipsDataItem ipsClearfix'):
+        f.write(pag.div.time.getText())

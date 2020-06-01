@@ -1,12 +1,14 @@
-import time, threading, sys
-
+import sys
+import threading
+import time
 
 data_ready = threading.Event()
 kill_flag = threading.Event()
+key_pressed = ''
 
 
 def keyboard_poller():
-    global key_pressed
+    # global key_pressed
     loop = True
 
     while loop:

@@ -4,6 +4,7 @@ import datetime
 import hashlib
 import json
 import os
+# import sys
 import uuid
 import warnings
 
@@ -17,6 +18,12 @@ try:
     from urllib import quote
 except ImportError:
     from urllib.parse import quote
+
+
+# def resource_path(relative_path):
+#     if hasattr(sys, "_MEIPASS"):
+#         return os.path.join(sys._MEIPASS, relative_path)
+#     return os.path.join(os.path.abspath("."), relative_path)
 
 
 def month_iterator(initial_date, finish_date):
@@ -35,15 +42,15 @@ def main(eMail, senha, meses, extensao, year=2020, last_year=None, last_month=No
     for date in month_iterator(initial_date, finish_date):
         year = date.year
         meses = date.month
-        filename = f'{year}-{meses}'
-        if extensao == 'xlsx':
-            filename += '.xlsx'
+        filename = f"{year}-{meses}"
+        if extensao == "xlsx":
+            filename += ".xlsx"
             guiabolso.xlsx_transactions(year, meses, filename)
-        elif extensao == 'txt':
-            filename += '.txt'
+        elif extensao == "txt":
+            filename += ".txt"
             guiabolso.txt_transactions(year, meses, filename)
         else:
-            filename += '.csv'
+            filename += ".csv"
             guiabolso.csv_transactions(year, meses, filename)
         print(filename)
 
@@ -61,7 +68,7 @@ class GuiaBolso:
     def __init__(self, eMail, senha):
         self.email = eMail
         self.password = senha
-        hardware_address = str(uuid.getnode()).encode('utf-8')
+        hardware_address = str(uuid.getnode()).encode("utf-8")
         self.device_token = hashlib.md5(hardware_address).hexdigest()
         self.session = requests.Session()
         self.token = self.login()
@@ -69,20 +76,31 @@ class GuiaBolso:
         # variables common
         self.categories = basic_info["categoryTypes"]
         self.statements = basic_info["accounts"]
-        self.fieldnames = [u'id', u'label', u'description', u'date', u'account', u'category',
-                           u'subcategory', u'duplicated', u'currency',
-                           u'value', u'deleted']
+        self.fieldnames = [
+            "id",
+            "label",
+            "description",
+            "date",
+            "account",
+            "category",
+            "subcategory",
+            "duplicated",
+            "currency",
+            "value",
+            "deleted",
+        ]
         self.category_resolver = {}
         for categ in self.categories:
-            for sub_categ in categ['categories']:
-                self.category_resolver[sub_categ['id']] = \
-                    (categ['name'], sub_categ['name'])
+            for sub_categ in categ["categories"]:
+                self.category_resolver[sub_categ["id"]] = (
+                    categ["name"],
+                    sub_categ["name"],
+                )
 
         self.account_resolver = {}
         for account in self.statements:
-            for sub_account in account['statements']:
-                self.account_resolver[sub_account['id']] = \
-                    sub_account['name']
+            for sub_account in account["statements"]:
+                self.account_resolver[sub_account["id"]] = sub_account["name"]
 
     def login(self):
         url = "https://www.guiabolso.com.br/comparador/v2/events/others"
@@ -103,24 +121,22 @@ class GuiaBolso:
                          "appVersion":"1.0.0",
                          "createdAt":"2020-04-24T23:20:05.552Z"},
              "identity":{}
-        }""" % (json.dumps(self.email),
-                json.dumps(self.password),
-                self.device_token,
-                self.device_token)
-        headers = {
-            'content-type': "application/json"
-        }
+        }""" % (
+            json.dumps(self.email),
+            json.dumps(self.password),
+            self.device_token,
+            self.device_token,
+        )
+        headers = {"content-type": "application/json"}
         response = self.session.post(url, headers=headers, data=payload).json()
-        if response['name'] != "web:users:login:response":
-            print(response['name'])
-            raise Exception(response['payload']['code'])
-        return response['auth']['token']
+        if response["name"] != "web:users:login:response":
+            print(response["name"])
+            raise Exception(response["payload"]["code"])
+        return response["auth"]["token"]
 
     def get_basic_info(self):
         url = "https://www.guiabolso.com.br/comparador/v2/events/"
-        headers = {
-            'content-type': "application/json"
-        }
+        headers = {"content-type": "application/json"}
         payload = """
         {
             "name":"rawData:info",
@@ -138,18 +154,21 @@ class GuiaBolso:
                         "appVersion":"1.0.0",
                         "createdAt":""},
             "identity":{}
-        }""" % (self.token,
-                self.token)
+        }""" % (
+            self.token,
+            self.token,
+        )
         response = self.session.post(url, headers=headers, data=payload).json()
-        d = {'categoryTypes': response['payload']['categoryTypes'], 'accounts': response['payload']['accounts']}
+        d = {
+            "categoryTypes": response["payload"]["categoryTypes"],
+            "accounts": response["payload"]["accounts"],
+        }
         return dict(d)
 
     def json_transactions(self, year, meses):
         month_count = get_month_count(year, meses)
         url = "https://www.guiabolso.com.br/comparador/v2/events/"
-        headers = {
-            'content-type': "application/json"
-        }
+        headers = {"content-type": "application/json"}
         payload = """
         {
              "name":"users:summary:month",
@@ -168,21 +187,24 @@ class GuiaBolso:
                          "appVersion":"1.0.0",
                          "createdAt":"2020-04-25T20:20:05.552Z"},
              "identity":{}
-        }""" % (month_count,
-                self.token,
-                self.token)
+        }""" % (
+            month_count,
+            self.token,
+            self.token,
+        )
         response = self.session.post(url, headers=headers, data=payload)
         return response
 
     def transactions(self, year, meses):
         transactions_new = []
         transactions = self.json_transactions(year, meses).json()
-        for statement in transactions['payload']['userMonthHistory']['statements']:
-            for t in statement['transactions']:
-                cat_id = t['categoryId']
-                t['category'], t['subcategory'] = self.category_resolver[cat_id]
-                t['account'] = self.account_resolver.get(
-                    t['statementId'], t['statementId'])
+        for statement in transactions["payload"]["userMonthHistory"]["statements"]:
+            for t in statement["transactions"]:
+                cat_id = t["categoryId"]
+                t["category"], t["subcategory"] = self.category_resolver[cat_id]
+                t["account"] = self.account_resolver.get(
+                    t["statementId"], t["statementId"]
+                )
                 unwanted_keys = set(t) - set(self.fieldnames)
 
                 for k in unwanted_keys:
@@ -195,12 +217,13 @@ class GuiaBolso:
         transactions = self.transactions(year, meses)
 
         if len(transactions) == 0:
-            warnings.warn(f'No transactions for the period ({year}-{meses})')
+            warnings.warn(f"No transactions for the period ({year}-{meses})")
             return
 
-        with open(file_name, 'wb') as f:
-            csv_writer = csv.DictWriter(f, fieldnames=self.fieldnames,
-                                        encoding='utf-8-sig')  # add BOM to csv
+        with open(file_name, "wb") as f:
+            csv_writer = csv.DictWriter(
+                f, fieldnames=self.fieldnames, encoding="utf-8-sig"
+            )  # add BOM to csv
             csv_writer.writeheader()
             csv_writer.writerows(transactions)
 
@@ -208,8 +231,7 @@ class GuiaBolso:
         transactions = self.transactions(year, meses)
 
         if len(transactions) == 0:
-            warnings.warn('No transactions for the period ({}-{})'.format(
-                year, meses))
+            warnings.warn("No transactions for the period ({}-{})".format(year, meses))
             return
 
         wb = openpyxl.Workbook()
@@ -218,9 +240,10 @@ class GuiaBolso:
         ws.append(self.fieldnames)
 
         for trans in transactions:
-            if u'date' in trans:
-                trans[u'date'] = datetime.datetime.fromtimestamp(
-                    trans[u'date'] / 1000).date()
+            if "date" in trans:
+                trans["date"] = datetime.datetime.fromtimestamp(
+                    trans["date"] / 1000
+                ).date()
             row = [trans[k] for k in self.fieldnames]
             ws.append(row)
 
@@ -228,84 +251,96 @@ class GuiaBolso:
 
     def txt_transactions(self, year, meses, file_name):
         transactions = self.transactions(year, meses)
-        transactions = sorted(transactions, key=lambda d: d['date'])
+        transactions = sorted(transactions, key=lambda d: d["date"])
 
         if len(transactions) == 0:
-            warnings.warn(f'No transactions for the period ({year}-{meses})')
+            warnings.warn(f"No transactions for the period ({year}-{meses})")
             return
-        paipline = '|'.center(5, '-')
-        homepath = os.path.expanduser(os.getenv('USERPROFILE'))
-        desktoppath = 'Desktop'
+        paipline = "|".center(5, "-")
+        homepath = os.path.expanduser(os.getenv("USERPROFILE"))
+        desktoppath = "Desktop"
         local_save = os.path.join(homepath, desktoppath, file_name)
         list_subcategory_ignorade = [
-            'Pagamento de cartão',
-            'Taxas bancárias',
-            'TV / Internet / Telefone',
-            'Impostos',
-            'Saques',
-            'Juros',
-            'Remuneração',
-            'Transferência',
-            'Boletos',
-            'Outros gastos',
+            "Pagamento de cartão",
+            "Taxas bancárias",
+            "TV / Internet / Telefone",
+            "Impostos",
+            "Saques",
+            "Juros",
+            "Remuneração",
+            "Transferência",
+            "Boletos",
+            "Outros gastos",
         ]
-        with open(local_save, 'w', encoding="utf8") as _file:
+        with open(local_save, "w", encoding="utf8") as _file:
             for conta in transactions:
-                if conta['subcategory'] not in list_subcategory_ignorade:
-                    data = datetime.datetime.fromtimestamp(conta['date'] / 1000).date()
-                    content = f'''{data} {paipline} {conta['label'].ljust(51, ' ')} {paipline}{str(conta['value'])[1:].rjust(8, ' ')}{paipline} {conta['subcategory']} '''
+                if conta["subcategory"] not in list_subcategory_ignorade:
+                    data = datetime.datetime.fromtimestamp(conta["date"] / 1000).date()
+                    content = f"""{data} {paipline} {conta['label'].ljust(51, ' ')} {paipline}{str(conta['value'])[1:].rjust(8, ' ')}{paipline} {conta['subcategory']} """
                     print(content)
                     _file.write(content)
-                    _file.write('\n')
+                    _file.write("\n")
 
 
 class Tela:
     def __init__(self):
         self.months = [
-            {1: 'Janeiro'},
-            {2: 'Fevereiro'},
-            {3: 'Março'},
-            {4: 'Abril'},
-            {5: 'Maio'},
-            {6: 'Junho'},
-            {7: 'Julho'},
-            {8: 'Agosto'},
-            {9: 'Setembro'},
-            {10: 'Outubro'},
-            {11: 'Novembro'},
-            {12: 'Dezembro'}
+            {1: "Janeiro"},
+            {2: "Fevereiro"},
+            {3: "Março"},
+            {4: "Abril"},
+            {5: "Maio"},
+            {6: "Junho"},
+            {7: "Julho"},
+            {8: "Agosto"},
+            {9: "Setembro"},
+            {10: "Outubro"},
+            {11: "Novembro"},
+            {12: "Dezembro"},
         ]
 
     def layout_inicial(self):
-        layout = \
+        layout = [
+            [sg.T("Escolha o mês")],
             [
-                [sg.T('Escolha o mês')],
-                [sg.Combo(self.months,
-                          size=(20, 12),
-                          enable_events=False,
-                          key='choicemonth')
-                 ],
-                [sg.Frame(layout=[
-                    [sg.Radio('TXT', "RADIO1", key='txt', default=True, size=(10, 1)),
-                     sg.Radio('XLSX', "RADIO1", key='xlsx'),
-                     sg.Radio('CSV', "RADIO1", key='csv')]], title='Qual extensão?',
-                    title_color='yellow', relief=sg.RELIEF_SUNKEN, tooltip='Use these to set flags')],
-                [sg.Cancel(), sg.OK()]
-            ]
-        window = sg.Window('Guia Bolso', grab_anywhere=False).Layout(layout)
+                sg.Combo(
+                    self.months, size=(20, 12), enable_events=False, key="choicemonth"
+                )
+            ],
+            [
+                sg.Frame(
+                    layout=[
+                        [
+                            sg.Radio(
+                                "TXT", "RADIO1", key="txt", default=True, size=(10, 1)
+                            ),
+                            sg.Radio("XLSX", "RADIO1", key="xlsx"),
+                            sg.Radio("CSV", "RADIO1", key="csv"),
+                        ]
+                    ],
+                    title="Qual extensão?",
+                    title_color="yellow",
+                    relief=sg.RELIEF_SUNKEN,
+                    tooltip="Use these to set flags",
+                )
+            ],
+            [sg.Cancel(), sg.OK()],
+        ]
+        window = sg.Window("Guia Bolso", grab_anywhere=False).Layout(layout)
         event, values = window.read()
         window.close()
-        if event == 'OK':
+        if event == "OK":
             radio_selected = [v[0] for v in values.items() if v[1] is True][0]
-            return values['choicemonth'], radio_selected
+            return values["choicemonth"], radio_selected
         else:
             return None
 
 
-if __name__ == '__main__':
-    email = config('GUIABOLSO_EMAIL')
-    password = config('GUIABOLSO_PASSWORD')
+if __name__ == "__main__":
+    email = config("GUIABOLSO_EMAIL")
+    password = config("GUIABOLSO_PASSWORD")
     telas = Tela()
     gb = GuiaBolso(email, password)
     month, extension = telas.layout_inicial()
     main(email, password, list(month)[0], extension)
+    # resource_path("myimage.gif")
