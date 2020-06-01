@@ -148,7 +148,7 @@ senha = ""
 arquivo = "ftp_via_python.txt"
 'ftp.luxu.com.br'
 login = "agenda"
-senha = "W7@d4FF#S*"
+senha = ""
 host = '192.175.124.120'
 arquivo = "test.php"
 
