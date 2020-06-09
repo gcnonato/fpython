@@ -1,6 +1,7 @@
 from requests import post
 from bs4 import BeautifulSoup as bs
 import os
+import PySimpleGUI as sg
 
 
 class Periciasmedicas:
@@ -71,20 +72,38 @@ class Periciasmedicas:
                 if info[0] == 0:
                     cont_cabecalho = 0
                 try:
-                    # print(f'{lista_cabecalho[cont_cabecalho]}={info[1]}')
                     _file.write(f"{self.lista_cabecalho[cont_cabecalho]}={info[1]}")
                     if "TP" in self.lista_cabecalho[cont_cabecalho]:
                         _file.write(f"\n{'*' * 70}")
                 except Exception as err:
                     print(err)
-                    # print(f'Data Agend/Exp={info[1]}')
                     _file.write(f"Data Agend/Exp={info[1]}")
                 _file.write(f"\n")
                 if info[0] % 9 == 0:
                     cont_cabecalho = 1
                 else:
                     cont_cabecalho += 1
-    print('Arquivo gerado com sucesso!')
+
+class Tela:
+    def __init__(self):
+        ...
+
+    def list_folder(self, lista_info):
+        layout = [
+            [sg.Button("Salvar em disco", key='printer'), sg.Button("Exit", key='exit')],
+            [sg.T("Source Folder")],
+            [sg.Multiline(lista_info, size=[100, 250], autoscroll=True)],
+        ]
+        window = sg.Window("Gerenciador", layout, size=(430, 410))
+        event, values = window.read()
+        while True:
+            if event == 'printer':
+                sg.popup_auto_close('Imprimindo...', auto_close_duration=2.5)
+                event = ''
+            if event == 'exit':
+                sg.popup_auto_close('Saindo...', auto_close_duration=0.5)
+                break
+        window.close()
 
 
 if __name__ == "__main__":
@@ -94,4 +113,5 @@ if __name__ == "__main__":
     filename = "periciasmedicas.txt"
     pm = Periciasmedicas(cpf, dtnasc, dig, filename)
     pm.get()
-    pm.write()
+    tela = Tela()
+    tela.list_folder(pm.lista_infos)

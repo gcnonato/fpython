@@ -33,10 +33,12 @@ def inicio():
 	# if not os.path.exists("testes"):
 	# 	os.makedirs("testes")
 	pasta = os.listdir("testes")
-	dir_testes = u'{}/{}'.format(os.getcwd(),'testes')
-	arquivos = [arq for arq in pasta if os.path.isfile(os.path.join(dir_testes, arq))]
+	# dir_testes = u'{}/{}'.format(os.getcwd(),'testes')
+	# arquivos = [arq for arq in pasta if os.path.isfile(os.path.join(dir_testes, arq))]
+	for (dirpath, dirnames, filenames) in os.walk(pasta):
+		print(f'PATH..:{dirpath} - DIRS..: {dirnames} - FILE..:{filenames}')
 	# print(arquivos)
-	pdb = [arq for arq in arquivos if arq.lower().endswith(".pdb")]
+	# pdb = [arq for arq in arquivos if arq.lower().endswith(".pdb")]
 	# print(pdb)
 	# print (len(pdb))
 	if not os.path.exists('testar'):
