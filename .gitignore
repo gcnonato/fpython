@@ -16,3 +16,4 @@ __pycache__
 .html
 .spec
 build
+session_name.session
