@@ -1,0 +1,75 @@
+runserver --nostatic 0.0.0.0:8000
+docker exec -it junt_web_1 /bin/sh
+docker exec -it junt_web_1 python manage.py createsuperuser
+docker exec -it junt_web_1 python manage.py makemigrations
+docker exec -it junt_web_1 python manage.py migrate
+docker exec -it junt_web_1 pip install django-cors-headers
+docker-compose up --build junt_web_1
+
+docker start teste-pgadmin
+http://localhost:15432/browser/
+
+# RECEITA PARA ATUALIZAR O CONTAINER COM NOVA LIB DO DJANGO
+docker stop container-id
+docker rm container-id
+docker rmi image-id
+docker-compose up container-name
+
+# ATUALIZAR O CONTAINER
+docker-compose up --force-recreate --build -d
+--force-recreate: Recrie contêineres mesmo que sua configuração e imagem não tenham sido alteradas.
+-d: Modo desanexado: execute contêineres em segundo plano, imprima novos nomes de contêineres
+--build: Build images before starting containers.
+
+# MYSQL - CRIAR
+docker run --name mysql_docker -e MYSQL_ROOT_PASSWORD=iu00q71o -d mysql:5.7.30
+
+2b2385963cd3 mysql:5.7.30 "docker-entrypoint.s…" 3306/tcp, 33060/tcp mysql_docker
+
+docker run -it --network mysql_docker --rm mysql mysql -hsome-mysql -uexample-user -p
+
+docker run -it --rm mysql mysql -hmysql_docker -uexample-user -p
+
+# LIMPEZA
+docker system prune
+
+# SUBIR O PGADMIN E O LINK PARA ELE
+# Criando um container PGADMIN
+docker run --name teste-pgadmin --network=junt_default -p 15432:80 -e "PGADMIN_DEFAULT_EMAIL=zicadopv@gmail.com" -e "PGADMIN_DEFAULT_PASSWORD=2222" -d dpage/pgadmin4
+
+# Remover Container and seus Volumes
+docker rm -v <container_name>
+
+# LISTAR CONTAINER DOCKER
+docker ps -a
+
+# DELETAR CONTAINERS DOCKER (ESTANDO FUNCIONANDO)
+docker rm -f <nome_do_container>
+
+# LISTAR IMAGES DOCKER
+docker images -a
+
+# DELETAR IMAGES DOCKER
+- Deleta uma image
+docker image rmi <image_id>
+
+- Deleta todas as images
+docker images rmi <image_id> <image_id>
+
+# Listar volumes:
+docker volume ls
+
+# Remover um único ou múltiplos volumes:
+docker volume rm <volume_name> <volume_name>
+
+# Remover volumes pendentes:
+docker volume prune
+
+# Ver as imagens pendentes
+docker images --filter "dangling=true"
+
+# Deletar ou remover as imagens pendentes, use:
+docker images purge
+
+# Habilitar o WSL
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
