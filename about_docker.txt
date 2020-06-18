@@ -3,10 +3,17 @@ docker exec -it junt_web_1 /bin/sh
 docker exec -it junt_web_1 python manage.py createsuperuser
 docker exec -it junt_web_1 python manage.py makemigrations
 docker exec -it junt_web_1 python manage.py migrate
-docker exec -it junt_web_1 pip install django-cors-headers
-docker-compose up --build junt_web_1
+docker exec -it junt_web_1 python manage.py makemessages
+docker exec -it junt_web_1 python manage.py compilemessages
+docker exec -it junt_web_1 pip install extra_views
+docker-compose up --build
 
-docker start teste-pgadmin
+#cria ou atualiza o django.po
+django-admin makemessages -l pt_BR
+# atualizar o django.po
+django-admin compilemessages
+
+docker start pgadmin4
 http://localhost:15432/browser/
 
 # RECEITA PARA ATUALIZAR O CONTAINER COM NOVA LIB DO DJANGO

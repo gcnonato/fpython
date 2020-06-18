@@ -161,7 +161,7 @@ class GuiaBolsoSelenium:
         )
         # driver = self.driver
         driver.get(url)
-        xpath_input_email = '//input[@name="eMail"]'
+        xpath_input_email = '//input[@name="email"]'
         input_email = wait.until(
             CondicaoExperada.element_to_be_clickable(
                 (By.XPATH, xpath_input_email)
@@ -171,7 +171,7 @@ class GuiaBolsoSelenium:
         input_email.clear()
         input_email.send_keys(params['eMail'])
         sleep(random.randint(5, 7) / 30)
-        xpath_input_password = '//input[@name="senha"]'
+        xpath_input_password = '//input[@name="password"]'
         input_password = wait.until(
             CondicaoExperada.element_to_be_clickable(
                 (By.XPATH, xpath_input_password)
@@ -251,8 +251,8 @@ if __name__ == '__main__':
     url = 'https://www.guiabolso.com.br/web/#/login'
     gb = GuiaBolsoSelenium()
     params = {}
-    params['eMail'] = config('GUIABOLSO_EMAIL', default='localhost')
-    params['senha'] = config('GUIABOLSO_PASSWORD', default='localhost')
+    params['eMail'] = config('GUIABOLSO_EMAIL')
+    params['senha'] = config('GUIABOLSO_PASSWORD')
     params['current_month'] = gb.layout_inicial()
     print(params['current_month'])
     if params['current_month'] != None:
