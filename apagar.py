@@ -157,7 +157,7 @@ class Tela:
                         list_files_directory.append(f'{"*"*96}')
                 sg.Print(list_files_directory, size=(100, 20), sep="+")
             if event == sg.WIN_CLOSED or "Exit" in event:
-                sg.popup_auto_close("Saindo...", auto_close_duration=0.5)
+                sg.popup_auto_close("Exit...", auto_close_duration=0.5)
                 break
         window.close()
 
