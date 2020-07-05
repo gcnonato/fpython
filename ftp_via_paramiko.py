@@ -1,9 +1,10 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-from paramiko import SSHClient
-import paramiko
 import configparser
+
+import paramiko
+from paramiko import SSHClient
 
 # Carrega as configurações de arquivo externo
 config = configparser.ConfigParser()

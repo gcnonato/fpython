@@ -1,8 +1,10 @@
-from requests import get
-from pprint import pprint
 import json
 import random
+from pprint import pprint
 from time import sleep
+
+from requests import get
+
 
 class Jogodavelha:
     def __init__(self):

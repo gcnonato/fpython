@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import os
-from os.path import isdir, expanduser
+from os.path import expanduser, isdir
 from time import sleep
 
 os.path.expanduser("~")

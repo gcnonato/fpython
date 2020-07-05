@@ -1,8 +1,9 @@
-from requests import get
-from bs4 import BeautifulSoup as bs
-from shutil import copyfileobj
-from io import BytesIO
 import os
+from io import BytesIO
+from shutil import copyfileobj
+
+from bs4 import BeautifulSoup as bs
+from requests import get
 
 html = get('http://noespacovip.com.br/imagem_fck/image/')
 soup = bs(html.content, 'html.parser')

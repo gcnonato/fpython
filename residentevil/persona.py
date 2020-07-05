@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
+
 from utils import get_value_mark
+
 
 class Persona:
     def __init__(self, name, url ):

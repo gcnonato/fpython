@@ -11,4 +11,3 @@ s.get(
 		'x-test2': 'true'
 	}
 )
-

@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/python
 
+import json
 import os
+
 import requests
 from bs4 import BeautifulSoup
+
 
 def run(link, nrrodada):
     if link is None:
@@ -40,7 +43,6 @@ if __name__ == "__main__":
     lista = run(base_url,rodada)
 # print(lista)
 
-import json
 lista_salvar = [ dict(partida=l[:7], horario=l[8:13], jogo=l[14:]) for l in lista ]
 dict_salvar = json.dumps(lista_salvar, indent=4, ensure_ascii=False)
 diretorio = os.path.abspath('../tabelabr2018/static')

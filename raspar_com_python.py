@@ -2,6 +2,7 @@
 
 import urllib.request
 
+
 def externalurls(url):
     '''List external urls on a given url'''
     t=urllib.request.urlopen(url).read().decode()

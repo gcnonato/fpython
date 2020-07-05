@@ -1,25 +1,27 @@
 # encoding: utf-8
-# encoding: iso-8859-1
-# encoding: win-1252
+import scrapy
 
-from bs4 import BeautifulSoup as bs
-import urllib.request
 
-# url = 'https://olhardigital.com.br/'
-url = 'http://www2.planalto.gov.br/'
-site = urllib.request.urlopen(url)
-soup = bs(site, 'html.parser')
-# for h2 in soup.find_all('h2'):
-print(soup)
-# for p in soup.find_all('p'):
-#     print('Nóticia: {}'.format(p.text))
-# for a in soup.find_parents("a", class="link-gray")
-# nv = []
-# lista = soup.select(".link-gray")
-# for p in lista:
-    # print('Nóticia: {}'.format(p.text))
-    # nv.append(p)
-# for p in nv:
-    # print(p.find('a'))
-    # print('Nóticia: {}'.format(p.text))
-    # print(100*'*')
+class MedidasProvisorias(scrapy.Spider):
+    name = "mp"
+
+    def start_requests(self):
+        headers = {
+            "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:77.0) Gecko/20100101 Firefox/77.0",
+        }
+        yield scrapy.Request(
+            "http://www.planalto.gov.br/CCIVIL_03/MPV/Principal.htm", headers=headers
+        )
+
+    def parse(self, response):
+        headers = {
+            "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:77.0) Gecko/20100101 Firefox/77.0",
+        }
+        mps_urls = response.xpath(
+            "//a[contains(@href, 'Quadro') and not(contains(@href, 'AGU'))]/@href"
+        ).getall()
+        for url in mps_urls:
+            yield scrapy.Request(url, headers=headers, callback=self.parse_mp_table)
+
+    def parse_mp_table(self, reponse):
+        print(reponse)

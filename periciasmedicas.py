@@ -1,7 +1,8 @@
-from requests import post
-from bs4 import BeautifulSoup as bs
 import os
+
 import PySimpleGUI as sg
+from bs4 import BeautifulSoup as bs
+from requests import post
 
 
 class Periciasmedicas:

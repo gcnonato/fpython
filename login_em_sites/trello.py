@@ -1,7 +1,8 @@
 # coding: utf-8
 
-from requests import post, get
 import os
+
+from requests import get, post
 
 
 def logar(html, params):

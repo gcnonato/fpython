@@ -1,3 +1,4 @@
+import datetime
 import os
 import random
 from pprint import pprint
@@ -6,7 +7,6 @@ import openpyxl
 import psycopg2
 from decouple import config
 from faker import Faker
-
 # first, import a similar Provider or use the default one
 from faker.providers import BaseProvider
 
@@ -59,9 +59,10 @@ class Connection:
         return rs
 
     def inserir(self, dados):
-        title, content, date, tenant_id = dados
-        sql = f"INSERT INTO public.calendary_calendary(title, content, date, tenant_id)"
-        sql += f" VALUES('{title}', '{content}', '{date}', {tenant_id})"
+        title, content, dataInicial, tenant_id = dados
+        content = f'<h2>{content}</h2>'
+        sql = f'INSERT INTO public.calendary_calendary(title, content, "dataInicial", tenant_id)'
+        sql += f" VALUES('{title}', '{content}', '{dataInicial}', {tenant_id})"
         try:
             cursor = self._db.cursor()
             cursor.execute(sql)
@@ -153,16 +154,30 @@ if __name__ == "__main__":
     dados = []
     faker = Faker("pt-br")
     fakers = faker.profile()
-    for i in range(10):
+    for i in range(100):
         for key, values in fakers.items():
             if key in ["job", "birthdate", "company"]:
-                dados.append(values)
+                if "birthdate" in key:
+                    if values.year > 2010:
+                        dados.append(values)
+                    else:
+                        day = values.day
+                        month = values.month
+                        year = random.randint(2010, 2020)
+                        str_date = f'{year}/{month}/{day}'
+                        new_date = datetime.datetime.strptime(str_date, "%Y/%m/%d")
+                        dados.append(new_date)
+                        print(f'NEW DATA - {new_date}'.center(100, '*'))
+                else:
+                    dados.append(values)
         dados.append(random.randint(1, 2))
-        print(con.inserir(dados))
+        # print(con.manipular('select * from public.calendary_calendary'))
+        if dados:
+            con.inserir(dados)
         pprint(dados)
         dados = []
         fakers = faker.profile()
 
-    sql = "SELECT * FROM calendary_calendary"
-    for calendary in con.consultar(sql):
-        print(calendary)
+    # sql = "SELECT * FROM calendary_calendary"
+    # for calendary in con.consultar(sql):
+    #     print(calendary)

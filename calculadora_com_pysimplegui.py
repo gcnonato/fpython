@@ -1,5 +1,6 @@
-import PySimpleGUI as sg
 import math
+
+import PySimpleGUI as sg
 
 sg.popup_ok('Atenção!',
             'Não utilizar pontos e vírgulas nos valores recebidos, não deixar valores em branco, pagamento não recebido colocar 0 (zero) !')

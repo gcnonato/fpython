@@ -1,9 +1,10 @@
-from html.parser import HTMLParser
-from urllib.request import urlopen
-from urllib import parse
-import sys
 import os
+import sys
+from html.parser import HTMLParser
 from pprint import pprint
+from urllib import parse
+from urllib.request import urlopen
+
 
 # We are going to create a class called LinkParser that inherits some
 # methods from HTMLParser which is why it is passed into the definition

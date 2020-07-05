@@ -1,9 +1,10 @@
 
+import random
 from datetime import date
+from time import sleep
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from time import sleep
-import random
 
 browser = webdriver.Firefox(executable_path='geckodriver')
 # browser = webdriver.Firefox(executable_path='C:\\Users\\aline.almeida\\PycharmProjects\\geckodriver.exe')

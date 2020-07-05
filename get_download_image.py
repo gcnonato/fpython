@@ -1,10 +1,11 @@
-from requests import get
-from io import BytesIO
-from PIL import Image
 import os
 import sys
-from bs4 import BeautifulSoup as bs
+from io import BytesIO
+
 import PySimpleGUI as sg
+from bs4 import BeautifulSoup as bs
+from PIL import Image
+from requests import get
 
 
 def verify_link(link):

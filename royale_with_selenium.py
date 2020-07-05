@@ -1,13 +1,15 @@
+import os
+import random
+from datetime import datetime
+from time import sleep
+
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as CondicaoExperada
 from selenium.common.exceptions import *
 from selenium.webdriver import ActionChains
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from time import sleep
-import os, random
-from datetime import datetime
+from selenium.webdriver.support import expected_conditions as CondicaoExperada
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 class RoyaleWithSelenium:
@@ -94,4 +96,3 @@ if __name__ == '__main__':
             print('Deu ruim ¬¬')
             royale = RoyaleWithSelenium()
             result = royale.main(url)
-

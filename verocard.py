@@ -1,6 +1,6 @@
-from selenium import webdriver
-from bs4 import BeautifulSoup
 import requests
+from bs4 import BeautifulSoup
+from selenium import webdriver
 
 
 class Verocard:

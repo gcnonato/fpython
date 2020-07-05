@@ -1,5 +1,5 @@
-from requests import get
 import lxml.html
+from requests import get
 
 url = 'https://www.sfnet.com/detail-pages/member-directory-company-profile-detail/addleshaw-goddard-llp-0fa9c5e6-d6b9-4956-8ae0-cd3e521823d0'
 

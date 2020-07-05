@@ -1,5 +1,5 @@
-from tkinter import *
 import re
+from tkinter import *
 
 lista = [ 'actions', 'additional', 'also', 'an', 'and', 'angle', 'are', 'as', 'be', 'bind', 'bracket', 'brackets',
          'button', 'can', 'cases', 'configure', 'course', 'detail', 'enter', 'event', 'events', 'example', 'field',

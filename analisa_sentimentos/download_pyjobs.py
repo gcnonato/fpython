@@ -1,5 +1,6 @@
 import os
 import re
+
 from carpet import get_pyjob_codes, get_pyjob_content
 
 JOBS_DIRECTORY = 'jobs/pyjobs'

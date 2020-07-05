@@ -1,10 +1,13 @@
-from PIL import ImageGrab
-import cv2
-import numpy as np
 import ctypes
-from matplotlib import pyplot as plt
-from ctypes import windll, Structure, c_ulong, byref
+from ctypes import Structure, byref, c_ulong, windll
 from time import sleep
+
+import numpy as np
+from PIL import ImageGrab
+
+import cv2
+from matplotlib import pyplot as plt
+
 
 class POINT(Structure):
     _fields_ = [("x", c_ulong), ("y", c_ulong)]
@@ -100,5 +103,3 @@ sleep(1)
 ctypes.windll.user32.mouse_event(2, 0, 0, 0,0) # left down
 sleep(0.25)
 ctypes.windll.user32.mouse_event(4, 0, 0, 0,0) # left up
-
-

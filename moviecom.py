@@ -1,5 +1,6 @@
 from selenium import webdriver
 
+
 class Moviecom:
     def __init__(self, driver):
         self.driver = driver

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 #coding: utf-8
-from googlesearch import search
-from clint.textui import colored
-import webbrowser
-import platform
 import os
+import platform
+import webbrowser
 
+from clint.textui import colored
+from googlesearch import search
 
 sistema = platform.platform()
 if "win" in sistema.lower():
@@ -71,5 +71,3 @@ while True:
         os.system(cmd_limpar)
     else:
         print("Essa opção não existe, tente novamente!")
-
-

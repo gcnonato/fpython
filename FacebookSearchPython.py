@@ -1,6 +1,7 @@
 #@@@@@Sorry: this code has been deprecated in 2015, April 30 with new Facebook 2.0 API version
-import urllib.request
 import json
+import urllib.request
+
 
 def search(texto):
     #pegue o access_token

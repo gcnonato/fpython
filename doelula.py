@@ -1,5 +1,6 @@
-import requests
 import json
+
+import requests
 
 url = 'https://doe.lula.com.br/api/campaign/doadores'
 

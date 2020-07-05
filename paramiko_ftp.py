@@ -1,5 +1,6 @@
-import paramiko
 import configparser
+
+import paramiko
 
 # Carrega as configurações de arquivo externo
 config = configparser.ConfigParser()

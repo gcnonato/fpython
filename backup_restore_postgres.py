@@ -1,11 +1,10 @@
 import os
-import psycopg2
 import subprocess
-from subprocess import Popen
 from pprint import pprint
+from subprocess import Popen
 
 import pandas as pd
-
+import psycopg2
 from decouple import config
 
 

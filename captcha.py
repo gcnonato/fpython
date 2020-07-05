@@ -1,4 +1,7 @@
 from PIL import Image
+
+from pytesser import *
+
 #Imagem a ser quebrada, neste ponto você poderia usar urlib, httplib ou curl para carregar esta imagem.
 img = Image.open('hodo.jpg')
 #convertemos para o padrão RGB
@@ -23,8 +26,6 @@ big = im_orig.resize((116, 56), Image.NEAREST)
 ext = ".tif"
 big.save("input-NEAREST" + ext)
 
-#   Yeah! Fazemos OCR da imagem usando o Pytesser
-from pytesser import *
 image = Image.open('input-NEAREST.tif')
 #simplesmente imprimimos a imagem em formato de string OCRizado
 print(image_to_string(image))

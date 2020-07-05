@@ -5,13 +5,13 @@
 # Requer Python 3.6 ou superior
 #
 import sys
-
-from random import randint, choice, sample
+from random import choice, randint, sample
 from time import sleep
 from typing import List, Tuple
-from mensagens import (INIMIGO_FORA_DA_LISTA, NUMERO_INVALIDO, TITULO_REGRA, PRESSIONE_ENTER)
 
-from util import valida_str, valida_int, slow_print, caixa, barra, pausa
+from mensagens import (
+    INIMIGO_FORA_DA_LISTA, NUMERO_INVALIDO, PRESSIONE_ENTER, TITULO_REGRA)
+from util import barra, caixa, pausa, slow_print, valida_int, valida_str
 
 #
 # https://github.com/lskbr/rpg

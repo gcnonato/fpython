@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import requests
+
+# Salvando os arquivo resultado.js para o programador front-end web fazer a pagina
+import cgi
 import os
 import os.path
+import webbrowser
+
+import requests
 
 # remove o arquivo ANTES de salvá-lo dnv
 if os.path.isfile('resultado.html'):
@@ -64,8 +69,6 @@ for categoria in categorias:
             listas.append(anuncio['descricao']),
             listas.append('-'*100),
 
-# Salvando os arquivo resultado.js para o programador front-end web fazer a pagina
-import cgi
 
 def escape_html(data):
     return cgi.escape(data).encode(
@@ -100,7 +103,6 @@ fobj.write(
 )
 fobj.close()
 
-import webbrowser
 
 new = 2
 diretorio = os.path.abspath('.')
@@ -124,4 +126,3 @@ webbrowser.open(url, new=new)
 # Lista de diretórios com path completo.
 #for i in dirlist:
   #  print(i)
-

@@ -1,7 +1,7 @@
 # coding: utf-8
 
-from requests import get
 from bs4 import BeautifulSoup as bs
+from requests import get
 from selenium import webdriver
 
 

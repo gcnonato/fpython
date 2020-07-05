@@ -4,7 +4,9 @@ import urllib.request
 
 from bs4 import BeautifulSoup as bs
 
-url = "https://www.buzzfeed.com/trending?utm_term=.aiYqq0KzPG#.imA44kywqY"
+
+# url = 'https://olhardigital.com.br/'
+url = 'https://www.buzzfeed.com/trending?utm_term=.aiYqq0KzPG#.imA44kywqY'
 site = urllib.request.urlopen(url)
 soup = bs(site, "html.parser")
 nv = []

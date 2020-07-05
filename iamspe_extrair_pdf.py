@@ -1,6 +1,6 @@
-from tabula import read_pdf, convert_into
 import os
 
+from tabula import convert_into, read_pdf
 
 filename = 'CREDENCIADOS.pdf'
 fileout = "output.csv"

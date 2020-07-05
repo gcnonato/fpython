@@ -1,9 +1,5 @@
-from carpet import (
-    csv_to_list,
-    evaluate_job_file,
-    get_files_in_directory,
-    order_by_key,
-)
+from carpet import (csv_to_list, evaluate_job_file, get_files_in_directory,
+                    order_by_key)
 
 METRICS_FILENAME = 'metrics.csv'
 JOBS_DIRECTORY = 'jobs'

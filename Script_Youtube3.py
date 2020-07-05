@@ -2,11 +2,13 @@
 # -*- coding: utf-8 -*-
 
 
-from os.path import expanduser
 import os
-import sys
-import urllib.request, urllib.error, urllib.parse
 import subprocess
+import sys
+import urllib.error
+import urllib.parse
+import urllib.request
+from os.path import expanduser
 
 #-------------------------------------
 # Criado por: Wolfterro

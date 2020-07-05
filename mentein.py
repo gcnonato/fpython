@@ -1,6 +1,6 @@
 #coding: utf-8
-from requests import get
 from bs4 import BeautifulSoup as bs
+from requests import get
 
 url = 'https://www.mentebinaria.com.br/'
 p = get(url)

@@ -1,5 +1,6 @@
-import rows
 import json
+
+import rows
 
 
 def lerArquivo():

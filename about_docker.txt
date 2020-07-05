@@ -1,5 +1,6 @@
 runserver --nostatic 0.0.0.0:8000
 docker exec -it junt_web_1 /bin/sh
+docker exec -it pgadmin4 /bin/sh
 docker exec -it junt_web_1 python manage.py createsuperuser
 docker exec -it junt_web_1 python manage.py makemigrations
 docker exec -it junt_web_1 python manage.py migrate

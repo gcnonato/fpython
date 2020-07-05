@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-import pymysql.cursors
-import pymysql
-import sys
-import json
 import datetime
+import json
+import sys
+
 import environ
-from sqlalchemy.dialects.mysql import insert
+import pymysql
+import pymysql.cursors
 from sqlalchemy import create_engine
+from sqlalchemy.dialects.mysql import insert
 
 # Carrega as configurações de arquivo externo
 environ.Path(__file__)

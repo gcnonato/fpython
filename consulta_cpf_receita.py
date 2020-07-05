@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import pole
+import os
 import re
 import urllib2
-import os
+
+import pole
 
 conexao = pole.http.Conexao('www.receita.fazenda.gov.br')
 dados = conexao.obter_dados('/aplicacoes/atcta/cpf/ConsultaPublica.asp')

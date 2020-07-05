@@ -1,10 +1,12 @@
+import os
+import subprocess
+
+import fire
+from bs4 import BeautifulSoup
+
+import cfscrape
 import huepy
 from huepy import *
-from bs4 import BeautifulSoup
-import subprocess
-import cfscrape
-import fire
-import os 
 
 requests = cfscrape.create_scraper()
 

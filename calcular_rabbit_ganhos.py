@@ -1,7 +1,10 @@
-from requests import get, post, Session
+import datetime
+import re
 from pprint import pprint
-import datetime, re
 from time import sleep
+
+from requests import Session, get, post
+
 
 def variables_to_access_site(token):
     cookies = {

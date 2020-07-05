@@ -1,5 +1,6 @@
 from scrapy import Request, Spider
 
+
 '''
 para "aliviar" pros servidores usar:
 ```scrapy runspider <arquivo>.py -s HTTPCACHE_ENABLED=1 -o <nome-de-saida>.csv ```

@@ -1,9 +1,10 @@
 #!/usr/bin/python3
-from requests import post
-from parsel import Selector
-from datetime import datetime
-import PySimpleGUI as sg
 import urllib.request
+from datetime import datetime
+
+import PySimpleGUI as sg
+from parsel import Selector
+from requests import post
 
 
 class DiarioOficial:

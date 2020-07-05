@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
+import json
+import os
+import pprint
+from time import sleep
+
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
-from time import sleep
-import pprint
-import json
-import os
 
 url = 'https://www.indeed.com.br/empregos-de-python-em-londrina'
 

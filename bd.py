@@ -6,8 +6,8 @@ import re
 import sys
 from datetime import datetime
 from time import sleep
-from decouple import config
 
+from decouple import config
 from selenium import webdriver
 from selenium.common.exceptions import *
 from selenium.webdriver import ActionChains

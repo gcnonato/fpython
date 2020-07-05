@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
+import os
+import random
 from time import sleep
 
-import random
-import os
 from decouple import config
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import *
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as CondicaoExperada
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -51,6 +51,11 @@ type_like_a_person("11632112", login)
 type_like_a_person(config("HOLERITE_SENHA"), senha)
 sleep(random.randint(1, 5) / 30)
 linkElem.send_keys(Keys.ENTER)
-
 sleep(random.randint(15, 25) / 30)
+# de PROPÓSITO PARA QUEBRAR PARA NÃO FECHAR
+input_caixaAviso = wait.until(
+    CondicaoExperada.element_to_be_clickable(
+        (By.XPATH, xpath_input_caixaAviso)
+    )
+)
 # browser.quit()

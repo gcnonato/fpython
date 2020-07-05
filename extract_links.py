@@ -3,6 +3,7 @@
 import locale
 
 import requests
+
 import rows
 
 # Get the HTML

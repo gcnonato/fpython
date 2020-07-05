@@ -1,7 +1,8 @@
-from pornhub_api import PornhubApi
 import random
 import string
 from pprint import pprint
+
+from pornhub_api import PornhubApi
 
 api = PornhubApi()
 list_categories = []
@@ -25,5 +26,5 @@ for category in categories:
     list_categories = [e.category for e in category[1]]
 
 for category in list_categories:
-    if 'amat' in category:
+    if 'vintage' in category:
         print(category)

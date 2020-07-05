@@ -1,6 +1,7 @@
 ''' Exemplo de PO no cultcampinas.com.br '''
 from selenium import webdriver
 
+
 class Cult:
     def __init__(self, driver):
         self.driver = driver
@@ -31,4 +32,3 @@ cc = webdriver.Chrome()
 c = Cult(cc)
 c.navigate()
 c.get_all_data()
-

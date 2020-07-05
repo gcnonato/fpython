@@ -1,8 +1,9 @@
 # coding: utf-8
 
-from requests import post, get
-from bs4 import BeautifulSoup as bs
 import os
+
+from bs4 import BeautifulSoup as bs
+from requests import get, post
 
 
 def logar(html, params):

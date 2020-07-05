@@ -1,5 +1,6 @@
 import os
 
+
 def lerSql(s):
     with open(s, encoding="utf8") as _file:
         text = _file.read()

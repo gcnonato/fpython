@@ -1,5 +1,7 @@
 import scrapy
+
 import js2xml
+
 
 class QuotesSpider(scrapy.Spider):
     name = 'quotes'

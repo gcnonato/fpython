@@ -1,11 +1,14 @@
+import random
+import time
+
+import environ
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as CondicaoExperada
 from selenium.common.exceptions import *
 from selenium.webdriver import ActionChains
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-import time, random, environ
+from selenium.webdriver.support import expected_conditions as CondicaoExperada
+from selenium.webdriver.support.ui import WebDriverWait
 
 environ.Path(__file__)
 env = environ.Env()

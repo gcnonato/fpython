@@ -1,5 +1,6 @@
-import twitter
 import configparser
+
+import twitter
 
 # Carrega as configurações de arquivo externo
 config = configparser.ConfigParser()

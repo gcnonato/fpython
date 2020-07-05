@@ -1,7 +1,9 @@
+import getpass
 from time import sleep
+
 from selenium import webdriver
 from selenium.common.exceptions import ElementClickInterceptedException
-import getpass
+
 
 class Instagram(object):
 

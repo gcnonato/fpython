@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-import psycopg2
-from sshtunnel import SSHTunnelForwarder
 import time
-from decouple import config
 
+import psycopg2
+from decouple import config
+from sshtunnel import SSHTunnelForwarder
 
 with SSHTunnelForwarder(
          (config('INTEGRATOR_POSTRGRES_HOST'), 22),

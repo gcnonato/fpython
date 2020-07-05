@@ -1,7 +1,9 @@
-from bs4 import BeautifulSoup
 import requests
-from tqdm import tqdm
+from bs4 import BeautifulSoup
+
 from persona import Persona
+from tqdm import tqdm
+
 
 class Scrapper:
 

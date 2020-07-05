@@ -1,10 +1,12 @@
+from pprint import pprint
+
+import environ
+import pandas as pd
 import sqlalchemy
 from sqlalchemy import create_engine
-from sqlalchemy_utils import database_exists, create_database
-import pandas as pd
-import environ
+
 from config import config
-from pprint import pprint
+from sqlalchemy_utils import create_database, database_exists
 
 env = environ.Env()
 env.read_env('../.env')

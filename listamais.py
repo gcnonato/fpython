@@ -1,11 +1,12 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as condicaoexperada
-from selenium.common.exceptions import *
-from time import sleep
 import random
+from time import sleep
+
 import PySimpleGUI as sg
+from selenium import webdriver
+from selenium.common.exceptions import *
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as condicaoexperada
+from selenium.webdriver.support.ui import WebDriverWait
 
 URL = "https://www.listamais.com.br/"
 BTN_TO_SEARCH = "//button[@class='tg-btn']"

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import sqlite3
 import json
+import sqlite3
 from pprint import pprint
+
 
 def ler_json():
     with open('tabelas.json', encoding="utf-8") as f:    

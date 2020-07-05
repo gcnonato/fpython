@@ -1,6 +1,7 @@
-from typing import List, Optional, Union
-from mensagens import OPCAO_INVALIDA
 from time import sleep
+from typing import List, Optional, Union
+
+from mensagens import OPCAO_INVALIDA
 
 
 def valida_str(limite: Union[str, List[str]], msg: str) -> str:

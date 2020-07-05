@@ -6,7 +6,6 @@ import openpyxl
 import psycopg2
 from decouple import config
 from faker import Faker
-
 # first, import a similar Provider or use the default one
 from faker.providers import BaseProvider
 

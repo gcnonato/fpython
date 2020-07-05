@@ -1,5 +1,6 @@
-import requests
 import configparser
+
+import requests
 
 # Carrega as configurações de arquivo externo
 config = configparser.ConfigParser()

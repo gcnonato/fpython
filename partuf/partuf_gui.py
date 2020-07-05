@@ -1,12 +1,13 @@
+import os
+import subprocess
+
+import fire
+import PySimpleGUI as sg
+from bs4 import BeautifulSoup
+
+import cfscrape
 import huepy
 from huepy import *
-from bs4 import BeautifulSoup
-import PySimpleGUI as sg
-import subprocess
-import cfscrape
-import fire
-import os
-
 
 requests = cfscrape.create_scraper()
 

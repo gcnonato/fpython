@@ -1,5 +1,6 @@
 import os
 import re
+
 from bs4 import BeautifulSoup as bs
 from requests import get
 from splitty import clear_list_strings

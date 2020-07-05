@@ -1,144 +1,139 @@
-#!/usr/bin/ python3.7
 # -*- coding: utf-8 -*-
 import os
-import shutil
 import subprocess
 from tkinter import *
+from functools import partial
 
-ROOT_DIR = "/home/luxu/Desktop/"
 LOCAL_DEFAULT_LINUX = "/home/luxu/Desktop/"
-LOCAL_DEFAULT_WINDOWS = "C:/Users/luxu/Desktop/python/"
+homepath = os.path.expanduser(os.getenv("USERPROFILE"))
+desktoppath = "Desktop"
+LOCAL_DEFAULT_WINDOWS = os.path.join(homepath, desktoppath, "fpython/")
 
 
 class Application(Frame):
-    def holerite(self):
-        if os.name != "posix":
-            os.system(f"ipython.exe {LOCAL_DEFAULT_WINDOWS}selenium/holerite.py")
-            # os.system("python.exe C:/Users/luxu/Desktop/python/selenium/holerite.py")
-        else:
-            os.system("python3.6 python/Desktop/holerite.py")
-        self.quit
 
-    def zap(self):
-        if os.name != "posix":
-            os.system("luxucode zap")
-        self.quit
+	def __init__(self, master=None):
 
-    def royale(self):
-        if os.name != "posix":
-            # source = 'C:\\Users\\luxu\\Desktop'
-            # os.system(f"ipython.exe {LOCAL_DEFAULT_WINDOWS}royale_with_selenium.py")
-            # files = [f for f in os.listdir('.') if f.startswith('Cheats')]
-            # for file in files:
-            # 	print(file)
-            # 	shutil.move(file, source)  ## to move files from
-            # 	print()
-            os.system(f"ipython.exe {LOCAL_DEFAULT_WINDOWS}royale.py")
-        else:
-            os.system(f"ipython {LOCAL_DEFAULT_LINUX}fpython/royale.py")
-        self.quit
+		# holerite = Button(text="Holerite", command=self.holerite)
+		# royale = Button(text="Royale", command=self.royale)
+		# youtube = Button(text="Youtube", command=self.youtube)
+		# guiabolso = Button(text="GuiaBolso", command=self.guiabolso)
+		# guiabolsow = Button(text="GuiaBolsoW", command=self.guiabolsow)
+		# verocard = Button(text="Verocard", command=self.verocard)
+		# listamais = Button(text="ListaMais", command=self.listamais)
+		# bdo = Button(text="Bdo", command=self.bdo)
+		# list_apps = (
+		# 	holerite,
+		# 	royale,
+		# 	youtube,
+		# 	guiabolso,
+		# 	guiabolsow,
+		# 	verocard,
+		# 	bdo,
+		# 	listamais,
+		# )
+		Frame.__init__(self, master)
+		top = Frame()
+		top.pack(fill="both", expand=True)
+		self.f = Frame(top)
+		self.f.pack(fill="x")
+		rotulo = Label(self.f, text="Scripts", foreground="white")
+		rotulo.pack()
+		rotulo.configure(
+			relief="ridge", font="Arial 26 bold", border=5, background="black"
+		)
+		list_bts = (
+			'holerite',
+			'royale',
+			'youtube',
+			'guiabolso',
+			'guiabolsow',
+			'verocard',
+			'bd',
+			'listamais',
+		)
+		for bt in list_bts:
+		# for bt in list_apps:
+			bt = self.bt(bt)
+			bt.configure(relief="groove", border=10, font="Times 20 bold")
+			bt.pack(side="left", fill="both", expand=True)
+		# for w in list_apps:
+		# 	w.configure(relief="groove", border=10, font="Times 20 bold")
+		# 	w.pack(side="left", fill="both", expand=True)
+	def comando(self, texto):
+		subprocess.Popen(["ipython", f"{LOCAL_DEFAULT_WINDOWS}{texto}.py"], shell=True)
 
-    def jupyter(self):
-        if os.name != "posix":  # windows
-            os.chdir(f"{LOCAL_DEFAULT_WINDOWS}jupyter_virtual_env/venv/Scripts/")
-            subprocess.Popen(["start", "activate"], shell=True)
-        else:
-            subprocess.Popen(["start", "jupyter notebook"], shell=True)
-        self.quit
 
-    def guiabolso(self):
-        if os.name != "posix":
-            source = "C:\\Users\\luxu\\Desktop"
-            os.system("ipython.exe C:/Users/luxu/Desktop/python/guiabolso.py")
-            files = [f for f in os.listdir(".") if f.startswith("Cheats")]
-            for file in files:
-                print(file)
-                shutil.move(file, source)  ## to move files from
-                print()
-        else:
-            os.system(f"ipython {ROOT_DIR}fpython/guiabolso.py")
-            # subprocess.Popen(['gedit', 'royale.txt'])
-        self.quit
+	def bt(self, texto):
+		return Button(text=f'{texto.capitalize()}', command=lambda: self.comando(texto))
 
-    def youtube(self):
-        if os.name != "posix":
-            # os.chdir("C:/Users/luxu/Desktop/")
-            os.system("python.exe C:/Users/luxu/Desktop/python/pegar_video.py")
-        else:
-            os.system(f"ipython {ROOT_DIR}fpython/pegar_video.py")
-        self.quit
 
-    def gastos(self):
-        if os.name != "posix":
-            os.chdir("C:/Users/luxu/.virtualenvs/djangox-CVI14up0/Scripts/")
-            subprocess.Popen(["start", "activate"], shell=True)
-        else:
-            os.chdir("gastosluxu/venv/Scripts/")
-        self.quit
-
-    def verocard(self):
-        if os.name != "posix":
-            os.system("python.exe C:/Users/luxu/Desktop/python/selenium/verocard.py")
-        else:
-            os.system("python3.6 python/selenium/verocard.py")
-        self.quit
-
-    def bdo(self):
-        if os.name != "posix":
-            os.system("ipython.exe C:/Users/luxu/Desktop/python/selenium/badoo.py")
-        else:
-            os.system(f"ipython {ROOT_DIR}fpython/badoo_with_ff.py")
-        self.quit
-
-    def jenis(self):
-        if os.name != "posix":
-            os.chdir("python/imparcial/")
-            subprocess.Popen(["scrapy", "crawl", "jenis"], shell=True)
-        else:
-            os.system("python3.6 python/Desktop/jenis.py")
-            subprocess.Popen(["mousepad", "royale.txt"])
-        self.quit
-
-    def botoes(self, nome):
-        return f"%s=Button(text=%s,command=self.%s)" % (nome, nome, nome)
-
-    def __init__(self, master=None):
-        Frame.__init__(self, master)
-        top = Frame()
-        top.pack(fill="both", expand=True)
-        f = Frame(top)
-        f.pack(fill="x")
-        rotulo = Label(f, text="Scripts", foreground="white")
-        rotulo.pack()
-        rotulo.configure(
-            relief="ridge", font="Arial 26 bold", border=5, background="black"
-        )
-        holerite = Button(text="Holerite", command=self.holerite)
-        zap = Button(text="Zap", command=self.zap)
-        royale = Button(text="Royale", command=self.royale)
-        youtube = Button(text="Youtube", command=self.youtube)
-        gastos = Button(text="Gastos", command=self.gastos)
-        guiabolso = Button(text="GuiaBolso", command=self.guiabolso)
-        verocard = Button(text="Verocard", command=self.verocard)
-        jenis = Button(text="Jenis", command=self.jenis)
-        bdo = Button(text="Bdo", command=self.bdo)
-
-        for w in (
-            holerite,
-            zap,
-            royale,
-            youtube,
-            gastos,
-            guiabolso,
-            verocard,
-            bdo,
-            jenis,
-        ):
-            w.configure(relief="groove", border=10, font="Times 20 bold")
-            w.pack(side="left", fill="both", expand=True)
+	# def holerite(self):
+	# 	if os.name != "posix":  # windows
+	# 		os.system(f"ipython.exe {LOCAL_DEFAULT_WINDOWS}holerite.py")
+	# 	else:
+	# 		os.system(f"ipython {LOCAL_DEFAULT_LINUX}fpython/holerite.py")
+	# 	self.quit
+	#
+	# def royale(self):
+	# 	if os.name != "posix":  # windows
+	# 		os.system(f"ipython.exe {LOCAL_DEFAULT_WINDOWS}royale.py")
+	# 	else:
+	# 		os.system(f"ipython {LOCAL_DEFAULT_LINUX}fpython/royale.py")
+	# 	self.quit
+	#
+	# def jupyter(self):
+	# 	if os.name != "posix":  # windows
+	# 		os.chdir(f"{LOCAL_DEFAULT_WINDOWS}jupyter_virtual_env/venv/Scripts/")
+	# 		subprocess.Popen(["start", "activate"], shell=True)
+	# 	else:
+	# 		subprocess.Popen(["start", "jupyter notebook"], shell=True)
+	# 	self.quit
+	#
+	# def guiabolso(self):
+	# 	if os.name != "posix":  # windows
+	# 		os.system(f"ipython {LOCAL_DEFAULT_WINDOWS}guiabolso.py")
+	# 	else:
+	# 		os.system(f"ipython {LOCAL_DEFAULT_LINUX}fpython/guiabolso.py")
+	# 	self.quit
+	#
+	# def guiabolsow(self):
+	# 	if os.name != "posix":  # windows
+	# 		os.system(f"ipython {LOCAL_DEFAULT_WINDOWS}guiabolsow.py")
+	# 	else:
+	# 		os.system(f"ipython {LOCAL_DEFAULT_LINUX}fpython/guiabolso_by_requests..py")
+	# 	self.quit
+	#
+	# def youtube(self):
+	# 	if os.name != "posix":  # windows
+	# 		os.system(f"ipython {LOCAL_DEFAULT_WINDOWS}youtube.py")
+	# 	else:
+	# 		os.system("python3.6 python/pegar_video.py")
+	# 	self.quit
+	#
+	# def verocard(self):
+	# 	if os.name != "posix":
+	# 		os.system(f"python.exe {LOCAL_DEFAULT_WINDOWS}verocard.py")
+	# 	else:
+	# 		os.system("python3.6 python/verocard.py")
+	# 	self.quit
+	#
+	# def bdo(self):
+	# 	if os.name != "posix":  # windows
+	# 		os.system(f"ipython.exe {LOCAL_DEFAULT_WINDOWS}bd.py")
+	# 	else:
+	# 		os.system("python3.6 python/selenium/badoo.py")
+	# 	self.quit
+	#
+	# def listamais(self):
+	# 	if os.name != "posix":
+	# 		os.system(f"ipython.exe {LOCAL_DEFAULT_WINDOWS}listamais.py")
+	# 	else:
+	# 		os.system("python3.6 python/Desktop/jenis.py")
+	# 		subprocess.Popen(["mousepad", "royale.txt"])
+	# 	self.quit
 
 
 app = Application()
 app.master.title("Painel de Controle")
-# app.master.geometry("1300x100+100+80")
 mainloop()

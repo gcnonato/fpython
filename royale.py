@@ -1,9 +1,10 @@
 # coding: utf-8
 
-from requests import get
-from bs4 import BeautifulSoup as bs
-from time import sleep
 import os
+from time import sleep
+
+from bs4 import BeautifulSoup as bs
+from requests import get
 
 
 def getSoup(url):

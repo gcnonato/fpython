@@ -1,11 +1,8 @@
 from json import dump
 from re import search
-from splitty import (
-    list_by_re_pattern,
-    make_intervals,
-    apply_intervals,
-    clear_list_strings,
-)
+
+from splitty import (apply_intervals, clear_list_strings, list_by_re_pattern,
+                     make_intervals)
 
 regex_process = (
     r'^Processo \d+-(\d+\.?){5}(/\d{2})?\s?(\(Processo \d+-(\d+\.?){5}\))?'

@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import webbrowser
+from time import sleep
+
 import requests
 from bs4 import BeautifulSoup
-import webbrowser
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from time import sleep
 
 # url = 'https://socialblade.com/youtube/channel/UCBUPPrMmr9TIhEo849cQm-w'
 url = 'https://socialblade.com/'

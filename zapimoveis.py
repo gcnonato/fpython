@@ -1,7 +1,7 @@
-from requests import get
-from bs4 import BeautifulSoup as bs
 import json
 
+from bs4 import BeautifulSoup as bs
+from requests import get
 
 headers = {
     'authority': 'www.zapimoveis.com.br',

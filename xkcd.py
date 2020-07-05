@@ -1,7 +1,10 @@
 #! python
 # downloadXkcd.py - Faz download de todas as tirinhas de XKCD
 
-import requests, os, bs4
+import os
+
+import bs4
+import requests
 
 url = 'http://xkcd.com' # url inicial
 os.makedirs('xkcd', exist_ok=True) # armazena as tirinhas em ./xkcd

@@ -1,4 +1,5 @@
 import requests
+
 jogos = requests.get('http://worldcup.sfg.io/matches').json()
 for jogo in jogos:
 	if jogo['status'] in ('completed', 'in progress'):

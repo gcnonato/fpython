@@ -1,7 +1,8 @@
-import environ
 import os
 from ftplib import FTP
 from time import sleep
+
+import environ
 
 environ.Path(__file__)
 env = environ.Env()

@@ -1,9 +1,9 @@
 #Import the necessary methods from tweepy library
 # from tweepy.streaming import StreamListener
-from tweepy import OAuthHandler
-from tweepy import Stream
-import tweepy
 import configparser
+
+import tweepy
+from tweepy import OAuthHandler, Stream
 
 # Carrega as configurações de arquivo externo
 config = configparser.ConfigParser()

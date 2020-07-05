@@ -1,6 +1,7 @@
-from scrapinghub import ScrapinghubClient
-import scrapinghub as sh
 import configparser
+
+import scrapinghub as sh
+from scrapinghub import ScrapinghubClient
 
 '''
 Programa que serve para gerenciamento do site SCRAPINGHUB.COM

@@ -1,7 +1,9 @@
-from textblob import TextBlob as tb
-import tweepy
-import numpy as np
 import configparser
+
+import numpy as np
+import tweepy
+
+from textblob import TextBlob as tb
 
 # Carrega as configurações de arquivo externo
 config = configparser.ConfigParser()
@@ -36,4 +38,3 @@ for tweet in public_tweets:
 
 print('MÉDIA DE SENTIMENTO: ' + 
 str(np.mean(analysis.sentiment.polarity)))
-

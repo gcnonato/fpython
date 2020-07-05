@@ -1,11 +1,13 @@
  # -*- coding: utf-8 -*-
 
-import shutil
 import os
+import shutil
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
+
 
 def donwload(arquivo):
 	# arq = 'C:\\caminho\\testes\\'+ arquivo

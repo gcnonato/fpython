@@ -1,11 +1,12 @@
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-import time
 import json
-import sys
 import os
+import sys
 # import pyautogui
 import threading
+import time
+
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 
 sys.path.append(os.getcwd())
 

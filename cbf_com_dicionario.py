@@ -1,6 +1,8 @@
 import csv
-from six.moves import cPickle as pickle
+
 import numpy as np
+from six.moves import cPickle as pickle
+
 
 def main(path_csv, path_pickle):
 

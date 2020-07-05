@@ -1,9 +1,12 @@
 # coding: utf-8
 
-import re
 import os
+import re
 import sys
 from pprint import pprint
+
+from ipdb import set_trace
+
 
 def lerArquivo(arquivo):
 	# set_trace()
@@ -24,5 +27,4 @@ def lerArquivo(arquivo):
 filename = 'error_log'
 # 'remuneracao.txt'
 arquivo = os.path.join(os.path.abspath('../'),filename)
-from ipdb import set_trace
 lerArquivo(arquivo)

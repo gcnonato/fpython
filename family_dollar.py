@@ -1,7 +1,8 @@
-from requests import get# for making standard html requests
-from bs4 import BeautifulSoup as bs # magical tool for parsing html data
-import json # for parsing data
-from pandas import DataFrame as df # premier library for data organization
+import json  # for parsing data
+
+from bs4 import BeautifulSoup as bs  # magical tool for parsing html data
+from pandas import DataFrame as df  # premier library for data organization
+from requests import get  # for making standard html requests
 
 url = 'https://locations.familydollar.com/id/'
 

@@ -1,10 +1,10 @@
-import environ
 import os
-import psycopg2
 import subprocess
 from pprint import pprint
 
+import environ
 import pandas as pd
+import psycopg2
 
 ROOT_DIR = environ.Path(__file__)
 env = environ.Env()

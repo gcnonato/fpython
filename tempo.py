@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import glob
+import os
+import os.path
+import time
+import webbrowser
+
 import requests
 from bs4 import BeautifulSoup
-import webbrowser
-import os.path
-import os, glob
-import time
 
 # remove o arquivo ANTES de salvá-lo dnv
 if os.path.isfile('tempo.html'):
@@ -209,4 +211,3 @@ diretorio = os.path.abspath('.')
 pagina = "tempo.html"
 url = f'{diretorio}/{pagina}'
 webbrowser.open(url, new=new)
-

@@ -1,8 +1,10 @@
 # coding=utf-8
 
-import requests
 import random
 from pprint import pprint
+
+import requests
+
 
 def proxies(q, mode='json'):
 		url = 'http://proxy.tekbreak.com/%s/%s' % (q,mode)

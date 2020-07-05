@@ -1,5 +1,6 @@
-import PySimpleGUI as sg
 import subprocess
+
+import PySimpleGUI as sg
 
 
 def ExecuteCommandSubprocess(command, *args):
