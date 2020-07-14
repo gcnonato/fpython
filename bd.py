@@ -1,4 +1,3 @@
-# import environ
 import json
 import os
 import random
@@ -15,6 +14,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as CondicaoExperada
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.chrome.options import Options
 
 
 class BadooWithSelenium:
@@ -24,8 +24,15 @@ class BadooWithSelenium:
             chrome_options = webdriver.ChromeOptions()
             #chrome_options.add_argument('--headless')
         else:
-            self.driver = webdriver.Firefox()
-            self.driver.set_window_size(1120, 550)
+            CHROMEDRIVER_PATH = '/usr/local/bin/chromedriver'
+            WINDOW_SIZE = "1920,1080"
+            chrome_options = Options()
+            # chrome_options.add_argument("--headless")
+            chrome_options.add_argument("--window-size=%s" % WINDOW_SIZE)
+            chrome_options.add_argument('--no-sandbox')
+            self.driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH,
+                                    chrome_options=chrome_options
+                                    )
         self.wait = WebDriverWait(
             self.driver,
             10,
@@ -90,8 +97,6 @@ class BadooWithSelenium:
 if __name__ == '__main__':
     url = 'https://us1.badoo.com/pt/signin/?f=top'
     params = {}
-    # params['email'] = input('Digite o e-mail:')
-    # params['password'] = input('Digite a senha:')
     params['email'] = config('BADOO_EMAIL')
     params['password'] = config('BADOO_PASSWORD')
     bd = BadooWithSelenium()
