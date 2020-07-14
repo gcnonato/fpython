@@ -24,7 +24,7 @@ jobs:
     - name: Code Quality
       run: |
         pip install black
-        black -l 120 -S --check
+        black -l 79 -S --check
     - name: Test with pytest
       run: |
         pytest
