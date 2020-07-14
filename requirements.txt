@@ -4,7 +4,7 @@ django-decouple==2.1
 ipython==7.13.0
 lxml==4.5.0
 Pillow==6.2.1
-psutil==5.4.2
+psutil==5.6.6
 psycopg2-binary==2.8.5
 PyMySQL==0.9.3
 requests==2.23.0
