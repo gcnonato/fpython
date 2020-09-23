@@ -46,6 +46,8 @@ def main(eMail, senha, meses, extensao, year=2020, last_year=None, last_month=No
         if extensao == "xlsx":
             filename += ".xlsx"
             guiabolso.xlsx_transactions(year, meses, filename)
+        elif extensao == "tela":
+            guiabolso.tela_transactions(year, meses, filename)
         elif extensao == "txt":
             filename += ".txt"
             guiabolso.txt_transactions(year, meses, filename)
@@ -281,6 +283,31 @@ class GuiaBolso:
                     _file.write(content)
                     _file.write("\n")
 
+    def tela_transactions(self, year, meses, file_name):
+        transactions = self.transactions(year, meses)
+        transactions = sorted(transactions, key=lambda d: d["date"])
+
+        if len(transactions) == 0:
+            warnings.warn(f"No transactions for the period ({year}-{meses})")
+            return
+        list_subcategory_ignorade = [
+            "Pagamento de cartão",
+            "Taxas bancárias",
+            "TV / Internet / Telefone",
+            "Impostos",
+            "Saques",
+            "Juros",
+            "Remuneração",
+            "Transferência",
+            "Boletos",
+            "Outros gastos",
+        ]
+        paipline = "|".center(5, "-")
+        for conta in transactions:
+            if conta["subcategory"] not in list_subcategory_ignorade:
+                data = datetime.datetime.fromtimestamp(conta["date"] / 1000).date()
+                content = f"""{data} {paipline} {conta['label'].ljust(51, ' ')} {paipline}{str(conta['value'])[1:].rjust(8, ' ')}{paipline} {conta['subcategory']} """
+                print(content)
 
 class Tela:
     def __init__(self):
@@ -311,9 +338,8 @@ class Tela:
                 sg.Frame(
                     layout=[
                         [
-                            sg.Radio(
-                                "TXT", "RADIO1", key="txt", default=True, size=(10, 1)
-                            ),
+                            sg.Radio("Tela", "RADIO1", key="tela", default=True),
+                            sg.Radio("TXT", "RADIO1", key="txt"),
                             sg.Radio("XLSX", "RADIO1", key="xlsx"),
                             sg.Radio("CSV", "RADIO1", key="csv"),
                         ]
@@ -333,7 +359,7 @@ class Tela:
             radio_selected = [v[0] for v in values.items() if v[1] is True][0]
             return values["choicemonth"], radio_selected
         else:
-            return None
+            return None, None
 
 
 if __name__ == "__main__":
@@ -342,5 +368,5 @@ if __name__ == "__main__":
     telas = Tela()
     gb = GuiaBolso(email, password)
     month, extension = telas.layout_inicial()
-    main(email, password, list(month)[0], extension)
-    # resource_path("myimage.gif")
+    if month:
+        main(email, password, list(month)[0], extension)
