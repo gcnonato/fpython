@@ -3,6 +3,7 @@ import os
 import random
 from datetime import datetime
 from time import sleep
+import grecaptchabypass
 
 import PySimpleGUI as sg
 from decouple import config
@@ -155,9 +156,9 @@ class GuiaBolsoSelenium:
 
     def main(self, url, params):
         if os.name != "posix":  # Windows
-            # driver = webdriver.Chrome()
-            chrome_options = webdriver.ChromeOptions()
+            driver = webdriver.Chrome()
             # chrome_options.add_argument('--headless')
+            chrome_options = webdriver.ChromeOptions()
             driver = webdriver.Chrome(options=chrome_options)
         else:
             driver = webdriver.Firefox()
@@ -172,13 +173,12 @@ class GuiaBolsoSelenium:
                 ElementNotSelectableException,
             ],
         )
-        # driver = self.driver
         driver.get(url)
         xpath_input_email = '//input[@name="email"]'
         input_email = wait.until(
             CondicaoExperada.element_to_be_clickable((By.XPATH, xpath_input_email))
         )
-        sleep(random.randint(5, 7) / 30)
+        sleep(random.randint(1, 17) / 30)
         input_email.clear()
         input_email.send_keys(params["eMail"])
         sleep(random.randint(5, 7) / 30)
@@ -196,7 +196,13 @@ class GuiaBolsoSelenium:
         )
         sleep(random.randint(15, 17) / 30)
         button_login.click()
-        sleep(random.randint(5, 6))
+        sleep(random.randint(1, 17) / 30)
+        # browser = grecaptchabypass.getBrowserFirefox(headless=False)
+        bypass = grecaptchabypass.Bypass(webdriver=driver)
+        bypass()
+        sleep(random.randint(1, 17) / 30)
+        return
+
         xpath_options_choice_months = '//div[@class="center"]'
         try:
             options_choice_months = driver.find_element_by_xpath(
@@ -267,16 +273,35 @@ class GuiaBolsoSelenium:
         return values["choicemonth"]
 
 
+class QuebraRecaptcha:
+
+    def teste(self):
+        # Iniciando browser, se headless for True o browser rodará em background.
+        browser = grecaptchabypass.getBrowserFirefox(headless=False)
+
+        # Para desabilitar o Logger: {grecaptcha.Logger.SHOW = False}
+
+        # Instanciando classe Bypass.
+        bypass = grecaptchabypass.Bypass(webdriver=browser)
+
+        # Entrando na página onde o recaptcha está sendo exibido.
+        browser.get("http://patrickhlauke.github.io/recaptcha/")
+
+        # Quebrando o reCaptcha simplesmente invocando bypass().
+        bypass()  # Retorna reCaptcha response: '03AGdBq26D_yqkZygev0CfRyFt2-U2PSN-8OaRfWGJ8U...'
+
+
 if __name__ == "__main__":
     url = "https://www.guiabolso.com.br/web/#/login"
+    # qr = QuebraRecaptcha()
+    # qr.teste()
     gb = GuiaBolsoSelenium()
     params = {}
     params["eMail"] = config("GUIABOLSO_EMAIL")
     params["senha"] = config("GUIABOLSO_PASSWORD")
     params["current_month"] = gb.layout_inicial()
-    print(params["current_month"])
     if params["current_month"] != None:
         gb.main(url, params)
-        # print('Muito bem vamos lá!')
+        print('Muito bem vamos lá!')
     else:
         print("Sem mês escolhido num dá!")
