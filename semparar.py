@@ -1,11 +1,8 @@
 # coding: utf-8
 
-import json
-import os
 from pprint import pprint
 
 import requests
-from bs4 import BeautifulSoup as bs
 
 api = 'https://minhaconta.semparar.com.br/minhaconta/api/login'
 

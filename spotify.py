@@ -20,7 +20,7 @@ class PlaylistUltimato:
         options = webdriver.ChromeOptions()
         options.add_argument("lang=pt-BR")
         self.driver = webdriver.Chrome(executable_path=r"chromedriver",chrome_options=options)
-		# self.driver = webdriver.Chrome(executable_path=r"./chromedriver.exe",chrome_options=options)
+        # self.driver = webdriver.Chrome(executable_path=r"./chromedriver.exe",chrome_options=options)
         self.wait = WebDriverWait(
             self.driver,
             10,

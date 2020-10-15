@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import datetime
+# import datetime
 import PySimpleGUI as sg
 from datetime import datetime, timedelta
 
@@ -22,6 +22,7 @@ def get_date(data):
 
 
 def get_time(time):
+    # print(datetime.strptime('22-07-2019',"%d-%m-%Y").date())
     try:
         hours, minutes, seconds = [int(i) for i in time.split(":")]
         return timedelta(hours=hours, minutes=minutes, seconds=seconds)
