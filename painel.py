@@ -1,18 +1,13 @@
 #!/usr/bin/env ipython
 # -*- coding: utf-8 -*-
 import os
-import sys
 import subprocess
 from tkinter import *
-from functools import partial
 
 LOCAL_DEFAULT_LINUX = "/home/luxu/Desktop/fpython/"
-# homepath = os.path.expanduser(os.getenv("USERPROFILE"))
-# desktoppath = "Desktop"
-# LOCAL_DEFAULT_WINDOWS = os.path.join(homepath, desktoppath, "fpython/")
-
-
-
+homepath = os.path.expanduser(os.getenv("USERPROFILE"))
+desktoppath = "Desktop"
+LOCAL_DEFAULT_WINDOWS = os.path.join(homepath, desktoppath, "fpython/")
 
 
 class Application(Frame):
@@ -46,17 +41,19 @@ class Application(Frame):
 			bt.pack(side="left", fill="both", expand=True)
 	
 	def run(self, cmd):
-		proc = subprocess.Popen(cmd,
-								stdout=subprocess.PIPE,
-								stderr=subprocess.PIPE,
-								)
+		proc = subprocess.Popen(
+			cmd,
+			stdout=subprocess.PIPE,
+			stderr=subprocess.PIPE,)
 		stdout, stderr = proc.communicate()
-
 		return proc.returncode, stdout, stderr
 	
-	def comando(self, texto):		
-		# subprocess.Popen(["ipython", f"{LOCAL_DEFAULT_LINUX}{texto}.py"], shell=True)
-		code, out, err = self.run([sys.executable, f"{LOCAL_DEFAULT_LINUX}{texto}.py"])
+
+	def comando(self, texto):
+		if os.name != "posix": #windows
+			code, out, err = self.run([sys.executable, f"{LOCAL_DEFAULT_WINDOWS}{texto}.py"])
+		else:
+			code, out, err = self.run([sys.executable, f"{LOCAL_DEFAULT_LINUX}{texto}.py"])
 		print(f"{out}")
 
 
