@@ -41,8 +41,8 @@ class Connection:
     return tables
 
 
-c = Connection()
+# c = Connection()
 # pprint(c.listTables())
 # listCategory = c.list('categorias')
-listContasPagar = c.list('contas_pagar')
-pprint(listContasPagar)
+# listContasPagar = c.list('contas_pagar')
+# pprint(listContasPagar)

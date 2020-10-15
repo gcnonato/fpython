@@ -11,9 +11,9 @@ def run(cmd):
 
     return proc.returncode, stdout, stderr
 
-code, out, err = run([sys.executable, 'run.py'])
+# code, out, err = run([sys.executable, 'run.py'])
+code, out, err = run([sys.executable, 'bd.py'])
 
 print(f"out: {out}")
-# print("out: '{}'".format(out))
-# print("err: '{}'".format(err))
-# print("exit: {}".format(code))
+print(f"err: '{err}'")
+print(f"exit: {code}")

@@ -65,7 +65,7 @@ class YoutubeDlScript():
 	
 	def option_function_update(self):
 		# os.system("youtube-dl --update")
-		os.system("pip install --upgrade youtube_dl")
+		os.system("pip3 install --upgrade youtube_dl")
 		sleep(0.5) # Time in seconds.
 
 
