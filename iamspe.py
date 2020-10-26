@@ -43,6 +43,7 @@ class Iamspe:
                 else:
                     tratado = f"{r.strip()}"
                     self.writeResults.append(tratado)
+        print(self.writeResults)
 
     def write_txt(self, filename):
         local_save = os.path.join(self.homepath, self.desktoppath, filename)

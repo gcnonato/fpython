@@ -65,7 +65,7 @@ class VivoWithSelenium:
         return pagina, quantidade_linha_tabela, first_page_current
 
     def main(self, url, params):
-        fileout = "relatorio_detalhado_gastos.txt"
+        fileout = f"vivo3g-{datetime.today().date()}-{datetime.today().time().isoformat().split('.')[0].replace(':','_')}.txt"
         homepath = os.path.expanduser(os.getenv('USERPROFILE'))
         desktoppath = 'Desktop'
         archive = os.path.join(homepath, desktoppath, fileout)
@@ -133,6 +133,9 @@ class VivoWithSelenium:
             pagina = 1
             first_page_previous = ''
             print('Inicio da tabela')
+            _f.write(f'Consumido..: {consumido} em %..: {consumido_em_porcentagem}\n')
+            _f.write(f'Disponível..: {disponivel} em %..: {disponivel_em_porcentagem}\n')
+            _f.write(f'{"*"*80}\n')
             pagina, quantidade_linha_tabela, first_page_previous = \
                 self.percorrer_tabela(pagina, first_page_previous, _f)
             sleep(5)
@@ -144,6 +147,7 @@ class VivoWithSelenium:
                 if quantidade_linha_tabela < 5 or not first_page_previous:
                     break
             driver.close()
+            print('Fechando o arquivo...')
             print(f'Consumido..: {consumido} em %..: {consumido_em_porcentagem}\n'
                   f'Disponível..: {disponivel} em %..: {disponivel_em_porcentagem}\n')
             print('Fim da tabela')
