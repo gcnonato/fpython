@@ -3,6 +3,7 @@
 import os
 import subprocess
 from tkinter import *
+import platform
 
 LOCAL_DEFAULT_LINUX = "/home/luxu/Desktop/fpython/"
 homepath = os.path.expanduser(os.getenv("USERPROFILE"))
@@ -33,6 +34,7 @@ class Application(Frame):
 			'verocard',
 			'bd',
 			'listamais',
+			'vivo',
 		)
 
 		for bt in list_bts:
@@ -44,13 +46,14 @@ class Application(Frame):
 		proc = subprocess.Popen(
 			cmd,
 			stdout=subprocess.PIPE,
-			stderr=subprocess.PIPE,)
+			stderr=subprocess.PIPE
+		)
 		stdout, stderr = proc.communicate()
 		return proc.returncode, stdout, stderr
 	
 
 	def comando(self, texto):
-		if os.name != "posix": #windows
+		if os.name != "posix":  # windows
 			code, out, err = self.run([sys.executable, f"{LOCAL_DEFAULT_WINDOWS}{texto}.py"])
 		else:
 			code, out, err = self.run([sys.executable, f"{LOCAL_DEFAULT_LINUX}{texto}.py"])
