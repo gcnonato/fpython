@@ -14,6 +14,7 @@ from selenium.common.exceptions import *
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as CondicaoExperada
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.chrome.options import Options
 
 url = 'https://login.vivo.com.br/loginmarca/appmanager/marca/publico?origem=https://login.vivo.com.br/saml2/idp/sso/login-return#'
 
@@ -24,8 +25,15 @@ class VivoWithSelenium:
             chrome_options = webdriver.ChromeOptions()
             # chrome_options.add_argument('--headless')
         else:
-            self.driver = webdriver.Firefox()
-            self.driver.set_window_size(1120, 550)
+            CHROMEDRIVER_PATH = '/usr/local/bin/chromedriver'
+            WINDOW_SIZE = "1920,1080"
+            chrome_options = Options()
+            # chrome_options.add_argument("--headless")
+            chrome_options.add_argument("--window-size=%s" % WINDOW_SIZE)
+            chrome_options.add_argument('--no-sandbox')
+            self.driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH,
+                                    chrome_options=chrome_options
+                                    )
         self.wait = WebDriverWait(
             self.driver,
             10,
@@ -66,9 +74,14 @@ class VivoWithSelenium:
 
     def main(self, url, params):
         fileout = f"vivo3g-{datetime.today().date()}-{datetime.today().time().isoformat().split('.')[0].replace(':','_')}.txt"
-        homepath = os.path.expanduser(os.getenv('USERPROFILE'))
-        desktoppath = 'Desktop'
-        archive = os.path.join(homepath, desktoppath, fileout)
+        if os.name != "posix":  # Windows
+            homepath = os.path.expanduser(os.getenv('USERPROFILE'))
+            desktoppath = 'Desktop'
+            archive = os.path.join(homepath, desktoppath, fileout)
+        else:
+            os.chdir('../')
+            homepath = os.getcwd()
+            archive = os.path.join(homepath, fileout)
         with open(archive, 'w') as _f:
             driver = self.driver
             driver.get(url)
