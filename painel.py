@@ -6,9 +6,10 @@ from tkinter import *
 import platform
 
 LOCAL_DEFAULT_LINUX = "/home/luxu/Desktop/fpython/"
-homepath = os.path.expanduser(os.getenv("USERPROFILE"))
-desktoppath = "Desktop"
-LOCAL_DEFAULT_WINDOWS = os.path.join(homepath, desktoppath, "fpython/")
+if os.name != "posix":  # windows
+	homepath = os.path.expanduser(os.getenv("USERPROFILE"))
+	desktoppath = "Desktop"
+	LOCAL_DEFAULT_WINDOWS = os.path.join(homepath, desktoppath, "fpython/")
 
 
 class Application(Frame):
@@ -57,7 +58,7 @@ class Application(Frame):
 			code, out, err = self.run([sys.executable, f"{LOCAL_DEFAULT_WINDOWS}{texto}.py"])
 		else:
 			code, out, err = self.run([sys.executable, f"{LOCAL_DEFAULT_LINUX}{texto}.py"])
-		print(f"{out}")
+		print(f"def comando..: {out}")
 
 
 	def bt(self, texto):
