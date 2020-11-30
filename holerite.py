@@ -40,12 +40,15 @@ login = browser.find_element_by_name("txt_logindce")
 senha = browser.find_element_by_name("txt_senhadce")
 linkElem = browser.find_element_by_name("enviar")
 xpath_input_caixaAviso = '//*[@id="aviso"]/div/div[3]/center/input'
-input_caixaAviso = wait.until(
-            CondicaoExperada.element_to_be_clickable(
-                (By.XPATH, xpath_input_caixaAviso)
+try:
+    input_caixaAviso = wait.until(
+                CondicaoExperada.element_to_be_clickable(
+                    (By.XPATH, xpath_input_caixaAviso)
+                )
             )
-        )
-input_caixaAviso.send_keys(Keys.ENTER)
+    input_caixaAviso.send_keys(Keys.ENTER)
+except TimeoutException:
+    ...
 sleep(random.randint(5, 7) / 30)
 type_like_a_person("11632112", login)
 type_like_a_person(config("HOLERITE_SENHA"), senha)
