@@ -3,11 +3,10 @@
 
 name: Python application
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -21,10 +20,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Code Quality
-      run: |
-        pip install black
-        black -l 79 -S --check
+    - name: Lint with flake8
+        run: |
+          pipenv run flake8 .
     - name: Test with pytest
       run: |
-        pytest
+        pytest . --cov=test
+    - name: Posting Coverage
+        env:
+          CODECOV_TOKEN: "1a4363b3-d7a7-4220-b444-01f3414d0aa7"
+        run: |
+          pipenv run codecov
