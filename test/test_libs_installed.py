@@ -1,7 +1,6 @@
+def soma(a, b):
+    return a / b
 
-
-def soma(a, b):    
-    return a/b
 
 def test_chrome():
     assert 1 == 1
@@ -14,5 +13,6 @@ def test_bs():
 def test_os():
     assert 2 == 2
 
+
 def test_divisao():
-    assert soma(9,3) == 3
+    assert soma(9, 3) == 3

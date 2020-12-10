@@ -1,5 +1,5 @@
+# -*- coding: utf-8 -*-
 import os
-
 import PySimpleGUI as sg
 
 form = sg.FlexForm("Everything bagel", default_element_size=(80, 1))  # config form
@@ -23,7 +23,6 @@ search_str = values["5"]  # word to be searched
 
 
 def my_word():
-    strings = []
     # Repeat for each file in the directory
     for folder, dirs, files in os.walk(search_path):
 

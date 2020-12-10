@@ -1,7 +1,4 @@
-import random
-import string
-from pprint import pprint
-
+# -*- coding: utf-8 -*-
 from pornhub_api import PornhubApi
 
 api = PornhubApi()
@@ -11,7 +8,7 @@ list_categories = []
 # category = random.choice(api.video.categories().categories)
 # result = api.search.search(ordering="mostviewed", tags=tags, category=category)
 cont = 0
-categories = api.video.categories()#.categories
+categories = api.video.categories()  # .categories
 # print(category)
 # for letra in list(string.ascii_lowercase):
 #     for tags in api.video.tags(letra).tags:
@@ -26,5 +23,5 @@ for category in categories:
     list_categories = [e.category for e in category[1]]
 
 for category in list_categories:
-    if 'vintage' in category:
+    if "vintage" in category:
         print(category)

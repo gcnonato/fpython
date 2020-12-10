@@ -1,10 +1,11 @@
+# -*- coding: utf-8 -*-
 import sys
 import threading
 import time
 
 data_ready = threading.Event()
 kill_flag = threading.Event()
-key_pressed = ''
+key_pressed = ""
 
 
 def keyboard_poller():
@@ -19,7 +20,6 @@ def keyboard_poller():
 
         ch = input(">")
         if ch:
-            key_pressed = ch
             data_ready.set()
 
 

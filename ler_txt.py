@@ -9,11 +9,11 @@ def lerarquivo(arquivo):
     for t in texto:
         """Transforma o texto em dicionário tirando os espaços em branco"""
         t = t.split(" ")
-        """Só pega as linhas do texto que seja maior do que 30 
-        e que na posição 2 do dicionário tenha a string 2018, 
-        qdo mudar o ano mude aqui tb"""
+        """Só pega as linhas do texto que seja maior do que 30
+            e que na posição 2 do dicionário tenha a string 2018,
+            qdo mudar o ano mude aqui tb"""
         if len(t) > 30 and re.search(r"2018", t[2]):
-            """Daki em diante é só pegar os dados que quiser, 
+            """Daki em diante é só pegar os dados que quiser,
             aqui só printei o dicionário"""
             print(u"{}".format(t))
 

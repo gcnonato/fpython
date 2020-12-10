@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import datetime
 import os
 import random
@@ -7,7 +8,6 @@ import openpyxl
 import psycopg2
 from decouple import config
 from faker import Faker
-# first, import a similar Provider or use the default one
 from faker.providers import BaseProvider
 
 
@@ -54,14 +54,14 @@ class Connection:
             cur = self._db.cursor()
             cur.execute(sql)
             rs = cur.fetchall()
-        except Exception as e:
+        except Exception:
             return None
         return rs
 
     def inserir(self, dados):
         title, content, dataInicial, tenant_id = dados
-        content = f'<h2>{content}</h2>'
-        sql = f'INSERT INTO public.calendary_calendary(title, content, "dataInicial", tenant_id)'
+        content = f"<h2>{content}</h2>"
+        sql = "INSERT INTO calendary_calendary(title, content, dataInicial, tenant_id)"
         sql += f" VALUES('{title}', '{content}', '{dataInicial}', {tenant_id})"
         try:
             cursor = self._db.cursor()
@@ -77,7 +77,7 @@ class Connection:
             cur = self._db.cursor()
             cur.execute(sql)
             rs = cur.fetchall()
-        except:
+        except Exception:
             return None
         return rs
 
@@ -110,9 +110,7 @@ class Connection:
         wb = openpyxl.load_workbook(filename)
         worksheet = wb.active
         print(worksheet)
-        excel_data = list()
         name_columns = []
-        data = {}
         for value in worksheet.iter_rows(min_row=1, max_row=1, values_only=True):
             name_columns.append(value)
         for datas in worksheet.iter_rows(
@@ -130,7 +128,7 @@ class Connection:
                 else:
                     print(f"{key} {value}")
 
-    def selectDB(self, dbSelect):
+    def selectDB(self):
         # LOCAL
         local = {
             "database": config("DATABASE"),
@@ -138,8 +136,7 @@ class Connection:
             "user": config("USER_LOCAL"),
             "password": config("PASSWORD_LOCAL"),
         }
-
-        # return local if dbSelect == "1" else aws
+        return local
 
     def listar(con, sql):
         for row in con.consultar(sql):
@@ -164,10 +161,10 @@ if __name__ == "__main__":
                         day = values.day
                         month = values.month
                         year = random.randint(2010, 2020)
-                        str_date = f'{year}/{month}/{day}'
+                        str_date = f"{year}/{month}/{day}"
                         new_date = datetime.datetime.strptime(str_date, "%Y/%m/%d")
                         dados.append(new_date)
-                        print(f'NEW DATA - {new_date}'.center(100, '*'))
+                        print(f"NEW DATA - {new_date}".center(100, "*"))
                 else:
                     dados.append(values)
         dados.append(random.randint(1, 2))

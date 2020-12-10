@@ -1,10 +1,7 @@
+# -*- coding: utf-8 -*-
 import os
-import sys
-from io import BytesIO
 
 import PySimpleGUI as sg
-from bs4 import BeautifulSoup as bs
-from PIL import Image
 from requests import get
 
 
@@ -14,9 +11,9 @@ def verify_link(link):
         try:
             if image.status_code == 200:
                 return image
-        except Exception as err:
+        except Exception:
             return False
-    except Exception as err:
+    except Exception:
         return False
 
 
@@ -28,7 +25,7 @@ def get_image(image_url):
     image_name = os.path.split(image_url)[1]
     image = verify_link(image_url)
     if image:
-         # Use your own path or "" to use current working directory. Folder must exist.
+        # Use your own path or "" to use current working directory. Folder must exist.
         homepath = os.path.expanduser(os.getenv("USERPROFILE"))
         desktoppath = "Desktop"
         base_dir = os.path.join(homepath, desktoppath, "images")
@@ -40,19 +37,28 @@ def get_image(image_url):
 
 def list_folder():
     layout = [
-        [sg.Frame(
-                layout=[
-                    [sg.T("URL")], [sg.In(key="link"), ],
-                ], title="Paste link", title_color="yellow", relief=sg.RELIEF_SUNKEN,)],
-        [sg.Frame(
+        [
+            sg.Frame(
+                layout=[[sg.T("URL")], [sg.In(key="link"), ], ],
+                title="Paste link",
+                title_color="yellow",
+                relief=sg.RELIEF_SUNKEN,
+            )
+        ],
+        [
+            sg.Frame(
                 "Botões",
-                [[sg.Button("Submit"), sg.Exit()]], background_color="lightblue", title_color="red", ) ],
+                [[sg.Button("Submit"), sg.Exit()]],
+                background_color="lightblue",
+                title_color="red",
+            )
+        ],
     ]
     window = sg.Window("Manipule URL´s", layout, size=(430, 160))
     while True:
         event, values = window.read()
         if "Submit" in event:
-            link = values['link']
+            link = values["link"]
             # print(link)
             link = verify_link(link)
             if link:
@@ -62,15 +68,15 @@ def list_folder():
         if "viewfiles" in event:
             # change the "output" element to be the value of "input" element
             # window['-OUTPUT-'].update(values['-IN-'])
-            filename = values["filename"]
+            return values["filename"]
         if event == sg.WIN_CLOSED or "Exit" in event:
             sg.popup_auto_close("Saindo...", auto_close_duration=0.5)
             break
     window.close()
 
 
-if __name__ == '__main__':
-    url = 'http://sisadm2.pjf.mg.gov.br/imagem/'
+if __name__ == "__main__":
+    url = "http://sisadm2.pjf.mg.gov.br/imagem/"
     # argv = len(sys.argv)
     # if argv < 2:
     #     print("Faltou passar a URL.")

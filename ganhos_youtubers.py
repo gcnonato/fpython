@@ -1,16 +1,14 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import webbrowser
-from time import sleep
 
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 # url = 'https://socialblade.com/youtube/channel/UCBUPPrMmr9TIhEo849cQm-w'
-url = 'https://socialblade.com/'
-nome_do_youtuber = 'andarilho'
+url = "https://socialblade.com/"
+nome_do_youtuber = "andarilho"
 
 browser = webdriver.Chrome()
 browser.get(url)
@@ -21,20 +19,22 @@ btnProcurar = browser.find_element_by_xpath('//*[@id="homepage-meta-search-butto
 caixaProcurar.send_keys(nome_do_youtuber)
 btnProcurar.send_keys(Keys.ENTER)
 # sleep(2)
-browser.implicitly_wait(2) # seconds
-browser.findElement(By.xpath("//a[@href='/youtube/channel']")).click();
+browser.implicitly_wait(2)  # seconds
+browser.findElement(By.xpath("//a[@href='/youtube/channel']")).click()
 # link = browser.find_element_by_xpath('/html/body/div[10]/div[1]/a').click()
 # print(link)
 
-def youtuber_selecionado(url_do_youtuber):
-	page = requests.get(url)
-	soup = BeautifulSoup(page.content, 'html.parser')
 
-	avatar = soup.find("img", {"id": "YouTubeUserTopInfoAvatar"})
-	info = soup.find("div", {"id": "YouTubeUserTopInfoBlockTop"})
-	for x in info:
-		print(x)
-		print('-'*50)
+def youtuber_selecionado(url_do_youtuber):
+    page = requests.get(url)
+    soup = BeautifulSoup(page.content, "html.parser")
+    avatar = soup.find("img", {"id": "YouTubeUserTopInfoAvatar"})
+    info = soup.find("div", {"id": "YouTubeUserTopInfoBlockTop"})
+    for x in info:
+        print(avatar)
+        print(x)
+        print("-" * 50)
+
 
 # data = popup.find("h3")
 

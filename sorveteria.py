@@ -15,6 +15,7 @@ class Sorveteria:
         age : int
             age of the person
     """
+
     def __init__(self):
         self.produtos = [
             ["A", "Refrigerante", 3.50],
@@ -41,7 +42,6 @@ class Sorveteria:
         print(f"{'-' * 52}")
         return
 
-
     def nova_venda(self):
         tot_pagar = 0
         os.system("cls" if os.name == "nt" else "clear")
@@ -66,14 +66,17 @@ class Sorveteria:
             self.vendas[codigo][3] += qnt * self.vendas[codigo][1]
         return
 
-
     def relatorio(self):
         total = 0
-        print('Relatório do dia'.center(20,'*'))
-        print(f'\n{"-"*49}\n{"Produto":<19} {"Quantidade":<10} {"Preço":<10} {"Total" :<16}')
+        print("Relatório do dia".center(20, "*"))
+        print(
+            f'\n{"-"*49}\n{"Produto":<19} {"Quantidade":<10} {"Preço":<10} {"Total" :<16}'
+        )
         for produto in self.vendas.values():
             if produto[2] > 0:
-                print(f"{produto[0]:<19}  {produto[2]:^10} {produto[1]:^10}  {produto[3]:^16.2f}")
+                print(
+                    f"{produto[0]:<19}  {produto[2]:^10} {produto[1]:^10}  {produto[3]:^16.2f}"
+                )
                 total += produto[3]
         print(f"\nTotal arrecadado no dia: R$ {total:.2f}")
         print(f"Valor médio em cada compra: R$ {total/self.contador_vendas:.2f}")
@@ -96,6 +99,7 @@ class Sorveteria:
     def __str__(self):
         return "sim, é possível usar doctest"
 
+
 def sorvetery():
     """
     >>> sorveteria = Sorveteria()
@@ -108,6 +112,7 @@ def sorvetery():
 
     """
 
-if __name__ == '__main__':
-     sorveteria = Sorveteria()
-     sorveteria.menu()
+
+if __name__ == "__main__":
+    sorveteria = Sorveteria()
+    sorveteria.menu()

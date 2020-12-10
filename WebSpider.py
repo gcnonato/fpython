@@ -21,9 +21,9 @@ class LinkParser(HTMLParser):
         # like <a href="www.someurl.com"></a>
         # Estamos procurando o começo de um link. Links normalmente parecem
         # like <a href="www.someurl.com"></a>
-        if tag == 'a':
+        if tag == "a":
             for (key, value) in attrs:
-                if key == 'href':
+                if key == "href":
                     # We are grabbing the new URL. We are also adding the
                     # base URL to it. For example:
                     # www.netinstructions.com is the base and
@@ -67,7 +67,7 @@ class LinkParser(HTMLParser):
         # Certifique-se de que estamos olhando para HTML e não outras coisas que
         # estão flutuando na internet (como
         # JavaScript files, CSS, or .PDFs por exemplo)
-        if response.getheader('Content-Type').startswith('text/html'):
+        if response.getheader("Content-Type").startswith("text/html"):
             htmlBytes = response.read()
             # Note that feed() handles Strings well, but not bytes
             # (A change from Python 2.x to Python 3.x)
@@ -77,7 +77,8 @@ class LinkParser(HTMLParser):
             self.feed(htmlString)
             return htmlString, self.links
         else:
-            return "",[]
+            return "", []
+
 
 # And finally here is our spider. It takes in an URL, a word to find,
 # and the number of pages to search through before giving up
@@ -101,7 +102,7 @@ def spider(url, word, maxPages) -> str:
     # e nós retornamos um conjunto de links dessa página da web
     # (isso é útil para onde ir em seguida)
     while numberVisited < int(maxPages) and pagesToVisit != [] and not foundWord:
-        numberVisited = numberVisited +1
+        numberVisited = numberVisited + 1
         # Start from the beginning of our collection of pages to visit:
         # Comece do início de nossa coleção de páginas para visitar:
         url = pagesToVisit[0]
@@ -111,7 +112,7 @@ def spider(url, word, maxPages) -> str:
             print(numberVisited, "Visiting:", url)
             parser = LinkParser()
             data, links = parser.getLinks(url)
-            if data.find(word)>-1:
+            if data.find(word) > -1:
                 foundWord = True
                 # Add the pages that we visited to the end of our collection
                 # of pages to visit:
@@ -119,9 +120,13 @@ def spider(url, word, maxPages) -> str:
                 # de páginas para visitar
                 pagesToVisit = pagesToVisit + links
                 sucesso = " **Success!**"
-                print(u'{}\nA palavra {} foi encontrado na URL.: {}'.format(sucesso,word,url))
+                print(
+                    u"{}\nA palavra {} foi encontrado na URL.: {}".format(
+                        sucesso, word, url
+                    )
+                )
                 foundWord = False
-        except:
+        except Exception:
             # print(" **Failed!**")
             continue
         # if foundWord:
@@ -138,40 +143,44 @@ def spider2(url, word, maxPages):
     searchWord = []
     data, links = parser.getLinks(url)
     qtd_links_url = len(links)
-    print(u'Quantidade de links encontrados na {}: {}'.format(url,qtd_links_url))
+    print(u"Quantidade de links encontrados na {}: {}".format(url, qtd_links_url))
     qtd_pages = int(maxPages)
     numberVisited = 0
     if qtd_links_url < qtd_pages:
         qtd_pages = qtd_links_url
     for i in range(qtd_pages):
         try:
-            if links[i].startswith('http'):
-                numberVisited = numberVisited +1
+            if links[i].startswith("http"):
+                numberVisited = numberVisited + 1
                 print(numberVisited, "Visiting:", links[i])
                 parser = LinkParser()
                 data, linkss = parser.getLinks(links[i])
                 if word in data:
                     searchWord.append(links[i])
-        except:
+        except Exception:
             continue
 
     return searchWord
 
-if __name__ == '__main__':
-    os.system('cls')
+
+if __name__ == "__main__":
+    os.system("cls")
     if len(sys.argv) < 2:
-        print('-'*66)
-        print('Tem que passar um site para poder pegar os links dele')
+        print("-" * 66)
+        print("Tem que passar um site para poder pegar os links dele")
         print('ex.: WebSpider.py "http://www.uol.com.br","carnaval", 200')
-        print('-'*66)
+        print("-" * 66)
         sys.exit()
     else:
-        url = u'{}'.format(sys.argv[1])
-        word = u'{}'.format(sys.argv[2])
+        url = u"{}".format(sys.argv[1])
+        word = u"{}".format(sys.argv[2])
         maxPages = sys.argv[3]
         resultSite = spider2(url, word, maxPages)
-        print(u'{}\nQuantidade de links que tem a palavra: {} é: {}'
-            .format('-'*66,word,len(resultSite)))
+        print(
+            u"{}\nQuantidade de links que tem a palavra: {} é: {}".format(
+                "-" * 66, word, len(resultSite)
+            )
+        )
         pprint(resultSite)
         # print(url, word, maxPages)
         # spider(url, word, maxPages)

@@ -2,36 +2,33 @@
 
 from scrapy import Request, Spider
 
-'''
+"""
 para "aliviar" pros servidores usar:
 ```scrapy runspider doctoralia.py -s HTTPCACHE_ENABLED=1```
 ```scrapy runspider doctoralia.py -s HTTPCACHE_ENABLED=1 -o <nome-de-saida>.csv ```
 ```scrapy runspider doctoralia.py -s HTTPCACHE_ENABLED=1 -s CLOSESPIDER ITEMCOUNT=500 -o <nome-de-saida>.csv ```
 
-'''
+"""
 # Nome, descrição, imagem, endereço, foto, especialidade
 
 
 class DoctoraliaSpider(Spider):
-    name = 'doctoralia'
+    name = "doctoralia"
 
     start_urls = [
-        'https://www.doctoralia.com.br/medico-clinico-geral/sao-paulo',
+        "https://www.doctoralia.com.br/medico-clinico-geral/sao-paulo",
         # 'https://www.doctoralia.com.br/local/rio-de-janeiro-rj/medico-clinico-geral'
     ]
 
     def parse(self, response):
-        links = response.css('a.rank-element-name__link::attr(href) ').extract()
+        links = response.css("a.rank-element-name__link::attr(href) ").extract()
         for link in links:
-            yield Request(
-                url=link,
-                callback=self.parse_novo
-            )
+            yield Request(url=link, callback=self.parse_novo)
             break
 
     def parse_novo(self, response):
         # trago toda a caixa onde tem as infos
-        boxes = response.css('#profile-info')
+        boxes = response.css("#profile-info")
         # crio o laço para separar as coisas
         caixas = boxes.xpath('./div[contains(@data-id, "doctor-address-item")]')
         for caixa in caixas:
@@ -47,13 +44,13 @@ class DoctoraliaSpider(Spider):
             '//span[contains(@class, "text-muted")]//text()'
         ).extract_first()
 
-        response.xpath(
-            '//h5[contains(@class, "offset-0")]//following-sibling::span'
-        )[-1].get()
+        response.xpath('//h5[contains(@class, "offset-0")]//following-sibling::span')[
+            -1
+        ].get()
 
         self.log(especialidade)
 
-        '''
+        """
         for box in boxes:
             # pego todos os endereços da caixa
             enderecos = box.xpath('.//h5[contains(@class, "offset-0")]')
@@ -122,4 +119,4 @@ class DoctoraliaSpider(Spider):
                     '-'*100
                 )
             )
-        '''
+        """

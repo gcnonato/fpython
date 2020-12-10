@@ -1,12 +1,11 @@
+# -*- coding: utf-8 -*-
 import json
 import os
 import sys
-# import pyautogui
 import threading
 import time
 
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 
 sys.path.append(os.getcwd())
 
@@ -18,7 +17,7 @@ with open(arquivoConf) as json_data_file:
 # E:/geckodriver.exe
 # WebDriver driver = new FirefoxDriver()
 
-firefox_profile = webdriver.FirefoxProfile(config['from_nameFirefox'])
+firefox_profile = webdriver.FirefoxProfile(config["from_nameFirefox"])
 browser = webdriver.Firefox(firefox_profile)
 
 num_of_tabs = 10

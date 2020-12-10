@@ -19,7 +19,11 @@ class Correios:
             "_ga": "GA1.3.1493968158.1588327061",
             "_gid": "GA1.3.1615543768.1588327061",
             "_gat_gtag_UA_564464_1": "1",
-            "CFGLOBALS": "urltoken%3DCFID%23%3D102956239%26CFTOKEN%23%3D6fc0f7ceebf578b7%2D1CB381EE%2DD0BA%2D1488%2DE9E36764A9BA1C1F%26jsessionid%23%3DF71FBE475FD98D20E346A374999C5EDF%2Ecfusion02%23lastvisit%3D%7Bts%20%272020%2D05%2D01%2007%3A10%3A24%27%7D%23hitcount%3D10%23timecreated%3D%7Bts%20%272020%2D05%2D01%2006%3A57%3A38%27%7D%23cftoken%3D6fc0f7ceebf578b7%2D1CB381EE%2DD0BA%2D1488%2DE9E36764A9BA1C1F%23cfid%3D102956239%23",
+            "CFGLOBALS": "urltoken%3DCFID%23%3D102956239%26CFTOKEN%23%3D6fc0f7ceebf578b7%2D1CB381EE%2DD0BA%2D1488%"
+                         "2DE9E36764A9BA1C1F%26jsessionid%23%3DF71FBE475FD98D20E346A374999C5EDF%2Ecfusion02%23last"
+                         "visit%3D%7Bts%20%272020%2D05%2D01%2007%3A10%3A24%27%7D%23hitcount%3D10%23timecreated%3D%7"
+                         "Bts%20%272020%2D05%2D01%2006%3A57%3A38%27%7D%23cftoken%3D6fc0f7ceebf578b7%2D1CB381EE%2DD0B"
+                         "A%2D1488%2DE9E36764A9BA1C1F%23cfid%3D102956239%23",
         }
 
         self.headers = {
@@ -28,8 +32,10 @@ class Correios:
             "Upgrade-Insecure-Requests": "1",
             "Origin": "https://www2.correios.com.br",
             "Content-Type": "application/x-www-form-urlencoded",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.129 Safari/537.36",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                          "(KHTML, like Gecko) Chrome/81.0.4044.129 Safari/537.36",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,"
+                      "image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
             "Sec-Fetch-Site": "same-origin",
             "Sec-Fetch-Mode": "navigate",
             "Sec-Fetch-User": "?1",
@@ -46,13 +52,13 @@ class Correios:
         response = post(url, cookies=self.cookies, headers=self.headers, data=data)
         soup = bs(response.content, "lxml")
         list_tables = soup.find_all("table")
-        msg = ''
+        msg = ""
         if list_tables:
             for table in list_tables:
                 final = " ".join(table.getText().split())
                 msg = final
         else:
-            msg = 'Lista vazia'
+            msg = "Lista vazia"
         return msg
 
     def telaInicial(self):
@@ -67,7 +73,9 @@ class Correios:
         if "OK" in event and len(values[0]) == 13:
             self.nro_rastreamento = values[0]
         else:
-            print(f'Lembre-se: para rastrear digite exatos 13 caracteres, vc digitou {len(values[0])} caracteres')
+            print(
+                f"Lembre-se: para rastrear digite exatos 13 caracteres, vc digitou {len(values[0])} caracteres"
+            )
             sys.exit(0)
 
 

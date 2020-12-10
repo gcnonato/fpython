@@ -8,7 +8,9 @@ import grecaptchabypass
 import PySimpleGUI as sg
 from decouple import config
 from selenium import webdriver
-from selenium.common.exceptions import *
+from selenium.common.exceptions import (
+
+    NoSuchElementException, ElementNotVisibleException, ElementNotSelectableException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as CondicaoExperada
 from selenium.webdriver.support.ui import WebDriverWait
@@ -76,7 +78,7 @@ class GuiaBolsoSelenium:
                             # csvWriter.writerow(rows)
                             print(rows)
                             rows = ""
-                        except:
+                        except Exception:
                             if "R$" in row:
                                 rows += f"{row}\n"
                                 txtFileObj.write(rows)
@@ -115,7 +117,7 @@ class GuiaBolsoSelenium:
                         csvWriter.writerow(rows)
                         print(rows)
                         rows = ""
-                    except:
+                    except Exception:
                         if "R$" in row:
                             rows += row
                             csvWriter.writerow(rows)
@@ -145,7 +147,7 @@ class GuiaBolsoSelenium:
                         rows += f"{row}\n"
                         print(f"{passar_um_traco}{rows}{passar_um_traco}")
                         rows = ""
-                    except:
+                    except Exception:
                         if "R$" in row:
                             rows += f"{row}\n"
                             print(rows)
@@ -274,7 +276,6 @@ class GuiaBolsoSelenium:
 
 
 class QuebraRecaptcha:
-
     def teste(self):
         # Iniciando browser, se headless for True o browser rodará em background.
         browser = grecaptchabypass.getBrowserFirefox(headless=False)
@@ -300,8 +301,8 @@ if __name__ == "__main__":
     params["eMail"] = config("GUIABOLSO_EMAIL")
     params["senha"] = config("GUIABOLSO_PASSWORD")
     params["current_month"] = gb.layout_inicial()
-    if params["current_month"] != None:
+    if params["current_month"] is not None:
         gb.main(url, params)
-        print('Muito bem vamos lá!')
+        print("Muito bem vamos lá!")
     else:
         print("Sem mês escolhido num dá!")

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-#coding: utf-8
 import os
 import platform
 import webbrowser
@@ -14,25 +13,25 @@ else:
     cmd_limpar = "clear"
 
 os.system(cmd_limpar)
-print(colored.blue("""
-  ___        _             _     _       _        
- / _ \ _ __ (_) ___  _ __ | |   (_)_ __ | | _____ 
-| | | | '_ \| |/ _ \| '_ \| |   | | '_ \| |/ / __|
-| |_| | | | | | (_) | | | | |___| | | | |   <\__ 
- \___/|_| |_|_|\___/|_| |_|_____|_|_| |_|_|\_\___/
-
-       Encontrando links da REDE ONION                                                  
+print(colored.blue(
+    """Encontrando links da REDE ONION
            Ryan Aragão - BurnSec
-        """))
+    """
+    )
+)
+
 
 def menu():
-    print("""
+    print(
+        """
 0. Sair
 1. Sites Onion
 2. Como Usar
 3. Créditos
 
-    """)
+    """
+    )
+
 
 while True:
     # menu()
@@ -46,9 +45,8 @@ while True:
         # conteudo = str(input("Conteúdo:"))
         conteudo = str("python")
         # dork = f'{conteudo} site:onion.link | site:onion.cab | site:onion.sh | site:tor2web.fi | site:onion.direct'
-        dork = f'{conteudo} site:www.stackoverflow.com | site:www.baboo.com.br'
-        with open("../"
-                  "sitesonion.txt", "w") as stream:
+        dork = f"{conteudo} site:www.stackoverflow.com | site:www.baboo.com.br"
+        with open("../" "sitesonion.txt", "w") as stream:
             print(stream)
             for url in search(dork, stop=50 or 1):
                 print(url, file=stream)

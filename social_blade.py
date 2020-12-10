@@ -1,15 +1,12 @@
-import requests
-from bs4 import BeautifulSoup
+# -*- coding: utf-8 -*-
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 
 
 class SocialBlade:
-
-    def __init__(self,driver):
+    def __init__(self, driver):
         self.driver = driver
         self.url = "https://socialblade.com/"
-        self.caixa_search = 'q'  #name
+        self.caixa_search = "q"  # name
 
     def navigate(self):
         self.driver.get(self.url)
@@ -22,32 +19,37 @@ class SocialBlade:
             print(box)
 
     def destrinchar_url(self):
-        prices = self.driver.find_elements_by_xpath("/html/body/div[15]/div[2]/div[1]/div[2]/div[3]")
-        prices = self.driver.find_elements_by_tag_name('div')
+        prices = self.driver.find_elements_by_xpath(
+            "/html/body/div[15]/div[2]/div[1]/div[2]/div[3]"
+        )
+        prices = self.driver.find_elements_by_tag_name("div")
         for price in prices:
             print(price)
         # return self.driver.find_elements_by_xpath("/html/body/div[15]/div[2]/div[1]/div[2]/div[3]")
         # print(c)
 
-    def search(self, word='None'):
+    def search(self, word="None"):
         self.driver.find_element_by_name(self.caixa_search).send_keys(word)
-        self.driver.find_element_by_xpath("//*[@id='topSearchForm']/div[1]/button").click()
+        self.driver.find_element_by_xpath(
+            "//*[@id='topSearchForm']/div[1]/button"
+        ).click()
         if self.driver.find_element_by_xpath("/html/body/div[10]/div[1]/a"):
             self.driver.find_element_by_xpath("/html/body/div[10]/div[1]/a").click()
         return self.driver.current_url
+
 
 url = "https://socialblade.com/"
 cc = webdriver.Chrome()
 c = SocialBlade(cc)
 c.navigate()
 # url = c.search('andarilho')
-url = c.search('Canal VGames')
+url = c.search("Canal VGames")
 # url = c.search('Clash com Nery')
 c.destrinchar_url()
 # cc.close()
 # cc.quit()
 
-'''
+"""
 #
 # found = soup.find('span', text='Rok produkcji').find_next_sibling('div')
 info_youtuber = 'YouTubeUserTopInfoWrap'  #id
@@ -81,4 +83,4 @@ SUBSCRIBERS = nv[1].find_next("span").find_next("span").find_next("span").text
 VIDEO_VIEWS = nv[2].find_next("span").find_next("span").find_next("span").text
 # USER_CREATED = n[5].text
 print('UPLOADS.:{}\nSUBSCRIBERS.:{}\nVIDEO VIEWS.:{}'.format(UPLOADS,SUBSCRIBERS,VIDEO_VIEWS))
-'''
+"""

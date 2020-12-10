@@ -1,9 +1,12 @@
+# -*- coding: utf-8 -*-
 import random
 from time import sleep
 
 import PySimpleGUI as sg
 from selenium import webdriver
-from selenium.common.exceptions import *
+from selenium.common.exceptions import (
+    NoSuchElementException, ElementNotVisibleException, ElementNotSelectableException
+)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as condicaoexperada
 from selenium.webdriver.support.ui import WebDriverWait

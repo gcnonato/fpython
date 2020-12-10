@@ -1,21 +1,21 @@
-#Import the necessary methods from tweepy library
-# from tweepy.streaming import StreamListener
+# -*- coding: utf-8 -*-
+# Import the necessary methods from tweepy library
 import configparser
 
 import tweepy
-from tweepy import OAuthHandler, Stream
+from tweepy import OAuthHandler
 
 # Carrega as configurações de arquivo externo
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read("config.ini")
 
-#Variables that contains the user credentials to access Twitter API
-access_token = config['twitter']['accesstoken']
-access_token_secret = config['twitter']['accesstokensecret']
-consumer_key = config['twitter']['consumerkey']
-consumer_secret = config['twitter']['consumersecret']
+# Variables that contains the user credentials to access Twitter API
+access_token = config["twitter"]["accesstoken"]
+access_token_secret = config["twitter"]["accesstokensecret"]
+consumer_key = config["twitter"]["consumerkey"]
+consumer_secret = config["twitter"]["consumersecret"]
 
-#This is a basic listener that just prints received tweets to stdout.
+# This is a basic listener that just prints received tweets to stdout.
 # class StdOutListener(StreamListener):
 
 #     def on_data(self, data):
@@ -25,17 +25,17 @@ consumer_secret = config['twitter']['consumersecret']
 #     def on_error(self, status):
 #         print(status)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
-    #This handles Twitter authetification and the connection to Twitter Streaming API
+    # This handles Twitter authetification and the connection to Twitter Streaming API
     # l = StdOutListener()
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
 
     api = tweepy.API(auth)
 
-    user = api.get_user('carlacecato')
-    user2 = api.get_user('DeniseCToledo8')
+    user = api.get_user("carlacecato")
+    user2 = api.get_user("DeniseCToledo8")
 
     public_tweets = api.home_timeline()
     for tweet in public_tweets:
@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
     # stream = Stream(auth, l)
 
-    #This line filter Twitter Streams to capture data by the keywords: 'python', 'javascript', 'ruby'
+    # This line filter Twitter Streams to capture data by the keywords: 'python', 'javascript', 'ruby'
     # stream.filter(track=['python', 'javascript', 'ruby'])
     # stream.filter(track=['DeniseCToledo8'])
     # stream.filter(track=['CarlaBigatto'])

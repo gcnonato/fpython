@@ -1,13 +1,15 @@
+# -*- coding: utf-8 -*-
 import os
+from ftplib import FTP
 from time import sleep
 
 file = ""
 
 
 def conectar(self):
-    # ftp = FTP(self['ftp'])
+    ftp = FTP(self['ftp'])
     # ftp.login(self['login'],self['senha'])
-    ftp = ftp("ftp.luxu.com.br", "luxucom", "")
+    # ftp = ftp("ftp.luxu.com.br", "luxucom", "")
     ftp.dir()
     # conn = f'"{self['ftp']}","{self['login']}","{self['senha']}"'
     return ftp
@@ -50,8 +52,8 @@ def upload(self, file):
 
 
 def ftps(options):
+    fabrizio = {"login": "", "senha": "", "ftp": ""}
     if options == "1":
-        fabrizio = {"login": "", "senha": "", "ftp": ""}
         connection = conectar(fabrizio)
         listar(connection, "public_html")
         baixar = input("Fazer download?(S)im/(N)ão.: ")
@@ -153,7 +155,7 @@ host = '192.175.124.120'
 arquivo = "test.php"
 
 for a in os.environ:
-	print('Var: ', a, 'Value: ', os.getenv(a))
+    print('Var: ', a, 'Value: ', os.getenv(a))
 if os.environ['PUBLIC']:
     print(True)
 else:

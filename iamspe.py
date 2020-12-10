@@ -1,6 +1,6 @@
+# -*- coding: utf-8 -*-
 import os
 import re
-
 from bs4 import BeautifulSoup as bs
 from requests import get
 from splitty import clear_list_strings
@@ -24,7 +24,8 @@ class Iamspe:
         self.headers = {
             "Connection": "keep-alive",
             "Accept": "*/*",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                          "(KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36",
             "X-Requested-With": "XMLHttpRequest",
             "Referer": "http://www.iamspe.sp.gov.br/rede/index.php",
             "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",

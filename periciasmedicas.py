@@ -16,8 +16,10 @@ class Periciasmedicas:
             "Upgrade-Insecure-Requests": "1",
             "Origin": "http://periciasmedicas.gestaopublica.sp.gov.br",
             "Content-Type": "application/x-www-form-urlencoded",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                          "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,"
+                      "image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
             "Referer": "http://periciasmedicas.gestaopublica.sp.gov.br/eSisla/noauth/login/LoginExecute.do",
             "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
         }
@@ -79,11 +81,12 @@ class Periciasmedicas:
                 except Exception as err:
                     print(err)
                     _file.write(f"Data Agend/Exp={info[1]}")
-                _file.write(f"\n")
+                _file.write("\n")
                 if info[0] % 9 == 0:
                     cont_cabecalho = 1
                 else:
                     cont_cabecalho += 1
+
 
 class Tela:
     def __init__(self):
@@ -91,18 +94,21 @@ class Tela:
 
     def list_folder(self, lista_info):
         layout = [
-            [sg.Button("Salvar em disco", key='printer'), sg.Button("Exit", key='exit')],
+            [
+                sg.Button("Salvar em disco", key="printer"),
+                sg.Button("Exit", key="exit"),
+            ],
             [sg.T("Source Folder")],
             [sg.Multiline(lista_info, size=[100, 250], autoscroll=True)],
         ]
         window = sg.Window("Gerenciador", layout, size=(430, 410))
         event, values = window.read()
         while True:
-            if event == 'printer':
-                sg.popup_auto_close('Imprimindo...', auto_close_duration=2.5)
-                event = ''
-            if event == 'exit':
-                sg.popup_auto_close('Saindo...', auto_close_duration=0.5)
+            if event == "printer":
+                sg.popup_auto_close("Imprimindo...", auto_close_duration=2.5)
+                event = ""
+            if event == "exit":
+                sg.popup_auto_close("Saindo...", auto_close_duration=0.5)
                 break
         window.close()
 

@@ -18,16 +18,18 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pytest
+        pip install pipenv codecov
+        pip install -q -r requirements.txt
+        pipenv sync --dev
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
-        run: |
-          pipenv run flake8 .
+      run: |
+        pipenv run flake8 .
     - name: Test with pytest
       run: |
         pytest . --cov=test
     - name: Posting Coverage
-        env:
-          CODECOV_TOKEN: "1a4363b3-d7a7-4220-b444-01f3414d0aa7"
-        run: |
-          pipenv run codecov
+      env:
+        CODECOV_TOKEN: "1a4363b3-d7a7-4220-b444-01f3414d0aa7"
+      run: |
+        pipenv run codecov

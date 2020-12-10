@@ -1,10 +1,9 @@
+# -*- coding: utf-8 -*-
 import random
 import time
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-
-# Fiz algumas modificações
 
 
 class InstagramBot:
@@ -17,7 +16,8 @@ class InstagramBot:
         self.driver = webdriver.Firefox(
             firefox_profile=firefoxProfile, executable_path=r"./geckodriver"
         )
-        """ # Coloque o caminho para o seu geckodriver aqui, lembrando que você precisa instalar o firefox e geckodriver na versão mais atual """
+        """Coloque o caminho para o seu geckodriver aqui, lembrando que você precisa instalar o firefox e geckodriver n
+        a versão mais atual """
         # Link download do geckodriver: https://github.com/mozilla/geckodriver/releases
         # Link download Firefox https://www.mozilla.org/pt-BR/firefox/new/
 
@@ -57,9 +57,7 @@ class InstagramBot:
         driver = self.driver
         driver.get("https://www.instagram.com/explore/tags/" + hashtag + "/")
         time.sleep(5)
-        for i in range(
-            1, 3
-        ):  # Altere o segundo valor aqui para que ele desça a quantidade de páginas que você quiser: quer que ele desça 5 páginas então você deve alterar de range(1,3) para range(1,5)
+        for i in range(1, 3):
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(3)
         hrefs = driver.find_elements_by_tag_name("a")
@@ -69,7 +67,7 @@ class InstagramBot:
             try:
                 if link.index("/p/") != -1:
                     links_de_posts.append(link)
-            except:
+            except Exception:
                 pass
 
         for pic_href in links_de_posts:

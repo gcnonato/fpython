@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import subprocess
 from pprint import pprint
@@ -23,10 +24,9 @@ class Banco:
         #     password={creds.RDS_PASSWORD}"
         self.con = psycopg2.connect(conn_string_local)
 
-
     def load_data(self, schema, table):
         sql_command = f"SELECT * FROM {str(table)}"
-        print (sql_command)
+        print(sql_command)
         conn = self.con
 
         # Load the data
@@ -35,16 +35,15 @@ class Banco:
         print(data.tail())
         return data
 
-
-        def connect(self) :
+        def connect(self):
             """ Connect to the PostgreSQL database server """
             conn = self.con
             try:
-                print('Connecting to the PostgreSQL database...')
+                print("Connecting to the PostgreSQL database...")
                 cur = conn.cursor()
-                print('PostgreSQL database version:')
+                print("PostgreSQL database version:")
 
-                cur.execute('SELECT version()')
+                cur.execute("SELECT version()")
                 db_version = cur.fetchone()
                 print(db_version)
                 cur.close()
@@ -53,8 +52,7 @@ class Banco:
             finally:
                 if conn is not None:
                     conn.close()
-                    print('Database connection closed.')
-
+                    print("Database connection closed.")
 
     def get_vendors(self, table):
         """ query data from the vendors table """
@@ -66,7 +64,7 @@ class Banco:
             #     WHERE g.segmento_id = c.id  ORDER BY g.id DESC
             #     """
             # )
-            cur.execute(f'SELECT * FROM {table} AS  c')
+            cur.execute(f"SELECT * FROM {table} AS  c")
             # rows = cur.fetchone()
             rows = cur.fetchall()
 
@@ -81,27 +79,25 @@ class Banco:
             if conn is not None:
                 conn.close()
 
-
     def lastIDinserted(self, table):
         conn = self.con
-        sql = f'SELECT MAX(id) FROM {table}'
+        sql = f"SELECT MAX(id) FROM {table}"
         # sql = "SELECT currval(pg_get_serial_sequence('website_comercio','id'))"
         # sql = "select nextval('website_gasto_id_seq')"
         # nextval('website_gasto_id_seq'::regclass)
         cur = conn.cursor()
         try:
-            print(f'SQL.: {sql}')
+            print(f"SQL.: {sql}")
             id = cur.execute(sql)
-            print(f'ID..: {id}')
+            print(f"ID..: {id}")
         except psycopg2.DatabaseError as error:
-            print(f'ERROR..: {error}')
+            print(f"ERROR..: {error}")
         finally:
-                cur.close()
-                conn.close()
-
+            cur.close()
+            conn.close()
 
     def insert_gasto(self, fields):
-        id = fields[4]
+        # id = fields[4]
         name = fields[0]
         slug = fields[1]
         valor = fields[2]
@@ -114,7 +110,7 @@ class Banco:
         try:
             cur = conn.cursor()
             # execute the INSERT statement
-            cur.execute(sql, (name,slug,valor,comercio_id,))
+            cur.execute(sql, (name, slug, valor, comercio_id,))
             # get the generated id back
             vendor_id = cur.fetchone()[0]
             # commit the changes to the database
@@ -128,28 +124,27 @@ class Banco:
                 conn.close()
         return vendor_id
 
-
-    def backup(self, server, user, database,password):
+    def backup(self, server, user, database, password):
         print(password)
-        os.chdir('C:\\Users\\luxu\\Desktop')
-        filename = 'backup.sql'
-        dado = f'pg_dump  -f {filename} -h {server} -U {user} {database}'
+        os.chdir("C:\\Users\\luxu\\Desktop")
+        filename = "backup.sql"
+        dado = f"pg_dump  -f {filename} -h {server} -U {user} {database}"
         # print(dado)
         popen = subprocess.Popen(dado, stdout=subprocess.PIPE, universal_newlines=True)
         popen.stdout.close()
         popen.wait()
 
-
-    def getTables(self, ):
+    def getTables(self,):
         conn = self.con
         # conn = psycopg2.connect(conn_string)
         cursor = conn.cursor()
-        cursor.execute("select relname from pg_class where relkind='r' and relname !~ '^(pg_|sql_)';")
+        cursor.execute(
+            "select relname from pg_class where relkind='r' and relname !~ '^(pg_|sql_)';"
+        )
         tables = []
         for table in cursor.fetchall():
             tables.append(table[0])
         return tables
-
 
     def getReadTable(self, table):
         conn = self.con
@@ -160,7 +155,7 @@ class Banco:
             #     WHERE g.segmento_id = c.id  ORDER BY g.id DESC
             #     """
             # )
-            cur.execute(f'SELECT * FROM {table} AS  c')
+            cur.execute(f"SELECT * FROM {table} AS  c")
             # rows = cur.fetchone()
             for row in cur.fetchall():
                 pprint(row)
@@ -168,8 +163,7 @@ class Banco:
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
         finally:
-                conn.close()
-
+            conn.close()
 
     def getReadColumnTable(self, table):
         conn = self.con
@@ -180,7 +174,7 @@ class Banco:
             #     WHERE g.segmento_id = c.id  ORDER BY g.id DESC
             #     """
             # )
-            cur.execute(f'SELECT * FROM {table} AS  c')
+            cur.execute(f"SELECT * FROM {table} AS  c")
             # rows = cur.fetchone()
             for row in cur.fetchall():
                 pprint(row)
@@ -188,12 +182,12 @@ class Banco:
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
         finally:
-                conn.close()
+            conn.close()
 
 
-if __name__ == '__main__':
-    schema = 'recrutamento'
-    table = 'django_migrations'
+if __name__ == "__main__":
+    schema = "recrutamento"
+    table = "django_migrations"
     banco = Banco()
     # load_data(schema,table)
     # get_vendors(table)

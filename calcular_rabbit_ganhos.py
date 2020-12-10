@@ -1,11 +1,8 @@
 #!/usr/bin/python3
-# import datetime
-import PySimpleGUI as sg
 from datetime import datetime, timedelta
 
-from time import sleep
+import PySimpleGUI as sg
 from decouple import config
-
 from requests import Session, get
 
 
@@ -17,7 +14,7 @@ def get_date(data):
             sep = "-"
         ano, mes, dia = [int(i) for i in data.split(sep)]
         return ano, mes, dia
-    except:
+    except Exception:
         return None
 
 
@@ -26,7 +23,7 @@ def get_time(time):
     try:
         hours, minutes, seconds = [int(i) for i in time.split(":")]
         return timedelta(hours=hours, minutes=minutes, seconds=seconds)
-    except:
+    except Exception:
         return None
 
 
@@ -48,9 +45,10 @@ def acessar_pagina():
 
 def logar(html, params):
     session = Session()
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36"
-    }
+    # headers = {
+    #     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+    #     AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36"
+    # }
     # response = session.post(html, data=params, headers=headers)
     resul = session.get("https://app.rabbiit.com/a/e7635e19d341/#/projects/3")
     # resposta = re.findall("Backup", resul.text)
@@ -63,15 +61,20 @@ def login():
     return token
 
 
-def variables_to_access_site(token, month, year=2020, dayInitial='7', dayFinal='6'):
+def variables_to_access_site(token, month, year=2020, dayInitial="7", dayFinal="6"):
     # Quando for usar tem q entrar no site, e atualizar esse authorization pelo https://curl.trillworks.com/#python
     cookies = {
         "_ga": "GA1.2.581327304.1556565197",
         "_gid": "GA1.2.1016363647.1556565197",
         "a": "e7635e19d341",
         "a-e7635e19d341": "G2k2G6YDgcrfGnZ2ExtwIWDP6JQbLKDTjdUqAlKitMst-9ZVzmGPb3k48",
-        "amplitude_idrabbiit.com": "eyJkZXZpY2VJZCI6ImE4OTQyMjQxLTU4ZjAtNDgwMS1hNzhhLWUzMzJmNjU5MzVlYlIiLCJ1c2VySWQiOm51bGwsIm9wdE91dCI6ZmFsc2UsInNlc3Npb25JZCI6MTU1NjU2NTIxNDk1NSwibGFzdEV2ZW50VGltZSI6MTU1NjU2NTQzODAxNywiZXZlbnRJZCI6NCwiaWRlbnRpZnlJZCI6MCwic2VxdWVuY2VOdW1iZXIiOjR9",
-        "intercom-session-686c4e3617bad5cdb7e55dfaaace8b455742041c": "SzQxV0xXci9LT2JQbzg1SVFabGlTZldpLzRZVk5iMUZhNThhak85azBDekJhcG13RnpVTEg3dkpCZmJGa054WS0tZkJKUmdKTEFHNXQ1Y01OeTN6VVJlQT09--fe775dde61c7fa780941c82201b7d1893d3bd0a9",
+        "amplitude_idrabbiit.com": "eyJkZXZpY2VJZCI6ImE4OTQyMjQxLTU4ZjAtNDgwMS1hNzhhLWUzMzJmNjU5MzVlYlIiLCJ1c2VySWQiOm5"
+                                   "1bGwsIm9wdE91dCI6ZmFsc2UsInNlc3Npb25JZCI6MTU1NjU2NTIxNDk1NSwibGFzdEV2ZW50VGltZSI6MT"
+                                   "U1NjU2NTQzODAxNywiZXZlbnRJZCI6NCwiaWRlbnRpZnlJZCI6MCwic2VxdWVuY2VOdW1iZXIiOjR9",
+        "intercom-session-686c4e3617bad5cdb7e55dfaaace8b455742041c": "SzQxV0xXci9LT2JQbzg1SVFabGlTZldpLzRZVk5iMUZhNThha"
+                                                                     "k85azBDekJhcG13RnpVTEg3dkpCZmJGa054WS0tZkJKUmdKTE"
+                                                                     "FHNXQ1Y01OeTN6VVJlQT09--fe775dde61c7fa780941c8220"
+                                                                     "1b7d1893d3bd0a9",
     }
 
     headers = {
@@ -79,21 +82,25 @@ def variables_to_access_site(token, month, year=2020, dayInitial='7', dayFinal='
         "pragma": "no-cache",
         "cache-control": "no-cache",
         "accept": "application/json, text/plain, */*",
-        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                      "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36",
         "x-api-token": f"{token}",
         "sec-fetch-site": "same-origin",
         "sec-fetch-mode": "cors",
         "sec-fetch-dest": "empty",
         "referer": "https://app.rabbiit.com/a/e7635e19d341/",
         "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-        "cookie": "a=e7635e19d341; a-e7635e19d341=SLGhk6Qh1MXpgiTyrEzEX0Sib0G8s5cIsqOPXxtQQJUz-J9p32AXNB6BY; intercom-session-686c4e3617bad5cdb7e55dfaaace8b455742041c=RVY2YXlvRG1oaXF0YkkvSU80dzhwL00zVG84Wlh1SXEzRWJQYTVySFdWT3VDTjBXcDJTaXJNamQ1Mmh3Um5nSS0tTU9aTUlhRzRjZDlaaWtNUjJhSzl4QT09--50e7c36c9d5ca69d99913c9de262fe1bd7006aa9",
+        "cookie": "a=e7635e19d341; a-e7635e19d341=SLGhk6Qh1MXpgiTyrEzEX0Sib0G8s5cIsqOPXxtQQJUz-J9p32AXNB6BY; intercom-s"
+                  "ession-686c4e3617bad5cdb7e55dfaaace8b455742041c=RVY2YXlvRG1oaXF0YkkvSU80dzhwL00zVG84Wlh1SXEzRWJQYTVy"
+                  "SFdWT3VDTjBXcDJTaXJNamQ1Mmh3Um5nSS0tTU9aTUlhRzRjZDlaaWtNUjJhSzl4QT09--50e7c36c9d5ca69d99913c9de262fe"
+                  "1bd7006aa9",
     }
     if len(dayInitial) < 2:
-        dayInitial = ''.join(("0",dayInitial))
+        dayInitial = "".join(("0", dayInitial))
     if len(dayFinal) < 2:
-        dayFinal= ''.join(("0", dayFinal))
-    month_present = ''.join(("0", month))
-    month_previous = ''.join(("0", str((int(month)-1))))
+        dayFinal = "".join(("0", dayFinal))
+    month_present = "".join(("0", month))
+    month_previous = "".join(("0", str((int(month) - 1))))
 
     params = (
         ("date_execution_start", f"{year}-{month_previous}-{dayInitial}"),
@@ -141,7 +148,7 @@ class Gui:
             [
                 sg.Combo(
                     self.days,
-                    size=(10,12),
+                    size=(10, 12),
                     enable_events=False,
                     key="choicedayinicial",
                     default_value=default_dayInicial,
@@ -175,10 +182,42 @@ class Gui:
                 )
             ],
             [sg.Cancel(), sg.OK()],
-            [sg.Multiline(font='Calibri', key='inicio', size=(100, 1), disabled=True, border_width='0')],
-            [sg.Multiline(font='Calibri', key='return', size=(100, 10), disabled=True, border_width='0')],
-            [sg.Multiline(font='Calibri', key='resultado_final', size=(100, 1), disabled=True, border_width='0')],
-            [sg.Multiline(font='Calibri', key='fim', size=(100, 1), disabled=True, border_width='0')]
+            [
+                sg.Multiline(
+                    font="Calibri",
+                    key="inicio",
+                    size=(100, 1),
+                    disabled=True,
+                    border_width="0",
+                )
+            ],
+            [
+                sg.Multiline(
+                    font="Calibri",
+                    key="return",
+                    size=(100, 10),
+                    disabled=True,
+                    border_width="0",
+                )
+            ],
+            [
+                sg.Multiline(
+                    font="Calibri",
+                    key="resultado_final",
+                    size=(100, 1),
+                    disabled=True,
+                    border_width="0",
+                )
+            ],
+            [
+                sg.Multiline(
+                    font="Calibri",
+                    key="fim",
+                    size=(100, 1),
+                    disabled=True,
+                    border_width="0",
+                )
+            ],
         ]
         window = sg.Window("Ganhos nos bicos", grab_anywhere=False).Layout(layout)
         while True:
@@ -189,33 +228,41 @@ class Gui:
                 project_name = "FreelaComAndré"
                 totalHoras = timedelta(hours=0, minutes=0, seconds=0)
                 month = values["choicemonth"]
-                nro_month = str(month).split(':')[0]
+                nro_month = str(month).split(":")[0]
                 year = values["choiceyear"]
                 day_initial = values["choicedayinicial"]
                 day_end = values["choicedayfinal"]
                 result = main(nro_month, year, day_initial, day_end)
-                window['inicio'].update(f'Projeto Iniciado: {datetime.now()}')
+                window["inicio"].update(f"Projeto Iniciado: {datetime.now()}")
                 list_jobs = []
                 for projeto in result:
                     get_project_name = projeto["project_name"]
                     ganhos_por_hora = projeto["rate_hour"]
                     if project_name in get_project_name:
-                        year_job, month_job, day_job = get_date(projeto["date_execution"])
+                        year_job, month_job, day_job = get_date(
+                            projeto["date_execution"]
+                        )
                         soma += float(projeto["rate_total"])
                         totalHoras += get_time(projeto["time_total"])
-                        list_jobs.append(f'{day_job}-{month_job}-{year_job}')
-                        list_jobs.append(f"{projeto['time_start']} - {projeto['time_end']} = {projeto['time_total']}")
+                        list_jobs.append(f"{day_job}-{month_job}-{year_job}")
+                        list_jobs.append(
+                            f"{projeto['time_start']} - {projeto['time_end']} = {projeto['time_total']}"
+                        )
                         list_jobs.append(f"Ganho nesse dia..: {projeto['rate_total']}")
                         list_jobs.append(f"Total de Horas..: {totalHoras}")
                         list_jobs.append(f"Total Ganho..: {round(soma, 3)}")
                         list_jobs.append(f'{"*"*90}')
-                window['return'].update(list_jobs)
-                window['resultado_final'].update(f'{round(totalHoras.total_seconds()/3600,2)} horas com {ganhos_por_hora} por hora ganhei R$ {round(soma, 3)} reais')
-                window['fim'].update(f'Projeto Finalizado: {datetime.now()}')
+                window["return"].update(list_jobs)
+                window["resultado_final"].update(
+                    f"{round(totalHoras.total_seconds()/3600,2)} horas com {ganhos_por_hora} por hora ganhei R$ "
+                    f"{round(soma, 3)} reais"
+                )
+                window["fim"].update(f"Projeto Finalizado: {datetime.now()}")
             elif "Cancel" in event:
                 sg.popup_auto_close("Exit...", auto_close_duration=0.5)
                 break
         window.close()
+
 
 gui = Gui()
 gui.layout_inicial()

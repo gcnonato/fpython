@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import random
 from pprint import pprint
@@ -6,7 +7,6 @@ import openpyxl
 import psycopg2
 from decouple import config
 from faker import Faker
-# first, import a similar Provider or use the default one
 from faker.providers import BaseProvider
 
 
@@ -53,13 +53,13 @@ class Connection:
             cur = self._db.cursor()
             cur.execute(sql)
             rs = cur.fetchall()
-        except Exception as e:
+        except Exception:
             return None
         return rs
 
     def inserir(self, dados):
         title, content, published, tenant_id = dados
-        sql = f"INSERT INTO public.about_about(title, content, published, tenant_id)"
+        sql = "INSERT INTO public.about_about(title, content, published, tenant_id)"
         sql += f" VALUES('{title}', '{content}', '{published}', {tenant_id})"
         try:
             cursor = self._db.cursor()
@@ -75,7 +75,7 @@ class Connection:
             cur = self._db.cursor()
             cur.execute(sql)
             rs = cur.fetchall()
-        except:
+        except Exception:
             return None
         return rs
 
@@ -108,9 +108,7 @@ class Connection:
         wb = openpyxl.load_workbook(filename)
         worksheet = wb.active
         print(worksheet)
-        excel_data = list()
         name_columns = []
-        data = {}
         for value in worksheet.iter_rows(min_row=1, max_row=1, values_only=True):
             name_columns.append(value)
         for datas in worksheet.iter_rows(
@@ -128,16 +126,14 @@ class Connection:
                 else:
                     print(f"{key} {value}")
 
-    def selectDB(self, dbSelect):
-        # LOCAL
+    def selectDB(self):
         local = {
             "database": config("DATABASE"),
             "host": config("HOST_LOCAL"),
             "user": config("USER_LOCAL"),
             "password": config("PASSWORD_LOCAL"),
         }
-
-        # return local if dbSelect == "1" else aws
+        return local
 
     def listar(con, sql):
         for row in con.consultar(sql):

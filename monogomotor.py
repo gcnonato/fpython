@@ -11,5 +11,4 @@ connect()
 
 # Se necessário é possível passar outros parâmetros, além dos parâmetros de
 # autenticação
-connect(host='my.mongo.host', port=1234,
-        username='myself', password='my-password')
+connect(host="my.mongo.host", port=1234, username="myself", password="my-password")

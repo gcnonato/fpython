@@ -1,7 +1,5 @@
 # coding: utf-8
 
-import os
-
 from requests import get, post
 
 
@@ -12,22 +10,18 @@ def logar(html, params):
 
 
 def acessar_pagina(self):
-    head = {'Authorization': 'token {}'.format(self)}
+    head = {"Authorization": "token {}".format(self)}
     # url = 'https://trello.com/luxu11/boards'
-    url = 'https://trello.com/b/NBVLhgjA/site-ong-crescer'
+    url = "https://trello.com/b/NBVLhgjA/site-ong-crescer"
     response = get(url, headers=head)
-
     print(response.text)
 
-if __name__ == '__main__':
-    params = {
-        'factors[user]': '',
-        'factors[password]': '',
-        'method': 'password'
-    }
-    html = 'https://trello.com/1/authentication'
+
+if __name__ == "__main__":
+    params = {"factors[user]": "", "factors[password]": "", "method": "password"}
+    html = "https://trello.com/1/authentication"
     token = logar(html, params)
-    print(len(token['code']))
+    print(len(token["code"]))
     # if 'status' not in token:
     acessar_pagina(token)
     # else:

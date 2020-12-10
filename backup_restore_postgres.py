@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import subprocess
 from pprint import pprint
@@ -91,7 +92,7 @@ class Banco:
             conn.close()
 
     def insert_gasto(self, fields):
-        id = fields[4]
+        # id = fields[4]
         name = fields[0]
         slug = fields[1]
         valor = fields[2]
@@ -122,8 +123,8 @@ class Banco:
         # , server, user, database, password
         homepath = os.path.expanduser(os.getenv("USERPROFILE"))
         desktoppath = "Desktop"
-        os.chdir('/'.join((homepath, desktoppath)))
-        os.chdir('C:/Program Files/PostgreSQL/10/bin')
+        os.chdir("/".join((homepath, desktoppath)))
+        os.chdir("C:/Program Files/PostgreSQL/10/bin")
         filename = "backup.sql"
         dado = f"pg_dump  -f {filename} -h {server} -U {user} {schema}"
         popen = subprocess.Popen(dado, stdout=subprocess.PIPE, universal_newlines=True)
@@ -182,25 +183,23 @@ class Banco:
     def version(self):
         conn = self.con
         cursor = conn.cursor()
-        cursor.execute(
-            "SELECT version();"
-        )
+        cursor.execute("SELECT version();")
         row = cursor.fetchone()
         print(row)
         cursor.close()
 
     def dump_schema(self, host, dbname, user, password, **kwargs):
-        command = f'pg_dump --host="{host}" ' \
-                  f'--dbname={"deo6ap8jo3oe95"} ' \
-                  f'--username={user} ' \
-                  f'--no-password ' \
-                  f'--format=c ' \
-                  f'--file=e:\schema.dmp '
-        os.chdir('C:/Program Files/PostgreSQL/10/bin')
+        command = (
+            f'pg_dump --host="{host}" '
+            f'--dbname={"deo6ap8jo3oe95"} '
+            f"--username={user} "
+            f"--no-password "
+            f"--format=c "
+            f"--file=e:\\schema.dmp "
+        )
+        os.chdir("C:/Program Files/PostgreSQL/10/bin")
         try:
-            proc = Popen(command, shell=True, env={
-                'PGPASSWORD': password
-            })
+            proc = Popen(command, shell=True, env={"PGPASSWORD": password})
             proc.wait()
         except Exception as err:
             print(err)
@@ -208,11 +207,11 @@ class Banco:
 
 if __name__ == "__main__":
     table = "django_migrations"
-    host = config('HEROKU_POSTRGRES_HOST')
-    schema = 'deo6ap8jo3oe95'
+    host = config("HEROKU_POSTRGRES_HOST")
+    schema = "deo6ap8jo3oe95"
     # config('HEROKU_POSTRGRES_DB')
-    user = config('HEROKU_POSTRGRES_USER')
-    password = config('HEROKU_POSTRGRES_PASSWORD')
+    user = config("HEROKU_POSTRGRES_USER")
+    password = config("HEROKU_POSTRGRES_PASSWORD")
     banco = Banco(host, schema, user, password)
     # banco.version()
     banco.backup(host, user, schema)

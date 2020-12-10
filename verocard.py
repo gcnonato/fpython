@@ -1,5 +1,4 @@
-import requests
-from bs4 import BeautifulSoup
+# -*- coding: utf-8 -*-
 from selenium import webdriver
 
 
@@ -8,9 +7,9 @@ class Verocard:
         self.driver = driver
         # self.url = "http://www.verocard.com.br/"
         self.url = "https://site.verocard.com.br/apex/f?p=105:105"
-        self.caixa_nro = 'P105_CARTAO'  #id
-        self.caixa_captcha = 'P105_VALIDACAO_RECAPTCHA'  #id
-        self.botao = 'P105_SUBMIT'  #id
+        self.caixa_nro = "P105_CARTAO"  # id
+        self.caixa_captcha = "P105_VALIDACAO_RECAPTCHA"  # id
+        self.botao = "P105_SUBMIT"  # id
         # self.page = requests.get(url)
         # self.soup = BeautifulSoup(page.content, 'html.parser')
 

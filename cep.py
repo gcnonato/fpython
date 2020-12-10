@@ -1,7 +1,7 @@
 import requests
 
 token = "a13c8b49453670f1a3ce7a15438c3af0"
-headers = {'Authorization': 'Token token=%s' % token}
+headers = {"Authorization": "Token token=%s" % token}
 
 
 def search_by_cep(nro):
@@ -27,16 +27,16 @@ def search_by_cities():
     response = requests.get(url, headers=headers)
     return response.json()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     # print(search_by_cities())
     # print(search_by_address())
     for key, value in search_by_cep(19034000).items():
-        if 'cidade' in key or 'estado' in key:
+        if "cidade" in key or "estado" in key:
             for k, v in value.items():
-                print(f'{k} - {v}')
+                print(f"{k} - {v}")
         else:
-            print(f'{key} - {value}')
-
+            print(f"{key} - {value}")
 
     # for city in search_cities():
     #     if 'aulo' in city['nome']:

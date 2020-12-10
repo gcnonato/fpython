@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 from ftplib import FTP
 from time import sleep
@@ -51,6 +52,7 @@ def delete(self):
     if apagar == "s" or apagar == "s".upper():
         self.delete(arquivo)
         msg = "Arquivo Apagado!"
+        print(msg)
     self.retrlines("LIST")
     self.quit()
 
@@ -63,6 +65,7 @@ def upload(self):
         u"{} \n Upload do arquivo? {} (S)im - (N)ão?.: ".format("*" * 60, arquivo)
     )
     msg = "Arquivo não Upado!"
+    print(msg)
     if subir == "s" or subir == "s".upper():
         self.storbinary("STOR {}".format(arquivo), open(arquivo, "rb"))
         msg = "Arquivo Upado!"

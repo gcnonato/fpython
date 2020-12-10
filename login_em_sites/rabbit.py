@@ -1,7 +1,5 @@
 # coding: utf-8
-
 import os
-
 from requests import get, post
 
 
@@ -12,20 +10,16 @@ def logar(html, params):
 
 
 def acessar_pagina(self):
-    head = {'Authorization': 'token {}'.format(self)}
-    response = get('https://app.rabbiit.com/a/e7635e19d341/#/projects/3', headers=head)
+    head = {"Authorization": "token {}".format(self)}
+    get("https://app.rabbiit.com/a/e7635e19d341/#/projects/3", headers=head)
 
-    # print(response)
 
-if __name__ == '__main__':
-    params = {
-        'email':'',
-        'password':''
-    }
-    html = 'https://app.rabbiit.com/api/v1/auth'
+if __name__ == "__main__":
+    params = {"email": "", "password": ""}
+    html = "https://app.rabbiit.com/api/v1/auth"
     token = logar(html, params)
-    if 'status' not in token:
-       acessar_pagina(token)
+    if "status" not in token:
+        acessar_pagina(token)
     else:
-        os.system('cls')
-        print('{}\nERRO.: {}\n{}'.format('*'*66,token['message'],'*'*66))
+        os.system("cls")
+        print("{}\nERRO.: {}\n{}".format("*" * 66, token["message"], "*" * 66))

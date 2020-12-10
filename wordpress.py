@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from wordpress import API
 
 base_url = "http://books.home.local/omniana"
@@ -12,7 +13,7 @@ wpapi = API(
     wp_pass="thisismypassword",
     oauth1a_3leg=True,
     creds_store="~/.wc-api-creds3.json",
-    callback="http://books.home.local/omniana/api-test"
+    callback="http://books.home.local/omniana/api-test",
 )
 print("creating new chapter")
 resource = "chapters"
@@ -21,12 +22,11 @@ data = {
     "title": "test",
     "status": "publish",
     "chapter-type": 48,
-    "part": 27
+    "part": 27,
 }
 
 try:
-    response = wpapi.post(base_url+api_path+resource, data)
-    pprint(response.json())
-except Exception as e:
+    response = wpapi.post(base_url + api_path + resource, data)
+    response.json()
+except Exception:
     print("couldn't post")
-    print(e)

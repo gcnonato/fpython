@@ -1,15 +1,12 @@
-import json
 import random
-from pprint import pprint
-from time import sleep
 
 from requests import get
 
 
 class Jogodavelha:
     def __init__(self):
-        self.jogador_X = ''
-        self.jogador_O = ''
+        self.jogador_X = ""
+        self.jogador_O = ""
         self.vez = 0
         self.lista_nomes = []
         self.ler_cidades_e_pegar_nomes()
@@ -19,56 +16,58 @@ class Jogodavelha:
         self.lista_de_posicoes = []
         self.lista_totalpalpites = []
 
-
     def ler_cidades_e_pegar_nomes(self):
-        url = 'https://servicodados.ibge.gov.br/api/v2/censos/nomes/ranking?localidade=3300100'
+        url = "https://servicodados.ibge.gov.br/api/v2/censos/nomes/ranking?localidade=3300100"
         for pessoas in get(url).json():
-            for pessoa in pessoas['res']:
-                self.lista_nomes.append(pessoa['nome'])
+            for pessoa in pessoas["res"]:
+                self.lista_nomes.append(pessoa["nome"])
 
     def tabuleiro(self, **posicao):
 
-        print(" {} | {} | {} ".format(posicao["pos1"], posicao["pos2"], posicao["pos3"]))
+        print(
+            " {} | {} | {} ".format(posicao["pos1"], posicao["pos2"], posicao["pos3"])
+        )
         print("------+------+------")
-        print(" {} | {} | {} ".format(posicao["pos4"], posicao["pos5"], posicao["pos6"]))
+        print(
+            " {} | {} | {} ".format(posicao["pos4"], posicao["pos5"], posicao["pos6"])
+        )
         print("------+------+------")
-        print(" {} | {} | {} ".format(posicao["pos7"], posicao["pos8"], posicao["pos9"]))
-        contar_jogadas = 0
-        vez = 0
-        if vez > 0:
-            vez = 0
+        print(
+            " {} | {} | {} ".format(posicao["pos7"], posicao["pos8"], posicao["pos9"])
+        )
 
     def is_exists(self, jogada, jogador):
         try:
-            len(self.tabuleiro[f'pos{jogada}'])
-            self.tabuleiro[f'pos{jogada}'] =
-        except KeyError as err:
+            len(self.tabuleiro[f"pos{jogada}"])
+            self.tabuleiro[f"pos{jogada}"] = jogador
+        except KeyError:
             print("Você digitou um número já pedido, tente novamente")
-
 
     def is_valid(self, jogada):
         while True:
             try:
                 jogada = int(jogada)
                 break
-            except:
+            except Exception:
                 print("Você não digitou um número válido, tente novamente")
                 jogada = input("Digite uma posição no tabuleiro para jogar: ")
         return jogada
 
-
     def pedir_jogada(self):
         print("-=-" * 15)
         if self.vez == 0:
-            jogada = input(self.jogador_1 + ", digite uma posição no tabuleiro para jogar: ")
+            jogada = input(
+                self.jogador_1 + ", digite uma posição no tabuleiro para jogar: "
+            )
             jogada = self.is_valid(jogada)
             self.is_exists(jogada)
-            vez = 1
+            self.vez = 1
         else:
-            jogada = input(self.jogador_2 + ", digite uma posição no tabuleiro para jogar: ")
+            jogada = input(
+                self.jogador_2 + ", digite uma posição no tabuleiro para jogar: "
+            )
         print("-=-" * 15)
         return jogada
-
 
     def verifica_jogada(jogada, numero_jogadas, **posicao):
         for key, value in posicao.items():
@@ -78,7 +77,6 @@ class Jogodavelha:
             else:
                 posicao[key] = "O"
         return posicao
-
 
     def procurar_vencedor(**posicao):
         possiveis_1 = posicao["pos1"] == posicao["pos4"] == posicao["pos7"]
@@ -100,18 +98,17 @@ class Jogodavelha:
             possiveis_8,
         ]
         for possiveis in lista_possiveis:
-            if possiveis == True:
+            if possiveis is True:
                 print("Temos um vencedor! Parabéns!")
                 return True
-            elif contar_jogadas == 8:
-                print("Deu velha! Ninguém ganhou.")
-                return True
-
+            # elif contar_jogadas == 8:
+            #     print("Deu velha! Ninguém ganhou.")
+            #     return True
 
     def criar_tabuleiro(self):
         tabuleiro = {}
         for nro in range(1, 10):
-            tabuleiro[f'pos{nro}'] = nro
+            tabuleiro[f"pos{nro}"] = nro
         self.tabuleiroVazio = tabuleiro
         # return {
         #     "pos1": 1,
@@ -125,8 +122,7 @@ class Jogodavelha:
         #     "pos9": 9,
         # }
 
-
-    def denovo():
+    def denovo(self):
         jogar_denovo = input(
             """
             Deseja jogar novamente?
@@ -140,19 +136,20 @@ class Jogodavelha:
         elif jogar_denovo.upper() == "N":
             print("Até logo!")
             return False
-        else:
-            return denovo()
+        # else:
+        #     return denovo()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     # print("Bem Vindo ao Jogo da Velha! Vamos começar!")
     jogo = Jogodavelha()
     try:
         jogo.jogador_X = jogo.lista_nomes.pop(random.randint(0, len(jogo.lista_nomes)))
-    except:
+    except Exception:
         jogo.jogador_O = jogo.lista_nomes.pop(random.randint(0, len(jogo.lista_nomes)))
     try:
         jogo.jogador_X = jogo.lista_nomes.pop(random.randint(0, len(jogo.lista_nomes)))
-    except:
+    except Exception:
         jogo.jogador_O = jogo.lista_nomes.pop(random.randint(0, len(jogo.lista_nomes)))
     # jogo.jogador_1 = input("Qual é o seu nome? ")
     print("Olá " + jogo.jogador_1 + ", você jogará com X")
@@ -164,8 +161,8 @@ if __name__ == '__main__':
     # print(lista_totalpalpites)
     jogada = jogo.pedir_jogada(jogo.lista_totalpalpites, jogo.vez)
     # while True:
-        # tabuleiro(**posicao)
-        # jogada = pedir_jogada(lista_totalpalpites)
+    # tabuleiro(**posicao)
+    # jogada = pedir_jogada(lista_totalpalpites)
     #     lista_totalpalpites[jogada - 1] = "X"
     #     posicao = verifica_jogada(jogada, contar_jogadas, **posicao)
     #     if procurar_vencedor(**posicao):

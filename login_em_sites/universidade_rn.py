@@ -1,15 +1,12 @@
 # coding: utf-8
-
-from bs4 import BeautifulSoup as bs
-from requests import get
 from selenium import webdriver
 
 
 class Universidade:
     def __init__(self, driver):
         self.driver = driver
-        self.url = 'https://sigaa.ufrn.br/sigaa/public/docente/busca_docentes.jsf?aba=p-academico'
-        self.caixa_busca = 'form:nome' #name
+        self.url = "https://sigaa.ufrn.br/sigaa/public/docente/busca_docentes.jsf?aba=p-academico"
+        self.caixa_busca = "form:nome"
 
     def navigate(self):
         self.driver.get(self.url)
@@ -22,9 +19,8 @@ class Universidade:
 
     def get_all_data(self):
         campo_busca = self._get_search()
-        campo_busca.send_keys('Raquel Carmona Torres Felix')
-        # for box in boxes:
-        #     print(self._get_title(box).text)
+        campo_busca.send_keys("Raquel Carmona Torres Felix")
+
 
 cc = webdriver.Chrome()
 c = Universidade(cc)

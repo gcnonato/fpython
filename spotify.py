@@ -3,7 +3,11 @@ import time
 
 import environ
 from selenium import webdriver
-from selenium.common.exceptions import *
+from selenium.common.exceptions import (
+    NoSuchElementException,
+    ElementNotVisibleException,
+    ElementNotSelectableException
+)
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -12,34 +16,38 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 environ.Path(__file__)
 env = environ.Env()
-env.read_env('.envs/.env')
+env.read_env(".envs/.env")
 
 
 class PlaylistUltimato:
     def __init__(self):
         options = webdriver.ChromeOptions()
         options.add_argument("lang=pt-BR")
-        self.driver = webdriver.Chrome(executable_path=r"chromedriver",chrome_options=options)
+        self.driver = webdriver.Chrome(
+            executable_path=r"chromedriver", chrome_options=options
+        )
         # self.driver = webdriver.Chrome(executable_path=r"./chromedriver.exe",chrome_options=options)
         self.wait = WebDriverWait(
             self.driver,
             10,
             poll_frequency=1,
-            ignored_exceptions=[  
+            ignored_exceptions=[
                 NoSuchElementException,
                 ElementNotVisibleException,
                 ElementNotSelectableException,
             ],
         )
-        self.email = env('SPOTIFY_EMAIL') # e-mail do facebook
-        self.senha = env('SPOTIFY_SENHA')
+        self.email = env("SPOTIFY_EMAIL")  # e-mail do facebook
+        self.senha = env("SPOTIFY_SENHA")
         self.link_spofity = "https://open.spotify.com/"
-        self.DeveUsarLoginFacebook = True #se logar pelo FB deixe True, se logar pelo Spotify deixa False
+        self.DeveUsarLoginFacebook = (
+            True  # se logar pelo FB deixe True, se logar pelo Spotify deixa False
+        )
 
     def Start(self):
         self.driver.get(self.link_spofity)
         self.LoginSpotify()
-        if self.DeveUsarLoginFacebook == True:
+        if self.DeveUsarLoginFacebook is True:
             self.LogarComFacebook()
         else:
             self.LogarComEmail()
@@ -55,9 +63,21 @@ class PlaylistUltimato:
         login_button.click()
 
     def LogarComEmail(self):
-        campo_email = self.wait.until(CondicaoExperada.element_to_be_clickable((By.XPATH,'//input[@name="username"]')))
-        campo_senha = self.wait.until(CondicaoExperada.element_to_be_clickable((By.XPATH,'//input[@name="password"]')))
-        botao_entrar = self.wait.until(CondicaoExperada.element_to_be_clickable((By.XPATH,'//button[text()="Entrar"]')))
+        campo_email = self.wait.until(
+            CondicaoExperada.element_to_be_clickable(
+                (By.XPATH, '//input[@name="username"]')
+            )
+        )
+        campo_senha = self.wait.until(
+            CondicaoExperada.element_to_be_clickable(
+                (By.XPATH, '//input[@name="password"]')
+            )
+        )
+        botao_entrar = self.wait.until(
+            CondicaoExperada.element_to_be_clickable(
+                (By.XPATH, '//button[text()="Entrar"]')
+            )
+        )
 
         campo_email.send_keys(self.email)
         time.sleep(2)
@@ -76,9 +96,21 @@ class PlaylistUltimato:
         self.InserirDadosLoginFacebook()
 
     def InserirDadosLoginFacebook(self):
-        campo_email = self.wait.until(CondicaoExperada.element_to_be_clickable((By.XPATH,'//input[@name="email"]')))
-        campo_senha = self.wait.until(CondicaoExperada.element_to_be_clickable((By.XPATH,'//input[@name="pass"]')))
-        botao_login = self.wait.until(CondicaoExperada.element_to_be_clickable((By.XPATH,'//button[@name="login"]')))
+        campo_email = self.wait.until(
+            CondicaoExperada.element_to_be_clickable(
+                (By.XPATH, '//input[@name="email"]')
+            )
+        )
+        campo_senha = self.wait.until(
+            CondicaoExperada.element_to_be_clickable(
+                (By.XPATH, '//input[@name="pass"]')
+            )
+        )
+        botao_login = self.wait.until(
+            CondicaoExperada.element_to_be_clickable(
+                (By.XPATH, '//button[@name="login"]')
+            )
+        )
 
         campo_email.clear()
         self.digite_como_uma_pessoa(self.email, campo_email)
@@ -107,17 +139,16 @@ class PlaylistUltimato:
         )
         time.sleep(random.randint(2, 3))
 
-
     def NavegarParaCadaAlbumDesteArtista(self, links_do_album):
         for link_album in links_do_album:
-                try:
-                    self.driver.get(link_album)
-                    print('adicionando album: '+ link_album)
-                    time.sleep(1)
-                    self.AddAlbumParaPlaylist(link_album)
-                except:
-                    print('não foram encontrados albuns para este artista')
-                    pass
+            try:
+                self.driver.get(link_album)
+                print("adicionando album: " + link_album)
+                time.sleep(1)
+                self.AddAlbumParaPlaylist(link_album)
+            except Exception:
+                print("não foram encontrados albuns para este artista")
+                pass
 
     def ClicarNoMenuOpcoesDoAlbum(self):
         try:
@@ -132,7 +163,7 @@ class PlaylistUltimato:
             )
             time.sleep(random.randint(1, 2))
             self.actions.context_click(menu_opcoes_do_album[1]).perform()
-        except:
+        except Exception:
             pass
 
     def AddAlbumParaPlaylist(self, album_link):
@@ -164,7 +195,8 @@ class PlaylistUltimato:
             CondicaoExperada.element_to_be_clickable(
                 (
                     By.XPATH,
-                    '//nav[@class="react-contextmenu react-contextmenu--visible"]/div[@class="react-contextmenu-item" and text()="Adicionar à playlist"]',
+                    '//nav[@class="react-contextmenu react-contextmenu--visible"]'
+                    '/div[@class="react-contextmenu-item" and text()="Adicionar à playlist"]',
                 )
             )
         )
@@ -183,15 +215,15 @@ class PlaylistUltimato:
         time.sleep(3)
         somentes_hrefs = []
         somente_links_de_artistas = []
-        todos_links_na_pagina = self.driver.find_elements_by_tag_name('a')
+        todos_links_na_pagina = self.driver.find_elements_by_tag_name("a")
         for elemento in todos_links_na_pagina:
             somentes_hrefs.append(elemento.get_attribute("href"))
-    
+
         for link in somentes_hrefs:
             try:
-                if link.index('/artist/') != -1:
+                if link.index("/artist/") != -1:
                     somente_links_de_artistas.append(link)
-            except:
+            except Exception:
                 pass
         return list(dict.fromkeys(somente_links_de_artistas))
 
@@ -199,7 +231,10 @@ class PlaylistUltimato:
         try:
             self.botao_carregar_mais_albuns = self.wait.until(
                 CondicaoExperada.element_to_be_clickable(
-                    (By.XPATH, '//section[@class=" artist-albums"]//*[text()="MOSTRAR MAIS"]')
+                    (
+                        By.XPATH,
+                        '//section[@class=" artist-albums"]//*[text()="MOSTRAR MAIS"]',
+                    )
                 )
             )
             self.botao_carregar_mais_albuns.click()
@@ -207,17 +242,19 @@ class PlaylistUltimato:
             self.botao_carregar_mais_albuns = None
             self.botao_carregar_mais_albuns = self.wait.until(
                 CondicaoExperada.element_to_be_clickable(
-                    (By.XPATH, '//section[@class=" artist-albums"]//*[text()="MOSTRAR MAIS"]')
+                    (
+                        By.XPATH,
+                        '//section[@class=" artist-albums"]//*[text()="MOSTRAR MAIS"]',
+                    )
                 )
             )
             if self.botao_carregar_mais_albuns is not None:
                 self.botao_carregar_mais_albuns.click()
                 print("Carregando mais albuns")
                 self.CarregarMaisAlbuns()
-        except:
+        except Exception:
             print("Todos albuns foram carregados")
             pass
-        
 
     def ObterLinksDosAlbunsDesteArtista(self):
         somente_hrefs = []
@@ -226,7 +263,7 @@ class PlaylistUltimato:
 
         try:
             self.CarregarMaisAlbuns()
-        except:
+        except Exception:
             print("Carregado todos albuns desta página")
             pass
 
@@ -240,7 +277,7 @@ class PlaylistUltimato:
             try:
                 if link.index("/album/") != -1:
                     links_dos_albuns.append(link)
-            except:
+            except Exception:
                 pass
 
         for link in links_dos_albuns:

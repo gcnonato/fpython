@@ -1,24 +1,15 @@
 import csv
-import json
 import os
 import random
-import re
-import sys
-from datetime import datetime
 from time import sleep
 
 import environ
 from selenium import webdriver
-from selenium.common.exceptions import *
-from selenium.webdriver import ActionChains
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support import expected_conditions as CondicaoExperada
-from selenium.webdriver.support.ui import WebDriverWait
 
 ROOT_DIR = environ.Path(__file__)
 env = environ.Env()
 env.read_env()
+
 
 class TaigaSelenium:
     def __init__(self):
@@ -52,9 +43,8 @@ class TaigaSelenium:
             single_input_field.send_keys(letter)
             sleep(random.randint(1, 5) / 30)
 
-
     def main(self, url, params):
-        if (os.name != 'posix'):  # Windows
+        if os.name != "posix":  # Windows
             driver = webdriver.Chrome()
             chrome_options = webdriver.ChromeOptions()
             # chrome_options.add_argument('--headless')
@@ -63,7 +53,7 @@ class TaigaSelenium:
             driver = webdriver.Firefox()
             driver.set_window_size(1120, 550)
         # driver = self.driver
-        print(f'URL.: {url}')
+        print(f"URL.: {url}")
         driver.get(url)
         sleep(random.randint(5, 7) / 30)
 
@@ -128,10 +118,10 @@ class TaigaSelenium:
     def write_in_txt(self):
         # Write out the TXT file.
         filename = "C://Users//luxu//Desktop//guiabolso.txt"
-        with open(filename, 'w') as txtFileObj:
+        with open(filename, "w") as txtFileObj:
             for dado in self.with_data_and_buys:
-                result = dado.text.split('\n')
-                rows = ''
+                result = dado.text.split("\n")
+                rows = ""
                 search = False
                 for row in result:
                     # for exclude in self.excludes:
@@ -147,14 +137,14 @@ class TaigaSelenium:
                             txtFileObj.write(rows)
                             # csvWriter.writerow(rows)
                             print(rows)
-                            rows = ''
-                        except:
-                            if 'R$' in row:
+                            rows = ""
+                        except Exception:
+                            if "R$" in row:
                                 rows += f"{row}\n"
                                 txtFileObj.write(rows)
                                 # csvWriter.writerow(rows)
                                 print(rows)
-                                rows = ''
+                                rows = ""
                                 passar_um_traco = f"{'*' * 80}\n"
                                 txtFileObj.write(passar_um_traco)
                                 # csvWriter.writerow('*' * 80)
@@ -167,11 +157,11 @@ class TaigaSelenium:
 
     def write_in_csv(self):
         # Write out the CSV file.
-        csvFileObj = open("guiabolso.csv", 'w', newline='')
-        csvWriter = csv.writer(csvFileObj, delimiter=' ')
+        csvFileObj = open("guiabolso.csv", "w", newline="")
+        csvWriter = csv.writer(csvFileObj, delimiter=" ")
         for dado in self.with_data_and_buys:
-            result = dado.text.split('\n')
-            rows = ''
+            result = dado.text.split("\n")
+            rows = ""
             search = False
             for row in result:
                 for exclude in self.excludes:
@@ -186,26 +176,26 @@ class TaigaSelenium:
                         rows += row
                         csvWriter.writerow(rows)
                         print(rows)
-                        rows = ''
-                    except:
-                        if 'R$' in row:
+                        rows = ""
+                    except Exception:
+                        if "R$" in row:
                             rows += row
                             csvWriter.writerow(rows)
                             print(rows)
-                            rows = ''
-                            csvWriter.writerow('*' * 80)
-                            print('*' * 100)
+                            rows = ""
+                            csvWriter.writerow("*" * 80)
+                            print("*" * 100)
                         else:
-                            rows += row + '/'
+                            rows += row + "/"
             sleep(3)
         csvFileObj.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # url = "https://projetos.clint.com.br/api/v1/auth"
     url = "https://projetos.clint.com.br/discover"
     params = {}
-    params['username'] = env.ENVIRON['TAIGA_USERNAME']
-    params['password'] = env.ENVIRON['TAIGA_PASSWORD']
+    params["username"] = env.ENVIRON["TAIGA_USERNAME"]
+    params["password"] = env.ENVIRON["TAIGA_PASSWORD"]
     gb = TaigaSelenium()
     gb.main(url, params)

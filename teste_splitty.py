@@ -1,12 +1,8 @@
-from pprint import pprint
-from json import dump
-import os
+# -*- coding: utf-8 -*-
 import re
-import json
+from pprint import pprint
+
 from splitty import (
-    list_by_re_pattern,
-    make_intervals,
-    apply_intervals,
     clear_list_strings,
 )
 
@@ -110,8 +106,8 @@ class Luxu:
                                     {"endereco": frase.split("\n")[2].split("end")[1]},
                                     {
                                         "telefone": frase.split("\n")[2].split("end")[
-                                                        0
-                                                    ][3:]
+                                            0
+                                        ][3:]
                                     },
                                 ]
                             }

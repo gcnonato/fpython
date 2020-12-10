@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import csv
 import os
 import re
@@ -43,13 +44,13 @@ def evaluate_job_file(filename: str, metrics: list) -> tuple:
         content = file.read()
 
     for metric in metrics:
-        lower_term = metric['Terms'].lower()
-        pattern = r'\b{}\b'.format(lower_term)
+        lower_term = metric["Terms"].lower()
+        pattern = r"\b{}\b".format(lower_term)
         lower_content = content.lower()
 
         if re.search(pattern, lower_content):
-            poor_level += int(metric['Poor level'])
-            words.append(metric['Terms'])
+            poor_level += int(metric["Poor level"])
+            words.append(metric["Terms"])
 
     return poor_level, words
 
@@ -60,10 +61,10 @@ def order_by_key(results_list: list, order_key: str) -> list:
     return reordered_results
 
 
-def get_pyjob_codes(url='http://www.pyjobs.com.br/', page=1) -> list:
+def get_pyjob_codes(url="http://www.pyjobs.com.br/", page=1) -> list:
     """Receive and url and page of pyjobs and return list of codes of jobs"""
     job_codes = []
-    full_url = '{}?page={}'.format(url, page)
+    full_url = "{}?page={}".format(url, page)
 
     try:
         response = request.urlopen(full_url)
@@ -73,13 +74,14 @@ def get_pyjob_codes(url='http://www.pyjobs.com.br/', page=1) -> list:
 
     pattern = r'href="/job/([0-9]+)/"'
     for line in response:
-        decoded_line = line.decode('utf-8')
+        decoded_line = line.decode("utf-8")
         match = re.search(pattern, decoded_line)
         if match:
             job_code = match.group(1)
             job_codes.append(job_code)
 
     return job_codes
+
 
 class ParsePyjobsHTML(HTMLParser):
     def __init__(self, *args, **kwargs):
@@ -88,11 +90,11 @@ class ParsePyjobsHTML(HTMLParser):
         self.capture_content = False
 
     def handle_starttag(self, tag, attrs):
-        if tag == 'section':
+        if tag == "section":
             self.capture_content = True
 
     def handle_endtag(self, tag):
-        if tag == 'section':
+        if tag == "section":
             self.capture_content = False
 
     def handle_data(self, data):
@@ -102,7 +104,7 @@ class ParsePyjobsHTML(HTMLParser):
 
 def get_pyjob_content(pyjob_code: str) -> str:
     """Get an pyjob_code and return your description"""
-    job_url = 'http://www.pyjobs.com.br/job/{}/'
+    job_url = "http://www.pyjobs.com.br/job/{}/"
     url = job_url.format(pyjob_code)
 
     try:
@@ -111,7 +113,7 @@ def get_pyjob_content(pyjob_code: str) -> str:
         print('Error "{}" when get "{}"'.format(exc.msg, url))
         return (pyjob_code, None)
 
-    response_content = response.read().decode('utf-8')
+    response_content = response.read().decode("utf-8")
 
     parser = ParsePyjobsHTML()
     parser.feed(response_content)
@@ -120,7 +122,7 @@ def get_pyjob_content(pyjob_code: str) -> str:
 
 def async_get_pyjob_codes(initial_page: int, final_page: int, max_workers=10) -> list:
     """Get initial_page and final_page of pyjobs and return a list pyjob_codes from pages"""
-    print('Running async_get_pyjob_codes...')
+    print("Running async_get_pyjob_codes...")
     pyjob_codes = []
     pages = range(initial_page, final_page + 1)
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
@@ -139,7 +141,7 @@ def async_get_pyjob_codes(initial_page: int, final_page: int, max_workers=10) ->
 
 def async_get_pyjob_content(pyjob_codes: list, max_workers=10) -> list:
     """Get pyjob_codes, get content of pyjob and return a list of contents"""
-    print('Running async_get_pyjob_content...')
+    print("Running async_get_pyjob_content...")
     contets = []
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         to_do_map = {}

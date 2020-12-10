@@ -14,10 +14,17 @@ def valida_str(limite: Union[str, List[str]], msg: str) -> str:
     return valor
 
 
-def valida_int(limite: List[int], mensagem: str, mensagem_de_erro: Optional[str] = OPCAO_INVALIDA) -> int:
+def valida_int(
+    limite: List[int], mensagem: str, mensagem_de_erro: Optional[str] = OPCAO_INVALIDA
+) -> int:
     while True:
         valor = input(mensagem).strip()
-        if not valor.isnumeric() or valor.isalpha() or len(valor) == 0 or int(valor) not in limite:
+        if (
+            not valor.isnumeric()
+            or valor.isalpha()
+            or len(valor) == 0
+            or int(valor) not in limite
+        ):
             if not valor.isnumeric() or valor.isalpha() or len(valor) == 0:
                 print(OPCAO_INVALIDA)
             else:
@@ -27,7 +34,7 @@ def valida_int(limite: List[int], mensagem: str, mensagem_de_erro: Optional[str]
     return int(valor)
 
 
-def caixa(mensagem: str, borda: str = '=', margem: int = 2):
+def caixa(mensagem: str, borda: str = "=", margem: int = 2):
     tamanho = len(mensagem) + margem
     linha = borda * tamanho
     print(f"\n{linha}")
@@ -35,7 +42,9 @@ def caixa(mensagem: str, borda: str = '=', margem: int = 2):
     print(linha)
 
 
-def barra(valor: int, dez: Optional[str] = "X", um: str = "I", separador: str = " ") -> str:
+def barra(
+    valor: int, dez: Optional[str] = "X", um: str = "I", separador: str = " "
+) -> str:
     if dez is None:
         u = valor
         return f"{u * um}{separador}{valor}"

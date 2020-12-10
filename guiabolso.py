@@ -1,5 +1,4 @@
 # coding=utf-8
-# 2016, all rights reserved
 import datetime
 import hashlib
 import json
@@ -7,16 +6,11 @@ import os
 import uuid
 import warnings
 
-import openpyxl
 import PySimpleGUI as sg
+import openpyxl
 import requests
 import unicodecsv as csv
 from decouple import config
-
-try:
-    from urllib import quote
-except ImportError:
-    from urllib.parse import quote
 
 
 # def resource_path(relative_path):
@@ -134,9 +128,9 @@ class GuiaBolso:
             self.device_token,
         )
         headers = {"content-type": "application/json"}
-        self.session.headers.update({
-            'User-Agent': 'Guiabolso/235 CFNetwork/893.14.2 Darwin/17.3.0'
-        })
+        self.session.headers.update(
+            {"User-Agent": "Guiabolso/235 CFNetwork/893.14.2 Darwin/17.3.0"}
+        )
         response = self.session.post(url, headers=headers, data=payload).json()
         # if response["name"] != "web:users:login:response":
         if response["name"] != "users:login:response":
@@ -286,7 +280,8 @@ class GuiaBolso:
             for conta in transactions:
                 if conta["subcategory"] not in list_subcategory_ignorade:
                     data = datetime.datetime.fromtimestamp(conta["date"] / 1000).date()
-                    content = f"""{data} {paipline} {conta['label'].ljust(51, ' ')} {paipline}{str(conta['value'])[1:].rjust(8, ' ')}{paipline} {conta['subcategory']} """
+                    content = f"""{data} {paipline} {conta['label'].ljust(51, ' ')}
+                    {paipline}{str(conta['value'])[1:].rjust(8, ' ')}{paipline} {conta['subcategory']} """
                     print(content)
                     _file.write(content)
                     _file.write("\n")
@@ -314,8 +309,10 @@ class GuiaBolso:
         for conta in transactions:
             if conta["subcategory"] not in list_subcategory_ignorade:
                 data = datetime.datetime.fromtimestamp(conta["date"] / 1000).date()
-                content = f"""{data} {paipline} {conta['label'].ljust(51, ' ')} {paipline}{str(conta['value'])[1:].rjust(8, ' ')}{paipline} {conta['subcategory']} """
+                content = f"""{data} {paipline} {conta['label'].ljust(51, ' ')}
+                {paipline}{str(conta['value'])[1:].rjust(8, ' ')}{paipline} {conta['subcategory']} """
                 print(content)
+
 
 class Tela:
     def __init__(self):
