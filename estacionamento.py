@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 horarios = []
 vagas_guardadas = []
 vagas = {
