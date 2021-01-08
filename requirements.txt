@@ -1,5 +1,5 @@
 beautifulsoup4==4.9.3
-ccxt==1.39.37
+ccxt==1.39.91
 clint==0.5.1
 django-decouple==2.1
 flake8==3.8.4
@@ -18,11 +18,12 @@ PyQt5==5.15.2
 PySimpleGUI==4.32.1
 pytest-cov==2.10.1
 pytest==6.2.1
-requests==2.25.0
+requests==2.25.1
 rows==0.4.1
 scrapinghub==2.3.1
 Scrapy==2.4.1
 selenium==4.0.0a7
 SQLAlchemy-Utils==0.36.8
 Twisted==20.3.0
+unicode==2.7
 xmltodict==0.12.0
