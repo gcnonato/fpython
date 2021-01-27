@@ -1,10 +1,10 @@
 #!/usr/bin/python
-import os
-import paramiko
-from getpass import getpass
-#enderecos = arquivo contendo endereços IP
+# import os
+# import paramiko
+# from getpass import getpass
+# enderecos = arquivo contendo endereços IP
 # routers = open("enderecos")
-#COLETAR AS CREDENCIAIS
+# COLETAR AS CREDENCIAIS
 user = "usuario"
 passw = "senha"
 
@@ -12,7 +12,7 @@ routers = ['127.0.0.1', '201.42.148.239', '10.234.434.12']
 
 for ip in routers:
     print("Verify ICMP Status IP: "+ip+"...")
-    resposta = 0 # os.system("ping -c 5 " + ip + "> /dev/null")
+    resposta = 0  # os.system("ping -c 5 " + ip + "> /dev/null")
     if resposta == 0:
         print(ip+" - Status ICMP OK")
         print("Running backup process - "+ip)

@@ -5,7 +5,7 @@
 #     print(total)
 #     total_casos -= 1
 
-def testar_fila(clients:dict) -> int :
+def testar_fila(clients: dict):
     """ A primeira linha contém um inteiro N, indicando o número de casos de teste a seguir.
         Cada caso de teste inicia com um inteiro M (1 ≤ M ≤ 1000), indicando o número de clientes.
         Em seguida haverá M inteiros distintos Pi (1 ≤ Pi ≤ 1000), onde o i-ésimo inteiro indica o
@@ -16,9 +16,10 @@ def testar_fila(clients:dict) -> int :
     >>> testar_fila([[3,'2121-3200'],[2,'2221-4432'],[4,'3221-0000']])
     2221-4432
     """
-    m = len(clients) # numero de clientes
-    p = clients[1][1] # numero sms
+    # m = len(clients) # numero de clientes
+    p = clients[1][1]
     return p
+
 
 if __name__ == "__main__":
     import doctest
