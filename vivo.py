@@ -74,7 +74,7 @@ class VivoWithSelenium:
         if first_page_current not in first_page_previous:
             for row in driver.find_elements_by_xpath("//tbody//tr"):
                 _f.write(row.text)
-                print(row.text)
+                # print(row.text)
                 _f.write("\n")
             print("*" * 60)
             return pagina, quantidade_linha_tabela, first_page_current
@@ -92,104 +92,107 @@ class VivoWithSelenium:
             os.chdir("../")
             homepath = os.getcwd()
             archive = os.path.join(homepath, fileout)
-        with open(archive, "w") as _f:
-            driver = self.driver
-            driver.get(url)
-            xpath_clicar_button_login = '//*[@id="main-menu"]/div[1]/nav/div/a[2]'
-            clicar_button_login = self.wait.until(
-                CondicaoExperada.element_to_be_clickable(
-                    (By.XPATH, xpath_clicar_button_login)
-                )
+        driver = self.driver
+        driver.get(url)
+        xpath_clicar_button_login = '//*[@id="main-menu"]/div[1]/nav/div/a[2]'
+        clicar_button_login = self.wait.until(
+            CondicaoExperada.element_to_be_clickable(
+                (By.XPATH, xpath_clicar_button_login)
             )
-            clicar_button_login.click()
-            sleep(random.randint(5, 7) / 30)
-            xpath_vivo_login_username = '//input[@name="vivo_login_username"]'
-            input_email = self.wait.until(
-                CondicaoExperada.element_to_be_clickable(
-                    (By.XPATH, xpath_vivo_login_username)
-                )
+        )
+        clicar_button_login.click()
+        sleep(random.randint(5, 7) / 30)
+        xpath_vivo_login_username = '//input[@name="vivo_login_username"]'
+        input_email = self.wait.until(
+            CondicaoExperada.element_to_be_clickable(
+                (By.XPATH, xpath_vivo_login_username)
             )
-            input_email.clear()
-            self.type_like_a_person(params["cpf"], input_email)
-            sleep(random.randint(5, 7) / 30)
-            xpath_input_password = '//input[@name="vivo_login_password"]'
-            input_password = self.wait.until(
-                CondicaoExperada.element_to_be_clickable(
-                    (By.XPATH, xpath_input_password)
-                )
+        )
+        input_email.clear()
+        self.type_like_a_person(params["cpf"], input_email)
+        sleep(random.randint(5, 7) / 30)
+        xpath_input_password = '//input[@name="vivo_login_password"]'
+        input_password = self.wait.until(
+            CondicaoExperada.element_to_be_clickable(
+                (By.XPATH, xpath_input_password)
             )
-            sleep(random.randint(5, 7) / 30)
-            input_password.clear()
-            self.type_like_a_person(params["password"], input_password)
-            sleep(random.randint(15, 18) / 30)
-            xpath_button_login = "/html/body/div[2]/div[2]/header/div/div/div" \
-                                 "/div/div[1]/div[2]/div/div/div[2]/form/button"
-            button_login = self.wait.until(
-                CondicaoExperada.element_to_be_clickable((By.XPATH, xpath_button_login))
-            )
-            button_login.click()
-            sleep(15)
-            close_banner = driver.find_element_by_class_name("fecharAlert")
-            try:
-                close_banner.click()
-            except ElementNotInteractableException:
-                print("Sem banner para fechar")
-            # Até aqui conecta no site
-            sleep(5)
-            # fim_do_ciclo = driver.find_elements_by_xpath('//strong[@data-bind]')[1].text
-            url_extrato_detalhado = "https://meuvivo.vivo.com.br/content/vivo/meu-vivo/meu-consumo/consumo.html"
-            driver.get(url_extrato_detalhado)
-            sleep(5)
-            consumido = driver.find_element_by_xpath(
-                '//span[@data-bind="text:tabledata.Consumption"]'
-            ).text
-            consumido_em_porcentagem = driver.find_element_by_xpath(
-                '//span[@data-bind="text:tabledata.ConsumptionPercent"]'
-            ).text
-            disponivel = driver.find_element_by_xpath(
-                '//span[@data-bind="text:tabledata.available"]'
-            ).text
-            disponivel_em_porcentagem = driver.find_element_by_xpath(
-                '//span[@data-bind="text:tabledata.availablePercent"]'
-            ).text
+        )
+        sleep(random.randint(5, 7) / 30)
+        input_password.clear()
+        self.type_like_a_person(params["password"], input_password)
+        sleep(random.randint(15, 18) / 30)
+        xpath_button_login = "/html/body/div[2]/div[2]/header/div/div/div" \
+                             "/div/div[1]/div[2]/div/div/div[2]/form/button"
+        button_login = self.wait.until(
+            CondicaoExperada.element_to_be_clickable((By.XPATH, xpath_button_login))
+        )
+        button_login.click()
+        sleep(15)
+        close_banner = driver.find_element_by_class_name("fecharAlert")
+        try:
+            close_banner.click()
+        except ElementNotInteractableException:
+            print("Sem banner para fechar")
+# Até aqui conecta no site
+        sleep(5)
+        # fim_do_ciclo = driver.find_elements_by_xpath('//strong[@data-bind]')[1].text
+        url_extrato_detalhado = "https://meuvivo.vivo.com.br/content/vivo/meu-vivo/meu-consumo/consumo.html"
+        driver.get(url_extrato_detalhado)
+        sleep(5)
+        consumido = driver.find_element_by_xpath(
+            '//span[@data-bind="text:tabledata.Consumption"]'
+        ).text
+        consumido_em_porcentagem = driver.find_element_by_xpath(
+            '//span[@data-bind="text:tabledata.ConsumptionPercent"]'
+        ).text
+        disponivel = driver.find_element_by_xpath(
+            '//span[@data-bind="text:tabledata.available"]'
+        ).text
+        disponivel_em_porcentagem = driver.find_element_by_xpath(
+            '//span[@data-bind="text:tabledata.availablePercent"]'
+        ).text
 
-            sleep(5)
-            link_extrato_mais_detalhado = driver.find_element_by_xpath(
-                '//a[@data-content-id="impl_see_detailed_extract_data"]'
-            )
+        sleep(5)
+        link_extrato_mais_detalhado = driver.find_element_by_xpath(
+            '//a[@data-content-id="impl_see_detailed_extract_data"]'
+        )
+        try:
             link_extrato_mais_detalhado.click()
             sleep(5)
             pagina = 1
             first_page_previous = ""
-            print("Inicio da tabela")
-            _f.write(f"Consumido..: {consumido} em %..: {consumido_em_porcentagem}\n")
-            _f.write(
-                f"Disponível..: {disponivel} em %..: {disponivel_em_porcentagem}\n"
-            )
-            _f.write(f'{"*"*80}\n')
-            (
-                pagina,
-                quantidade_linha_tabela,
-                first_page_previous,
-            ) = self.percorrer_tabela(pagina, first_page_previous, _f)
-            sleep(5)
-            while True:
-                driver.find_element_by_xpath('//a[@title="Próxima página"]').click()
-                sleep(2)
+            # print("Inicio da tabela")
+            with open(archive, "w") as _f:
+                _f.write(f"Consumido..: {consumido} em %..: {consumido_em_porcentagem}\n")
+                _f.write(
+                    f"Disponível..: {disponivel} em %..: {disponivel_em_porcentagem}\n"
+                )
+                _f.write(f'{"*"*80}\n')
                 (
                     pagina,
                     quantidade_linha_tabela,
                     first_page_previous,
                 ) = self.percorrer_tabela(pagina, first_page_previous, _f)
-                if quantidade_linha_tabela < 5 or not first_page_previous:
-                    break
-            driver.close()
-            print("Fechando o arquivo...")
-            print(
-                f"Consumido..: {consumido} em %..: {consumido_em_porcentagem}\n"
-                f"Disponível..: {disponivel} em %..: {disponivel_em_porcentagem}\n"
-            )
-            print("Fim da tabela")
+                sleep(5)
+                while True:
+                    driver.find_element_by_xpath('//a[@title="Próxima página"]').click()
+                    sleep(2)
+                    (
+                        pagina,
+                        quantidade_linha_tabela,
+                        first_page_previous,
+                    ) = self.percorrer_tabela(pagina, first_page_previous, _f)
+                    if quantidade_linha_tabela < 5 or not first_page_previous:
+                        break
+        except Exception:
+            pass
+        driver.close()
+        # print("Fechando o arquivo...")
+        # print(
+        #     f"Consumido..: {consumido} em %..: {consumido_em_porcentagem}\n"
+        #     f"Disponível..: {disponivel} em %..: {disponivel_em_porcentagem}\n"
+        # )
+        # print("Fim da tabela")
 
 
 def load_txt():
