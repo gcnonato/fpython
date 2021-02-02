@@ -5,6 +5,7 @@
 #     print(total)
 #     total_casos -= 1
 
+
 def testar_fila(clients: dict):
     """ A primeira linha contém um inteiro N, indicando o número de casos de teste a seguir.
         Cada caso de teste inicia com um inteiro M (1 ≤ M ≤ 1000), indicando o número de clientes.

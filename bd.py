@@ -6,9 +6,8 @@ from time import sleep
 from decouple import config
 from selenium import webdriver
 from selenium.common.exceptions import (
-
-    NoSuchElementException, ElementNotVisibleException, ElementNotSelectableException)
-from selenium.webdriver.chrome.options import Options
+    NoSuchElementException, ElementNotVisibleException, ElementNotSelectableException
+)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as CondicaoExperada
 from selenium.webdriver.support.ui import WebDriverWait
@@ -19,17 +18,17 @@ class BadooWithSelenium:
         if os.name != "posix":  # Windows
             self.driver = webdriver.Chrome()
             chrome_options = webdriver.ChromeOptions()
-            # chrome_options.add_argument('--headless')
-        else:
+            chrome_options.add_argument('--headless')
             CHROMEDRIVER_PATH = "/usr/local/bin/chromedriver"
             WINDOW_SIZE = "1920,1080"
-            chrome_options = Options()
-            # chrome_options.add_argument("--headless")
             chrome_options.add_argument("--window-size=%s" % WINDOW_SIZE)
             chrome_options.add_argument("--no-sandbox")
             self.driver = webdriver.Chrome(
                 executable_path=CHROMEDRIVER_PATH, chrome_options=chrome_options
             )
+        else:
+            from webdriver_manager.chrome import ChromeDriverManager
+            self.driver = webdriver.Chrome(ChromeDriverManager().install())
         self.wait = WebDriverWait(
             self.driver,
             10,
