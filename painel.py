@@ -28,10 +28,7 @@ class Application(Frame):
         )
         list_bts = (
             "holerite",
-            "royale",
-            "youtube",
-            "guiabolso",
-            "guiabolsow",
+            "calcular_rabbit_ganhos",
             "verocard",
             "bd",
             "listamais",
