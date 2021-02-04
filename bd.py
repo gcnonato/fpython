@@ -18,17 +18,20 @@ class BadooWithSelenium:
         if os.name != "posix":  # Windows
             self.driver = webdriver.Chrome()
             chrome_options = webdriver.ChromeOptions()
-            chrome_options.add_argument('--headless')
+            # chrome_options.add_argument('--headless')
+
+        else:
+            from webdriver_manager.chrome import ChromeDriverManager
+            from selenium.webdriver.chrome.options import Options
+            chrome_options = Options()
             CHROMEDRIVER_PATH = "/usr/local/bin/chromedriver"
             WINDOW_SIZE = "1920,1080"
             chrome_options.add_argument("--window-size=%s" % WINDOW_SIZE)
             chrome_options.add_argument("--no-sandbox")
-            self.driver = webdriver.Chrome(
-                executable_path=CHROMEDRIVER_PATH, chrome_options=chrome_options
-            )
-        else:
-            from webdriver_manager.chrome import ChromeDriverManager
             self.driver = webdriver.Chrome(ChromeDriverManager().install())
+            # self.driver = webdriver.Chrome(
+            #     executable_path=CHROMEDRIVER_PATH, chrome_options=chrome_options
+            # )
         self.wait = WebDriverWait(
             self.driver,
             10,
