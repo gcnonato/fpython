@@ -18,6 +18,7 @@ PyQt5==5.15.2
 PySimpleGUI==4.32.1
 pytest-cov==2.10.1
 pytest==6.2.1
+python-docx==0.8.10
 requests==2.25.1
 rows==0.4.1
 scrapinghub==2.3.1
@@ -25,5 +26,6 @@ Scrapy==2.4.1
 selenium==4.0.0a7
 SQLAlchemy-Utils==0.36.8
 Twisted==20.3.0
+TwitterSearch==1.0.2
 unicode==2.7
 xmltodict==0.12.0
