@@ -1,5 +1,4 @@
 import os
-
 import PySimpleGUI as sg
 from bs4 import BeautifulSoup as bs
 from requests import post
@@ -27,7 +26,10 @@ class Periciasmedicas:
         self.cpf = _cpf
         self.dtnasc = _dtnasc
         self.dig = _dig
-        self.homepath = os.path.expanduser(os.getenv("USERPROFILE"))
+        if (os.name != 'posix'):  # Windows
+            self.homepath = os.path.expanduser(os.getenv("USERPROFILE"))
+        else:
+            self.homepath = os.path.expanduser("~")
         self.desktoppath = "Desktop"
         self.lista_cabecalho = []
         self.lista_infos = []

@@ -12,7 +12,7 @@ options.add_argument('--ignore-ssl-errors')
 
 # A partir dessa etapa, ele virá fazer tudo automaticamente dentro do browser
 # Abre o browser do Google Chrome automaticamente
-browser = webdriver.Chrome(options = options)
+browser = webdriver.Chrome(options=options)
 
 # Obtém os dados através da variavel URL
 browser.get(url)
@@ -40,5 +40,3 @@ browser.find_element_by_tag_name('dtNasc').send_keys('06')
 browser.find_element_by_tag_name('dtNasc').send_keys('1974')
 
 browser.find_element_by_class_name('submeter').click()
-
-

@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 from pandas_datareader import data as wb
-import matplotlib.pyplot as plt
 import datetime
 
 data = wb.DataReader('PG', data_source='yahoo', start='2000-1-1')
@@ -17,7 +16,7 @@ media_anual = data['Resultado'].mean()*250
 data['RetLogaritmico'] = np.log(data['Adj Close']/data['Adj Close'].shift(1))
 # print(data['RetLogaritmico'])
 
-data['RetLogaritmico'].plot(figsize=(8,5))
+data['RetLogaritmico'].plot(figsize=(8, 5))
 # plt.show()
 medialog = data['RetLogaritmico'].mean()*250
 # print(str(round(medialog,5)*100)+'%')
@@ -44,10 +43,10 @@ mediacarteiras = ret_carteiras.mean()*100
 mediaretornoanual = ret_carteiras.mean() * 250
 
 np.dot(mediaretornoanual, pesos)
-portfolio = str(round(np.dot(mediaretornoanual, pesos),5)*100) + '%'
+portfolio = str(round(np.dot(mediaretornoanual, pesos), 5)*100) + '%'
 
 pesos2 = np.array([0.3, 0.3, 0.15, 0.05, 0.2])
-portfolio2 = str(round(np.dot(mediaretornoanual, pesos2),5)*100) + '%'
+portfolio2 = str(round(np.dot(mediaretornoanual, pesos2), 5)*100) + '%'
 
 # print(mediacarteiras)
 # print(mediaretornoanual)
@@ -63,7 +62,7 @@ for t in ind_carteiras:
     )['Adj Close']
 
 
-(indicadores / indicadores.iloc[0]*100).plot(figsize=(8,5))
+(indicadores / indicadores.iloc[0]*100).plot(figsize=(8, 5))
 
 
 retindicadores = (indicadores / indicadores.shift(1)) - 1

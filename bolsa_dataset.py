@@ -12,7 +12,7 @@ base = pd.read_csv('PETR4.SA.csv')
 base = base.dropna()
 base_treino = base.iloc[:, 1:2].values
 
-normalizador = MinMaxScaler(feature_range=(0,1))
+normalizador = MinMaxScaler(feature_range=(0, 1))
 base_treino_normalizada = normalizador.fit_transform(base_treino)
 
 previsores = []
@@ -20,20 +20,20 @@ preco_real = []
 
 for i in range(90, 1242):
     try:
-        previsores.append(base_treino_normalizada[i-90:i,0])
-        preco_real.append(base_treino_normalizada[i,0])
+        previsores.append(base_treino_normalizada[i-90:i, 0])
+        preco_real.append(base_treino_normalizada[i, 0])
     except IndexError as err:
-        # print(err)
+        print(err)
         break
 
 previsores, preco_real = np.array(previsores), np.array(preco_real)
-previsores = np.reshape(previsores,(previsores.shape[0], previsores.shape[1],1))
+previsores = np.reshape(previsores, (previsores.shape[0], previsores.shape[1], 1))
 
 regressor = Sequential()
 regressor.add(LSTM(
         units=100,
         return_sequences=True,
-        input_shape = (previsores.shape[1],1)
+        input_shape=(previsores.shape[1], 1)
     )
 )
 regressor.add(Dropout(0.3))

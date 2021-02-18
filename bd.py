@@ -19,12 +19,11 @@ class BadooWithSelenium:
             self.driver = webdriver.Chrome()
             chrome_options = webdriver.ChromeOptions()
             # chrome_options.add_argument('--headless')
-
         else:
             from webdriver_manager.chrome import ChromeDriverManager
             from selenium.webdriver.chrome.options import Options
             chrome_options = Options()
-            CHROMEDRIVER_PATH = "/usr/local/bin/chromedriver"
+            # CHROMEDRIVER_PATH = "/usr/local/bin/chromedriver"
             WINDOW_SIZE = "1920,1080"
             chrome_options.add_argument("--window-size=%s" % WINDOW_SIZE)
             chrome_options.add_argument("--no-sandbox")

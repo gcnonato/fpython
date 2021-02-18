@@ -1,19 +1,19 @@
 import json
-from datetime import date
+# from datetime import date
 
-from TwitterSearch import *
+from TwitterSearch import TwitterSearch, TwitterSearchOrder
 from decouple import config
 
 iCONTADOR = 0
 iCONT = 0
 lista_full = []
 lista_tweets = []
-lat=-22.129517345580314
-long=-51.391638801542605
-km=50
+lat = -22.129517345580314
+long = -51.391638801542605
+km = 50
 
 quantidade_para_interar = 200
-subjects = ['lesbian']
+subjects = ['STF']
 # language = #'pt'
 
 try:
@@ -27,7 +27,7 @@ try:
     # iATRIBUTO.set_geocode(lat, long, km, imperial_metric=False)
     # iATRIBUTO.set_since(date(2021, 1, 1))
     # iATRIBUTO.set_until(date.today())
-    iATRIBUTO.set_result_type('mixed') #mixed, popular recent
+    iATRIBUTO.set_result_type('mixed')  # mixed, popular recent
 
     for tweet in iCONECTA.search_tweets_iterable(iATRIBUTO):
         lista_full.append(tweet)
@@ -40,7 +40,8 @@ try:
                 tweet['source'],
                 tweet['user']['description'],
                 # tweet['user']['entities'], #['url'], #['urls']['display_url'],
-                tweet['user']['entities']['description'], #['url'], #['urls']['display_url'],
+                tweet['user']['entities']['description'],
+                # ['url'], #['urls']['display_url'],
                 tweet['user']['url'],
                 tweet['user']['profile_image_url']
             )
@@ -51,5 +52,5 @@ try:
     json_full = json.dumps(lista_full, indent=4, ensure_ascii=False)
     json_filtro = json.dumps(lista_tweets, indent=4, ensure_ascii=False)
     print(json_filtro)
-except TwitterSearchException as error:
+except Exception as error:
     print(f'ERROR..: {error}')

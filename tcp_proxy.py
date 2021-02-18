@@ -5,15 +5,19 @@ import threading
 # this is a pretty hex dumping function directly taken from
 # the comments here:
 # http://code.activestate.com/recipes/142812-hex-dumper/
+from lxml.html.clean import unicode
+
+
 def hexdump(src, length=16):
     result = []
     digits = 4 if isinstance(src, unicode) else 2
     for i in range(0, len(src), length):
         s = src[i:i+length]
         hexa = b' '.join(["%0*X" % (digits, ord(x)) for x in s])
-        text = b''.join([x if 0x20 <= ord (x) < 0x7F else b'.' for x in s])
+        text = b''.join([x if 0x20 <= ord(x) < 0x7F else b'.' for x in s])
         result.append(b"%04X %-*s %s" % (i, length*(digits + 1), hexa, text))
     print(b'\n'.join(result))
+
 
 def receive_from(connection):
 
@@ -34,20 +38,23 @@ def receive_from(connection):
                 break
 
             buffer += data
-    except:
+    except Exception:
         pass
 
     return buffer
+
 
 # modify any responses destined for the remote host
 def request_handler(buffer):
     # perform packet modifications
     return buffer
 
+
 # modify any responses destined for the local host
 def response_handler(buffer):
     # perform packet modifications
     return buffer
+
 
 def proxy_handler(client_socket, remote_host, remote_port, receive_first):
 
@@ -55,7 +62,7 @@ def proxy_handler(client_socket, remote_host, remote_port, receive_first):
     remote_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     remote_socket.connect((remote_host, remote_port))
 
-    #receive data from the remote end if necessary
+    # receive data from the remote end if necessary
     if receive_first:
 
         remote_buffer = receive_from(remote_socket)
@@ -111,12 +118,11 @@ def proxy_handler(client_socket, remote_host, remote_port, receive_first):
             break
 
 
-
 def server_loop(local_host, local_port, remote_host, remote_port, receive_first):
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         server.bind((local_host, local_port))
-    except:
+    except Exception:
         print("[!!] Failed to listen on %s:%d" % (local_host, local_port))
         print("[!!] Check for other listening sockets or correct permissions.")
         sys.exit(0)
@@ -140,6 +146,7 @@ def server_loop(local_host, local_port, remote_host, remote_port, receive_first)
         )
 
         proxy_thread.start()
+
 
 def main():
     # no fancy command-line parsing here
@@ -167,6 +174,7 @@ def main():
 
     # now spin up our listening socket
     server_loop(local_host, local_port, remote_host, remote_port, receive_first)
+
 
 if __name__ == "__main__":
     main()

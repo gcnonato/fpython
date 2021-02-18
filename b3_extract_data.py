@@ -7,8 +7,9 @@ import os
 import glob
 import zipfile
 import pathlib
-import plotly.figure_factory as ff
+# import plotly.figure_factory as ff
 from selenium import webdriver
+
 
 class B3:
 
@@ -21,7 +22,6 @@ class B3:
         self.path_to_desktop = os.path.join(homepath, desktoppath)
         self.src = pathlib.Path(self.path_to_folder_downloads)
         self.dst = pathlib.Path(self.path_to_desktop)
-
 
     def function_path(self):
         # Recebe os arquivos do diretório na variavel
@@ -50,7 +50,7 @@ class B3:
 
         # A partir dessa etapa, ele virá fazer tudo automaticamente dentro do browser
         # Abre o browser do Google Chrome automaticamente
-        browser = webdriver.Chrome(options = options)
+        browser = webdriver.Chrome(options=options)
 
         # Obtém os dados através da variavel URL
         browser.get(url)
@@ -64,9 +64,9 @@ class B3:
         # Através do browser ele clica no item que faz o download dos arquivos necessários.
         browser.find_element_by_xpath("//a[@class='click-p']").click()
 
-        # Adiciona 1 segundo enquanto o arquivo baixado com a extensão zip não constar no diretório, antes de fechar o browser
-        # Após ser baixado, adiciona o nome do arquivo para uma variável
-        while not glob.glob(str(self.src) + "\*.zip"):
+        # Adiciona 1 segundo enquanto o arquivo baixado com a extensão zip não constar no diretório, antes de fechar
+        # o browser Após ser baixado, adiciona o nome do arquivo para uma variável
+        while not glob.glob(str(self.src) + "*.zip"):
             time.sleep(1)
         else:
             print("Arquivo baixado do link " + str(url))
@@ -96,26 +96,26 @@ class B3:
                                     {'ZipFile': [os.path.basename(zip)],
                                      'FileName': [info.filename],
                                      'Extension': [os.path.splitext(info.filename)[1].lower()],
-                                     'Size': [str(info.file_size/1000) + ' Kb'],
+                                     'Size': [str(info.file_size / 1000) + ' Kb'],
                                      'Directory': [self.src],
                                      'Modified': [str(datetime.datetime(*info.date_time))]}
                                 )
                             )
                         df = pd.DataFrame(
                             MetadataFiles,
-                                columns = [
-                                    'ZipFile',
-                                    'FileName',
-                                    'Extension',
-                                    'Size',
-                                    'Directory',
-                                    'Modified'
-                                ]
-                            )
+                            columns=[
+                                'ZipFile',
+                                'FileName',
+                                'Extension',
+                                'Size',
+                                'Directory',
+                                'Modified'
+                            ]
+                        )
                         # Mostra os data frame criado dentro do aquivo zip
                         print(df.head())
         # Cria a tabela do plotly de acordo com o data frame criado anteriormente
-        fig = ff.create_table(df)
+        # fig = ff.create_table(df)
 
         # Exibe a tabela
         # fig.show()
@@ -139,24 +139,23 @@ class B3:
         try:
             os.rename(
                 pathlib.Path(os.path.join(
-                        str(self.src),filename_emissor)
+                    str(self.src), filename_emissor)
                 ),
                 pathlib.Path(os.path.join(
-                        str(self.src),filename_emissor_novo)
+                    str(self.src), filename_emissor_novo)
                 )
             )
             os.rename(
                 pathlib.Path(os.path.join(
-                        str(self.src),filename_numeraca)
+                    str(self.src), filename_numeraca)
                 ),
                 pathlib.Path(os.path.join(
-                        str(self.src),filename_numeraca_novo)
+                    str(self.src), filename_numeraca_novo)
                 )
             )
         except FileExistsError as err:
             print(err)
             # os.remove(os.path.join(self.src, file))
-
 
         # Copia os arquivos extraidos o para o diretório da variavel dst
         QtdArq = 0
@@ -168,7 +167,6 @@ class B3:
 
         # Exibe uma mensagem de quantos arquivos foram copiados
         print("Foram copiados " + str(QtdArq) + " arquivos para o diretório " + str(self.dst))
-
 
 
 if __name__ == '__main__':

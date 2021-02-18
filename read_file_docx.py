@@ -1,5 +1,5 @@
 import os
-from docx import Document
+# from docx import Document
 from docx.shared import Inches
 from bs4 import BeautifulSoup as bs
 
@@ -7,7 +7,6 @@ from bs4 import BeautifulSoup as bs
 # import win32com.client
 
 import olefile
-
 
 
 homepath = os.path.expanduser(os.getenv("USERPROFILE"))
@@ -42,6 +41,7 @@ try:
 except UnicodeDecodeError as err:
     print(err)
 # document = Document('../temporario.doc')
+
 
 def create_docx(document):
     document.add_heading('Título do Documento', 0)
